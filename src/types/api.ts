@@ -16,7 +16,7 @@ export const SearchKnowledgeRequestSchema = z.object({
     })
     .optional(),
   topK: z.number(),
-  retrievalMode: z.enum(["lexical"]),
+  retrievalMode: z.enum(["lexical", "focused"]),
   includeRawText: z.boolean(),
   includeStructured: z.boolean(),
   minScore: z.number().optional(),

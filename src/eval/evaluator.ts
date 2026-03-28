@@ -4,6 +4,7 @@ import { getAllChunkFixtures } from "../test-utils";
 import { DEFAULT_EVAL_TOP_K, GOLDEN_DATASET, type GoldenQuery } from "./golden-dataset";
 import {
   citationFidelityRate,
+  graphExpansionHitRate,
   latencyP50,
   latencyP95,
   mrr,
@@ -35,6 +36,7 @@ export interface RetrievalEvalReport {
   citation_fidelity_rate: number;
   latency_p50_ms: number;
   latency_p95_ms: number;
+  graphExpansionHitRate: number;
   perQuery: EvaluatorQueryReport[];
 }
 
@@ -69,6 +71,18 @@ export async function evaluateRetrieval(
   const latencies = evaluatedQueries.map(({ response }) => response.timingMs);
   const aggregateResults = evaluatedQueries.flatMap(({ response }) => response.results);
 
+  // Compute graphExpansionHitRate: compare focused vs lexical on same queries
+  const focusedChunkIdSets: string[][] = [];
+  const lexicalChunkIdSets: string[][] = [];
+  for (const { goldenQuery } of evaluatedQueries) {
+    const focusedReq = { ...createSearchRequest(goldenQuery), retrievalMode: "focused" as const };
+    const lexicalReq = createSearchRequest(goldenQuery);
+    const focusedRes = index.search(focusedReq);
+    const lexicalRes = index.search(lexicalReq);
+    focusedChunkIdSets.push(focusedRes.results.map((r) => r.chunk.chunkId));
+    lexicalChunkIdSets.push(lexicalRes.results.map((r) => r.chunk.chunkId));
+  }
+
   const report: RetrievalEvalReport = {
     runAt: new Date().toISOString(),
     totalQueries: perQuery.length,
@@ -82,6 +96,7 @@ export async function evaluateRetrieval(
     ),
     latency_p50_ms: roundMetric(latencyP50(latencies, [], DEFAULT_EVAL_TOP_K)),
     latency_p95_ms: roundMetric(latencyP95(latencies, [], DEFAULT_EVAL_TOP_K)),
+    graphExpansionHitRate: roundMetric(graphExpansionHitRate(focusedChunkIdSets, lexicalChunkIdSets)),
     perQuery,
   };
 

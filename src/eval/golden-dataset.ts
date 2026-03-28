@@ -7,6 +7,12 @@ export interface GoldenQuery
   expectedChunkIds: string[];
 }
 
+/** Extended query for graph-aware evaluation */
+export interface GraphGoldenQuery extends GoldenQuery {
+  expectedEntityNames?: string[];
+  expectedRelationTypes?: string[];
+}
+
 export const GOLDEN_DATASET: GoldenQuery[] = [
   {
     query: "primary interaction cycle players repeat",
@@ -96,5 +102,44 @@ export const GOLDEN_DATASET: GoldenQuery[] = [
     expectedChunkIds: ["chunk-md-001", "chunk-yaml-001"],
     filters: { tags: ["progression"] },
     topK: DEFAULT_EVAL_TOP_K,
+  },
+];
+
+/** Graph-aware golden queries for evaluating focused/deep retrieval */
+export const GRAPH_GOLDEN_DATASET: GraphGoldenQuery[] = [
+  {
+    query: "combat system stamina dependency",
+    expectedChunkIds: ["chunk-json-001", "chunk-yaml-001"],
+    topK: DEFAULT_EVAL_TOP_K,
+    expectedEntityNames: ["Combat System", "Stamina"],
+    expectedRelationTypes: ["depends_on"],
+  },
+  {
+    query: "economy currency sources and sinks",
+    expectedChunkIds: ["chunk-yaml-001", "chunk-csv-001"],
+    topK: DEFAULT_EVAL_TOP_K,
+    expectedEntityNames: ["Economy", "Currency"],
+    expectedRelationTypes: ["feeds_into"],
+  },
+  {
+    query: "progression system level advancement rewards",
+    expectedChunkIds: ["chunk-md-001", "chunk-yaml-001"],
+    topK: DEFAULT_EVAL_TOP_K,
+    expectedEntityNames: ["Progression System"],
+    expectedRelationTypes: ["contains"],
+  },
+  {
+    query: "core loop feedback mechanics",
+    expectedChunkIds: ["chunk-pdf-001", "chunk-csv-001", "chunk-json-001"],
+    topK: DEFAULT_EVAL_TOP_K,
+    expectedEntityNames: ["Core Loop", "Feedback"],
+    expectedRelationTypes: ["synergizes_with"],
+  },
+  {
+    query: "combat balance constraints rate limits",
+    expectedChunkIds: ["chunk-json-001", "chunk-yaml-001"],
+    topK: DEFAULT_EVAL_TOP_K,
+    expectedEntityNames: ["Combat", "Balance"],
+    expectedRelationTypes: ["balanced_by", "constraint"],
   },
 ];

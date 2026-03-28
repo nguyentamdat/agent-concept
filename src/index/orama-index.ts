@@ -127,6 +127,10 @@ export class OramaIndex implements KnowledgeIndex {
     };
   }
 
+  getChunkById(chunkId: string): import("../types").KnowledgeChunk | undefined {
+    return this.chunksById.get(chunkId);
+  }
+
   private searchWithOrama(
     query: string,
     req: SearchKnowledgeRequest,

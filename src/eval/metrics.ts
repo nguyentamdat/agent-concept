@@ -120,3 +120,42 @@ function percentile(results: LatencySample[], percentileValue: number): number {
   const index = Math.max(0, Math.ceil(samples.length * percentileValue) - 1);
   return samples[index] ?? 0;
 }
+
+/**
+ * entityRecall@K: what % of expected entity names appear in the result entities.
+ * expectedEntityNames: canonical names to look for (case-insensitive substring match).
+ */
+export function entityRecallAtK(
+  resultEntityNames: string[],
+  expectedEntityNames: string[],
+  k: number
+): number {
+  if (expectedEntityNames.length === 0) return 1;
+  const topNames = resultEntityNames.slice(0, k).map((n) => n.toLowerCase());
+  const hits = expectedEntityNames.filter((expected) =>
+    topNames.some((name) => name.includes(expected.toLowerCase()) || expected.toLowerCase().includes(name))
+  );
+  return hits.length / expectedEntityNames.length;
+}
+
+/**
+ * graphExpansionHitRate: for a set of queries, what fraction had focused mode
+ * return at least 1 chunk that lexical mode did NOT return.
+ *
+ * focusedChunkIdSets: array of chunkId sets from focused results
+ * lexicalChunkIdSets: array of chunkId sets from lexical results (same queries)
+ */
+export function graphExpansionHitRate(
+  focusedChunkIdSets: string[][],
+  lexicalChunkIdSets: string[][]
+): number {
+  if (focusedChunkIdSets.length === 0) return 0;
+  let hits = 0;
+  for (let i = 0; i < focusedChunkIdSets.length; i++) {
+    const focused = new Set(focusedChunkIdSets[i] ?? []);
+    const lexical = new Set(lexicalChunkIdSets[i] ?? []);
+    const newChunks = [...focused].filter((id) => !lexical.has(id));
+    if (newChunks.length > 0) hits++;
+  }
+  return hits / focusedChunkIdSets.length;
+}

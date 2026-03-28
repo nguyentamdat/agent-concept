@@ -9,5 +9,8 @@ export interface KnowledgeIndexStats {
 export interface KnowledgeIndex {
   build(chunks: KnowledgeChunk[]): Promise<void>;
   search(req: SearchKnowledgeRequest): SearchKnowledgeResult;
+  getChunkById(chunkId: string): KnowledgeChunk | undefined;
   stats(): KnowledgeIndexStats;
 }
+
+export type { DeepSearchResult, DeepSearchOptions } from "./deep-retrieval";

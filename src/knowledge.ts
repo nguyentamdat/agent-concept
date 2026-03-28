@@ -5,9 +5,15 @@ import {
   type DocumentViewDataMap,
   type GetDocumentResultForView,
 } from "./api/document-access";
+import { buildFeatureDesignContext, type FeatureDesignContext } from "./api/design-context";
 import { createKnowledgeChunks } from "./chunk";
 import { extractFromChunks, type ExtractionSchemaName } from "./extract";
-import { createKnowledgeIndex, type KnowledgeIndex } from "./index/index";
+export type { DeepSearchOptions, DeepSearchResult } from "./index/index";
+import { buildGraphFromChunks, type GraphBuildOptions, type GraphBuildResult } from "./graph/graph-builder";
+import type { GameEntity, GameRelation, GraphStats } from "./graph/types";
+export type { FeatureDesignContext } from "./api/design-context";
+import type { GraphStore } from "./graph/graph-store";
+import { createKnowledgeIndex, deepSearch, focusedSearch, type DeepSearchOptions, type DeepSearchResult, type KnowledgeIndex } from "./index/index";
 import { buildCitationRefs, normaliseDocument } from "./normalise";
 import { parseCsv } from "./parse/csv";
 import { parseDocx } from "./parse/docx";
@@ -90,7 +96,7 @@ type ParsedKnowledgeDocument = {
 export class KnowledgeTool {
   private readonly documentStore: DocumentStore = {};
   private readonly index: KnowledgeIndex;
-
+  private _graph: GraphStore | null = null;
   constructor(index: KnowledgeIndex = createKnowledgeIndex()) {
     this.index = index;
   }
@@ -121,7 +127,14 @@ export class KnowledgeTool {
 
   search(request: SearchKnowledgeRequest): SearchKnowledgeResult {
     const validatedRequest = SearchKnowledgeRequestSchema.parse(request);
+    if (validatedRequest.retrievalMode === "focused") {
+      return SearchKnowledgeResultSchema.parse(focusedSearch(validatedRequest, this.index, this._graph));
+    }
     return SearchKnowledgeResultSchema.parse(this.index.search(validatedRequest));
+  }
+
+  async deepSearch(query: string, options: DeepSearchOptions): Promise<DeepSearchResult> {
+    return deepSearch(query, this.index, this._graph, options);
   }
 
   getDocument<V extends KnowledgeDocumentView>(
@@ -164,6 +177,62 @@ export class KnowledgeTool {
 
   listDocuments(): SourceDocument[] {
     return Object.values(this.documentStore).map(({ document }) => SourceDocumentSchema.parse(document));
+  }
+
+  get graph(): GraphStore | null {
+    return this._graph;
+  }
+
+  async buildGraph(options: GraphBuildOptions): Promise<GraphStats> {
+    const chunks = this.getAllChunks();
+    if (chunks.length === 0) {
+      throw new Error("No documents ingested. Call ingest() before buildGraph().");
+    }
+    const result: GraphBuildResult = await buildGraphFromChunks(chunks, options);
+    this._graph = result.graph;
+    return result.stats;
+  }
+
+  getEntity(name: string): GameEntity | undefined {
+    if (!this._graph) return undefined;
+    const matches = this._graph.findEntitiesByName(name);
+    return matches[0];
+  }
+
+  getEntityRelations(entityId: string): GameRelation[] {
+    if (!this._graph) return [];
+    return [
+      ...this._graph.getRelationsFrom(entityId),
+      ...this._graph.getRelationsTo(entityId),
+    ];
+  }
+
+  getSystemDependencies(systemName: string): GameEntity[] {
+    if (!this._graph) return [];
+    const entity = this.getEntity(systemName);
+    if (!entity) return [];
+    return this._graph.getDependencyChain(entity.entityId);
+  }
+
+  async getFeatureContext(description: string, llm?: import("./extract/llm-types").LLMProvider): Promise<FeatureDesignContext> {
+    let evidenceChunks: KnowledgeChunk[] = [];
+
+    if (llm) {
+      const deepResult = await deepSearch(description, this.index, this._graph, {
+        llm,
+        topK: 10,
+      });
+      evidenceChunks = deepResult.chunks.map((r) => r.chunk);
+    } else {
+      const focusedResult = focusedSearch(
+        { query: description, topK: 10, retrievalMode: "focused", includeRawText: false, includeStructured: false },
+        this.index,
+        this._graph
+      );
+      evidenceChunks = focusedResult.results.map((r) => r.chunk);
+    }
+
+    return buildFeatureDesignContext(description, this._graph, evidenceChunks);
   }
 
   private getStoredDocument(documentId: string) {
