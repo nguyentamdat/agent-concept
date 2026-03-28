@@ -1,0 +1,25 @@
+GAME DESIGN FUNDAMENTALS
+
+Core Loops and Feedback
+
+A core loop is the primary interaction cycle that players repeat throughout the game. It defines the moment-to-moment gameplay experience and is the foundation of all game design.
+
+Feedback loops reinforce player actions with immediate consequences. Positive feedback rewards player skill, while negative feedback creates challenge and tension. The most effective games layer multiple feedback loops at different time scales.
+
+Progression and Advancement
+
+Progression systems provide long-term goals and a sense of advancement. They keep players engaged beyond the core loop by offering new challenges and rewards. Without progression, even the best core loop becomes repetitive.
+
+Players need to see measurable progress toward meaningful goals. This could be level advancement, skill unlocks, or narrative progression.
+
+Economy Design Principles
+
+Game economies simulate scarcity and value exchange. They must balance player agency with designer control. Currency sinks remove money from the economy to prevent inflation. Common sinks include cosmetic purchases, convenience features, and progression acceleration.
+
+Currency sources inject money into the economy. These must be carefully tuned to match sink rates. Imbalanced economies lead to either inflation or deflation, both of which damage player experience.
+
+Difficulty and Challenge
+
+The difficulty curve determines how challenge scales throughout the game. A well-designed curve maintains engagement without frustration. Difficulty should increase gradually, with occasional plateaus for mastery and skill consolidation.
+
+Players should feel challenged but not overwhelmed. The sweet spot is often called the "flow state" where difficulty matches player skill.
