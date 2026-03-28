@@ -1,0 +1,31 @@
+{
+  "name": "knowledge-layer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local-first retrieval-first knowledge layer for game design documents",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "bun build src/index.ts --outdir dist --target bun --format esm && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@orama/orama": "latest",
+    "@orama/plugin-data-persistence": "latest",
+    "commander": "latest",
+    "csv-parse": "latest",
+    "gpt-tokenizer": "latest",
+    "js-yaml": "latest",
+    "mammoth": "latest",
+    "unpdf": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/js-yaml": "latest",
+    "typescript": "latest"
+  }
+}
