@@ -2,6 +2,34 @@
 
 AI game design pipeline plugin for Claude Code. Concept → Prototype → Feedback → Documents.
 
+## Install as Claude Code Plugin
+
+### From Marketplace (Recommended)
+
+```bash
+# Add the marketplace
+/plugin marketplace add YOUR_GITHUB_USER/game-design-kit
+
+# Install the plugin
+/plugin install game-design-kit@game-design-kit
+```
+
+### Direct (Development/Testing)
+
+```bash
+git clone <repo-url> game-design-kit
+claude --plugin-dir ./game-design-kit
+```
+
+### Manual Clone
+
+```bash
+git clone <repo-url> game-design-kit
+cd game-design-kit
+bun run setup
+claude
+```
+
 ## Quick Start
 
 ```bash

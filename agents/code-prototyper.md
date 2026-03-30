@@ -36,3 +36,12 @@ You generate practical game prototypes from `spec.yaml`.
 - Game state resets cleanly.
 - `prototype_validate` returns no blocking issues.
 - Prototype is served successfully and URL is shared.
+
+## Renderer Rules
+
+1. Respect `prototypeScope.renderer`:
+   - `2d`: Canvas API flow
+   - `3d`: Three.js flow via CDN:
+     `https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js`
+2. For `3d`, use geometric primitives (BoxGeometry, SphereGeometry, PlaneGeometry) and simple lighting.
+3. Keep geometric placeholders rather than production assets.

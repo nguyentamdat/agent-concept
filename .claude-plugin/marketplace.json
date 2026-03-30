@@ -1,0 +1,14 @@
+{
+  "name": "game-design-kit",
+  "owner": {
+    "name": "Game Design Kit"
+  },
+  "plugins": [
+    {
+      "name": "game-design-kit",
+      "source": "./",
+      "description": "AI game design pipeline: concept → prototype → feedback → documents",
+      "version": "1.0.0"
+    }
+  ]
+}

@@ -15,19 +15,19 @@ Thiết kế concept theo quy trình 2 phase: Phase A (brainstorm + outline + ch
    - Pitch tối đa 5 câu, tập trung điểm độc đáo và cảm giác chơi
 5. Trình bày danh sách concept và yêu cầu user chọn 1 concept.
 6. Sau khi user chọn, tạo Outline theo:
-   - @.claude/skills/game-concept-design/references/phase-a-outline-template.md
+   - @skills/game-concept-design/references/phase-a-outline-template.md
 7. Trình bày Outline và yêu cầu user approve.
 8. Dừng lại, không sang Phase B cho tới khi user approve.
 
 ## Phase B: Generate tài liệu sau khi approve Outline
 
 1. Đọc và áp dụng 12 lý thuyết từ:
-   - @.claude/skills/game-concept-design/references/game-design-theories.md
+   - @skills/game-concept-design/references/game-design-theories.md
 2. Đọc cấu trúc GCD từ:
-   - @.claude/skills/game-concept-design/references/gcd-template.md
+   - @skills/game-concept-design/references/gcd-template.md
 3. Generate Tài liệu 1: GCD (phân tích thiết kế, áp dụng lý thuyết theo từng section).
 4. Đọc cấu trúc GCD-Gameplay từ:
-   - @.claude/skills/game-concept-design/references/gcd-gameplay-template.md
+   - @skills/game-concept-design/references/gcd-gameplay-template.md
 5. Generate Tài liệu 2: GCD-Gameplay (rulebook-style, tập trung cách chơi).
 6. Generate `spec.yaml` (internal format cho prototype agent).
 7. Ghi 3 file vào thư mục project:

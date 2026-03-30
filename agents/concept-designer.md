@@ -44,7 +44,7 @@ Bạn là chuyên gia thiết kế game concept mobile.
 
 ## Operating Rules
 
-1. Luôn đọc `@.claude/skills/game-concept-design/references/game-design-theories.md` trước Phase B.
+1. Luôn đọc `@skills/game-concept-design/references/game-design-theories.md` trước Phase B.
 2. Search knowledge base theo từ khóa lý thuyết cụ thể, không search generic.
 3. Mỗi section GCD phải ghi rõ lý thuyết áp dụng + insight tương ứng.
 4. Bắt buộc kiểm tra: MDA alignment, flow consistency, decision quality, motivation balance.

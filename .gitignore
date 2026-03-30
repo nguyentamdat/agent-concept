@@ -21,3 +21,6 @@ projects/*/
 
 .env
 .env.*
+
+# Local dev settings (not part of plugin distribution)
+.claude/settings.local.json

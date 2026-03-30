@@ -24,11 +24,12 @@ type SourceRecord = {
   documentId?: string;
 };
 
-const rootDir = process.cwd();
+const pluginRoot = process.env.CLAUDE_PLUGIN_ROOT;
+const rootDir = pluginRoot ?? process.cwd();
 const knowledgeDir = resolve(rootDir, process.env.KNOWLEDGE_DIR ?? "knowledge");
 const projectsDir = resolve(rootDir, process.env.PROJECTS_DIR ?? "projects");
 const templatesDir = resolve(rootDir, process.env.TEMPLATES_DIR ?? "templates");
-const cacheDir = resolve(rootDir, ".knowledge-cache");
+const cacheDir = resolve(process.env.CACHE_DIR ?? resolve(rootDir, ".knowledge-cache"));
 
 let knowledgeTool: KnowledgeTool | null = null;
 let knowledgeReady: Promise<KnowledgeTool> | null = null;

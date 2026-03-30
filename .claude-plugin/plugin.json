@@ -1,0 +1,23 @@
+{
+  "name": "game-design-kit",
+  "version": "1.0.0",
+  "description": "AI game design pipeline: concept \u2192 prototype \u2192 feedback \u2192 documents. Powered by a game design knowledge base with 5 core references.",
+  "author": {
+    "name": "Game Design Kit"
+  },
+  "repository": "https://github.com/game-design-kit/game-design-kit",
+  "license": "MIT",
+  "keywords": ["game-design", "game-development", "prototype", "mda-framework", "knowledge-base"],
+  "mcpServers": {
+    "game-design-kit": {
+      "command": "bun",
+      "args": ["run", "${CLAUDE_PLUGIN_ROOT}/mcp-server/src/server.ts"],
+      "env": {
+        "KNOWLEDGE_DIR": "${CLAUDE_PLUGIN_ROOT}/knowledge",
+        "PROJECTS_DIR": "./projects",
+        "TEMPLATES_DIR": "${CLAUDE_PLUGIN_ROOT}/templates",
+        "CACHE_DIR": "${CLAUDE_PLUGIN_DATA}/.knowledge-cache"
+      }
+    }
+  }
+}

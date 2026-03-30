@@ -1,6 +1,33 @@
-# Game Design Kit Plugin
+# Game Design Kit Claude Code Plugin
 
-This repository powers an AI game design pipeline for Claude Code. It combines a local game design knowledge base, structured game specs, and rapid HTML prototype generation into a single workflow.
+Game Design Kit is a Claude Code plugin for an AI game design pipeline: Concept → Prototype → Feedback → Documents.
+
+It combines a local game design knowledge base, structured game specs, and rapid HTML prototype generation in one workflow.
+
+## Install / Run
+
+### Marketplace install
+
+```bash
+/plugin marketplace add YOUR_GITHUB_USER/game-design-kit
+/plugin install game-design-kit@game-design-kit
+```
+
+### Direct local plugin directory
+
+```bash
+git clone <repo-url> game-design-kit
+claude --plugin-dir ./game-design-kit
+```
+
+### Local development (standalone in this repo)
+
+```bash
+bun run setup
+claude
+```
+
+`.claude/settings.json` and `.claude/.mcp.json` remain for local development when running directly inside this repository.
 
 ## Knowledge Base
 
@@ -46,17 +73,28 @@ Design documents from concept phase (`gcd.md`, `gcd-gameplay.md`) must be writte
 - Use geometric placeholder shapes and simple UI treatment.
 - Keep prototype implementation concise and practical.
 
-## MCP Runtime / Test Commands
+## Plugin Structure
 
-- Run tests: `bun test`
-- Run MCP server: `bun run mcp-server/src/server.ts`
+- `.claude-plugin/plugin.json`: plugin metadata + MCP server config (uses `${CLAUDE_PLUGIN_ROOT}`)
+- `.claude-plugin/marketplace.json`: marketplace declaration
+- `commands/`: slash-command definitions
+- `agents/`: role agents for each pipeline phase
+- `skills/`: skill packages and references
+- `hooks/hooks.json`: plugin session hooks
+- `settings.json`: plugin permission manifest
 
-## Directory Conventions
+## Core Repository Directories
 
 - `knowledge/`: source design books and references
 - `projects/`: generated game projects and specs
 - `templates/`: prototype templates and starting points
 - `mcp-server/`: MCP server implementation and tool handlers
+
+## MCP Runtime / Test Commands
+
+- Run tests: `bun test`
+- Type-check: `bun run typecheck`
+- Run MCP server: `bun run mcp-server/src/server.ts`
 
 ## Operational Guidance
 
