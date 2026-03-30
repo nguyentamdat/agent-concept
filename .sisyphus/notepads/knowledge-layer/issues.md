@@ -1,0 +1,4 @@
+- F2 blocker: `src/` still contains 14 `as any` escape hatches across test files (`src/test-utils/fixtures.test.ts`, `src/types/api.test.ts`, `src/types/citation.test.ts`, `src/types/chunk.test.ts`, `src/types/document.test.ts`, `src/types/extraction.test.ts`).
+- F2 blocker: `src/parse/index.ts` does not re-export the `docx` and `pdf` parser modules, so the parse module barrel is incomplete relative to the review requirement.
+- F2 concern: `src/index/orama-index.ts` silently swallows errors in `searchWithOrama` and `capturePersistenceSnapshot`, which preserves fallback behavior but can hide retrieval/index persistence failures during debugging.
+- F2 re-run blocker: `src/index/orama-index.ts` imports `KnowledgeIndex`/`KnowledgeIndexStats` from `./index` while `src/index/index.ts` imports and re-exports `OramaIndex` from `./orama-index`, so the index module still has a circular dependency even though the import in `orama-index.ts` is type-only.
