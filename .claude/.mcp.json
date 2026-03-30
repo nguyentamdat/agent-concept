@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "game-design-kit": {
+      "type": "stdio",
+      "command": "bun",
+      "args": ["run", "./mcp-server/src/server.ts"],
+      "env": {
+        "KNOWLEDGE_DIR": "./knowledge",
+        "PROJECTS_DIR": "./projects",
+        "TEMPLATES_DIR": "./templates"
+      }
+    }
+  }
+}

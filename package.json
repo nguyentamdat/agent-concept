@@ -1,16 +1,24 @@
 {
-  "name": "knowledge-layer",
-  "version": "0.1.0",
+  "name": "game-design-kit",
+  "version": "1.0.0",
   "private": true,
-  "description": "Local-first retrieval-first knowledge layer for game design documents",
+  "description": "AI game design pipeline plugin for Claude Code",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "knowledge-layer": "src/cli.ts"
+  },
   "scripts": {
+    "setup": "bun install && cd mcp-server && bun install && cd .. && bun run scripts/setup-knowledge.ts",
+    "setup:knowledge": "bun run scripts/setup-knowledge.ts",
+    "postinstall": "cd mcp-server && bun install",
     "build": "bun build src/index.ts --outdir dist --target bun --format esm && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "test": "bun test",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist .knowledge-cache",
+    "cli": "bun run src/cli.ts",
+    "mcp": "bun run mcp-server/src/server.ts"
   },
   "dependencies": {
     "@orama/orama": "latest",

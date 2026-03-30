@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bun *)",
+      "Bash(npx *)",
+      "Bash(node *)",
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "mcp__game-design-kit__knowledge_ingest",
+      "mcp__game-design-kit__knowledge_search",
+      "mcp__game-design-kit__knowledge_graph",
+      "mcp__game-design-kit__knowledge_query_entity",
+      "mcp__game-design-kit__knowledge_stats",
+      "mcp__game-design-kit__spec_validate",
+      "mcp__game-design-kit__spec_diff",
+      "mcp__game-design-kit__spec_bump_version",
+      "mcp__game-design-kit__prototype_serve",
+      "mcp__game-design-kit__prototype_stop",
+      "mcp__game-design-kit__prototype_validate",
+      "mcp__game-design-kit__project_create",
+      "mcp__game-design-kit__project_list"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Read(.env)",
+      "Read(.env.*)"
+    ]
+  }
+}

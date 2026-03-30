@@ -1,6 +1,55 @@
-# knowledge-layer
+# Game Design Kit
 
-Local-first retrieval-first knowledge layer for game design documents. Ingest multi-format docs, build a knowledge graph of game design entities, and retrieve structured context for AI agents.
+AI game design pipeline plugin for Claude Code. Concept → Prototype → Feedback → Documents.
+
+## Quick Start
+
+```bash
+git clone <repo-url> game-design-kit
+cd game-design-kit
+bun install
+```
+
+Add your game design reference PDFs to `knowledge/`, then:
+
+```bash
+bun run setup:knowledge
+claude
+```
+
+```
+> /project:concept casual puzzle game with gardening theme for mobile
+```
+
+## Requirements
+
+- [Bun](https://bun.sh/) v1.0+
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI
+
+## Pipeline
+
+| Command | What it does |
+|---|---|
+| `/project:concept <idea>` | Phase A: brainstorm → outline → approve. Phase B: GCD + GCD-Gameplay + spec.yaml |
+| `/project:prototype` | Generate playable HTML5 prototype (2D Canvas or 3D Three.js) |
+| `/project:feedback <text>` | Process feedback → update spec → regenerate prototype |
+| `/project:approve` | Approve spec → generate 7 detail design documents |
+| `/project:status` | Show current project state |
+
+Design documents (`gcd.md`, `gcd-gameplay.md`) are written in Vietnamese.
+
+## Knowledge Base
+
+Place these PDFs in `knowledge/`:
+- The Art of Game Design (Schell)
+- MDA: A Formal Approach (Hunicke, LeBlanc, Zubek)
+- Hooked (Nir Eyal)
+- A Theory of Fun (Raph Koster)
+- Players Making Decisions (Zack Hiwiller)
+
+---
+
+Below is the original knowledge-layer library documentation.
 
 ## Table of Contents
 

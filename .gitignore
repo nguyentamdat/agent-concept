@@ -1,7 +1,6 @@
 node_modules/
 .bun/
 dist/
-.env
 *.log
 *.tsbuildinfo
 
@@ -11,6 +10,14 @@ Thumbs.db
 .idea/
 .vscode/
 
-.sisyphus/evidence/
+.sisyphus/
 
-knowledge/
+.knowledge-cache/
+knowledge/*.pdf
+projects/*/
+
+*.tar.gz
+*.zip
+
+.env
+.env.*
