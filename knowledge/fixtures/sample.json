@@ -1,0 +1,32 @@
+{
+  "gameMechanics": {
+    "coreLoop": {
+      "description": "The primary repeated action cycle that drives gameplay",
+      "complexity": "medium-high",
+      "engagementFactors": [
+        "immediate feedback",
+        "clear goals",
+        "skill expression"
+      ]
+    },
+    "turnBasedCombat": {
+      "description": "Strategic combat system where player and enemy take turns",
+      "phases": [
+        "player action selection",
+        "execution phase",
+        "enemy response",
+        "resolution"
+      ]
+    }
+  },
+  "economy": {
+    "currencies": [
+      {
+        "name": "gold",
+        "type": "soft",
+        "sources": ["combat", "quests", "trading"],
+        "sinks": ["equipment", "consumables", "upgrades"]
+      }
+    ]
+  }
+}

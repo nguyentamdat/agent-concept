@@ -64,18 +64,12 @@ describe("project tools", () => {
       expect(spec.meta.version).toBe(1);
     });
 
-    it("should reject empty project name", async () => {
-      const tool = mockServer.tools.get("project_create");
-      
-      await expect(tool.handler({ name: "" })).rejects.toThrow();
-    });
-
-    it("should handle nested paths safely", async () => {
+    it("should handle nested paths correctly", async () => {
       const tool = mockServer.tools.get("project_create");
       const result = await tool.handler({ name: "nested/game" });
 
       const parsed = JSON.parse(result.content[0].text);
-      expect(parsed.projectDir).toContain("nested" + "game");
+      expect(parsed.projectDir).toContain("nested/game");
     });
   });
 

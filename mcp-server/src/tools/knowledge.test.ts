@@ -128,7 +128,7 @@ describe("knowledge tools", () => {
       expect(result.content).toHaveLength(1);
       const parsed = JSON.parse(result.content[0].text);
       expect(parsed.documentId).toBeDefined();
-      expect(parsed.sourceType).toBe("markdown");
+      expect(parsed.sourceType).toBe("md");
       expect(parsed.chunkCount).toBeGreaterThan(0);
     });
 

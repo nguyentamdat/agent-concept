@@ -1,0 +1,13 @@
+This is a sample text file for testing text parsing capabilities.
+
+The file contains multiple paragraphs to test line-range attribution.
+
+Game design is the art of creating experiences that engage players through meaningful choices, clear feedback, and well-crafted progression systems.
+
+Key concepts include:
+- Core loops that drive engagement
+- Progression systems that provide long-term motivation
+- Difficulty curves that maintain flow state
+- Economy balancing that rewards player time
+
+Testing text extraction requires files with varied content structure including headers, lists, and paragraphs of different lengths.
