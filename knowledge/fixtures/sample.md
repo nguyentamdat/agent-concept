@@ -1,45 +1,34 @@
+---
+title: Game Design Fundamentals
+author: Test Author
+date: 2024-01-01
+---
+
 # Game Design Fundamentals
 
-## Core Loop
+## Core Loops
 
-The core loop is the primary interaction cycle that players repeat throughout the game session. It consists of three key elements:
+A core loop is the primary interaction cycle that players repeat throughout the game. It defines the moment-to-moment gameplay experience.
 
-1. **Action** - The player takes an action
-2. **Feedback** - The game provides immediate feedback
-3. **Reward** - The player receives a reward that motivates continued play
+### Feedback Loops
+
+Feedback loops reinforce player actions with immediate consequences. Positive feedback rewards player skill, while negative feedback creates challenge and tension.
 
 ## Progression Systems
 
-Progression systems provide long-term goals and a sense of advancement. These include:
+Progression systems provide long-term goals and a sense of advancement. They keep players engaged beyond the core loop by offering new challenges and rewards.
 
-- Experience points and leveling
-- Skill trees and unlocks
-- Achievement systems
-- Narrative progression
+| System Type | Description | Impact |
+|-------------|-------------|--------|
+| Experience | Level-based advancement | Long-term motivation |
+| Skill Trees | Ability unlocking | Player agency |
+| Achievements | Milestone rewards | Social recognition |
 
-## Difficulty Curves
+## Implementation
 
-A well-designed difficulty curve keeps players in the flow state - challenged but not overwhelmed. The curve should:
-
-- Start simple and introduce complexity gradually
-- Provide scaffolding for new mechanics
-- Offer appropriate challenge spikes at key moments
-- Allow for player skill expression
-
-## Player Motivation
-
-Understanding player motivation is crucial for game design. Players are driven by:
-
-- Intrinsic motivation: mastery, autonomy, purpose
-- Extrinsic motivation: rewards, achievements, social recognition
-- The balance between challenge and skill
-
-## Testing and Iteration
-
-Game design requires continuous testing and iteration:
-
-1. Prototype core mechanics quickly
-2. Test with real players early and often
-3. Gather both quantitative and qualitative feedback
-4. Iterate based on observed player behavior
-5. Validate changes through A/B testing when possible
+```yaml
+core_loop:
+  action: player_input
+  feedback: immediate_response
+  reward: progression_resource
+```

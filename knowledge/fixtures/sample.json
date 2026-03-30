@@ -1,32 +1,25 @@
 {
-  "gameMechanics": {
-    "coreLoop": {
-      "description": "The primary repeated action cycle that drives gameplay",
-      "complexity": "medium-high",
-      "engagementFactors": [
-        "immediate feedback",
-        "clear goals",
-        "skill expression"
-      ]
-    },
-    "turnBasedCombat": {
-      "description": "Strategic combat system where player and enemy take turns",
-      "phases": [
-        "player action selection",
-        "execution phase",
-        "enemy response",
-        "resolution"
-      ]
-    }
-  },
-  "economy": {
-    "currencies": [
-      {
-        "name": "gold",
-        "type": "soft",
-        "sources": ["combat", "quests", "trading"],
-        "sinks": ["equipment", "consumables", "upgrades"]
+  "game_design": {
+    "core_loops": {
+      "primary_loop": {
+        "description": "The primary repeated action cycle that drives gameplay",
+        "engagement_factors": ["immediate feedback", "clear goals"]
+      },
+      "combat_loop": {
+        "description": "Turn-based combat where enemy responds to player actions",
+        "steps": [
+          "Select action",
+          "Execute action",
+          "Receive feedback",
+          "Enemy responds"
+        ]
       }
-    ]
+    },
+    "progression": {
+      "level_system": {
+        "max_level": 100,
+        "xp_curve": "exponential"
+      }
+    }
   }
 }

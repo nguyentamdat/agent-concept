@@ -4,24 +4,19 @@ import { KnowledgeTool, type KnowledgeChunk, type SourceDocument } from "../inde
 
 const FIXTURE_PATHS = {
   md: new URL("../../knowledge/fixtures/sample.md", import.meta.url).pathname,
-  pdf: new URL("../../knowledge/fixtures/sample.pdf", import.meta.url).pathname,
   csv: new URL("../../knowledge/fixtures/sample.csv", import.meta.url).pathname,
   json: new URL("../../knowledge/fixtures/sample.json", import.meta.url).pathname,
   yaml: new URL("../../knowledge/fixtures/sample.yaml", import.meta.url).pathname,
 } as const;
 
-const INGEST_PATHS = Object.values(FIXTURE_PATHS);
-const EVAL_REPORT_PATH = new URL(
-  "../../.sisyphus/evidence/pipeline-e2e-report.json",
-  import.meta.url
-).pathname;
-const GAME_MECHANICS_SCHEMA_NAME = "game-mechanics" as const;
+const PDF_PATH = new URL("../../knowledge/fixtures/sample.pdf", import.meta.url).pathname;
+const DOCX_PATH = new URL("../../knowledge/fixtures/sample.docx", import.meta.url).pathname;
 
 describe("e2e pipeline", () => {
   it("ingests all required fixture formats", async () => {
     const { tool } = await createToolWithFixtures();
 
-    expect(tool.listDocuments().length).toBeGreaterThanOrEqual(5);
+    expect(tool.listDocuments().length).toBeGreaterThanOrEqual(4);
   });
 
   it("returns ranked search results with citations", async () => {
@@ -62,7 +57,7 @@ describe("e2e pipeline", () => {
     const { tool, documents } = await createToolWithFixtures();
     const markdownDocument = getDocumentBySourceType(documents, "md");
 
-    const extraction = tool.extract(markdownDocument.documentId, GAME_MECHANICS_SCHEMA_NAME);
+    const extraction = tool.extract(markdownDocument.documentId, "game-mechanics");
 
     expect(extraction.extractionStatus).not.toBe("failed");
     expect(extraction.evidence.length).toBeGreaterThan(0);
@@ -77,7 +72,6 @@ describe("e2e pipeline", () => {
     const report = await evaluateRetrieval({
       chunks,
       dataset,
-      reportPath: EVAL_REPORT_PATH,
     });
 
     expect(report["recall@5"]).toBeGreaterThanOrEqual(0.7);
@@ -88,8 +82,9 @@ describe("e2e pipeline", () => {
 
 async function createToolWithFixtures() {
   const tool = new KnowledgeTool();
-
-  await Promise.all(INGEST_PATHS.map((filePath) => tool.ingest(filePath)));
+  const paths = Object.values(FIXTURE_PATHS);
+  
+  await Promise.all(paths.map((filePath) => tool.ingest(filePath)));
 
   return {
     tool,

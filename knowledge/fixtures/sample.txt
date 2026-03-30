@@ -1,13 +1,11 @@
-This is a sample text file for testing text parsing capabilities.
+Game Design Fundamentals
 
-The file contains multiple paragraphs to test line-range attribution.
+A core loop is the primary interaction cycle that players repeat throughout the game. It defines the moment-to-moment gameplay experience.
 
-Game design is the art of creating experiences that engage players through meaningful choices, clear feedback, and well-crafted progression systems.
+Progression systems provide long-term goals and a sense of advancement. They keep players engaged beyond the core loop by offering new challenges and rewards.
 
-Key concepts include:
-- Core loops that drive engagement
-- Progression systems that provide long-term motivation
-- Difficulty curves that maintain flow state
-- Economy balancing that rewards player time
+Feedback loops reinforce player actions with immediate consequences. Positive feedback rewards player skill, while negative feedback creates challenge and tension.
 
-Testing text extraction requires files with varied content structure including headers, lists, and paragraphs of different lengths.
+Testing and Iteration
+
+Game design requires continuous testing and iteration. Prototype core mechanics quickly and test with real players early and often.

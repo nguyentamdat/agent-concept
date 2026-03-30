@@ -1,27 +1,25 @@
-game_systems:
-  progression:
-    description: Long-term advancement mechanics
-    types:
-      - experience_points
-      - skill_trees
-      - equipment_upgrades
-    balance_factors:
-      - pacing
-      - meaningful_choices
-      - visible_progress
+# Game design configuration
+# Note: comments will be stripped during parsing
 
-  difficulty:
-    approach: Adaptive difficulty with player choice
-    factors:
-      - player_skill
-      - equipment_level
-      - optional_challenges
-    
+game_design:
+  core_mechanics:
+    - combat_system:
+        description: Turn-based combat with action economy management
+        complexity: high
+        enemy_response: true
+    - progression_system:
+        description: Level-based character advancement
+        complexity: medium
+  
   economy:
-    currency_types:
-      soft: Gold earned through gameplay
-      hard: Gems purchased or earned rarely
-    design_principles:
-      - meaningful_sinks
-      - earn_rate_balance
-      - inflation_control
+    action_economy:
+      description: Resource management for turn-based actions
+      complexity: high
+    currencies:
+      gold:
+        sources:
+          - enemy_drops
+          - quest_rewards
+        sinks:
+          - equipment
+          - consumables

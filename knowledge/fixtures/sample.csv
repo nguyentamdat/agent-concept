@@ -1,6 +1,2 @@
-mechanic_id,mechanic_name,complexity_level,engagement_score,description
-move,Basic Movement,low,0.7,Primary navigation mechanic
-jump,Jumping,medium,0.8,Vertical traversal with timing
-attack,Basic Attack,low,0.75,Core combat interaction
-counter,Counter Attack,high,0.9,Skill-based defensive mechanic
-combo,Combo System,high,0.85,Chaining attacks for bonus damage
+mechanic_name,mechanic_type,description,difficulty_impact,engagement_impact
+Core Loop,Interaction,Primary repeated action cycle,Medium,High
