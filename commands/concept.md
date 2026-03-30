@@ -1,6 +1,6 @@
 # /design-kit:concept <game idea>
 
-Thiết kế concept theo quy trình 2 phase: Phase A (brainstorm + outline + chờ approve) và Phase B (GCD + GCD-Gameplay + spec).
+**Mô tả:** Thiết kế game concept theo quy trình 2 phase - Phase A (brainstorm + outline + chờ duyệt) và Phase B (sinh GCD + GCD-Gameplay + spec.yaml). Dựa trên 12 lý thuyết game design cốt lõi.
 
 ## Phase A: Thu thập thông tin → Brainstorm → Outline (chờ approve)
 

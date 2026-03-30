@@ -1,6 +1,6 @@
 # /design-kit:docs [doc1,doc2,...|all]
 
-Generate specific detail design documents from current spec without the full approval flow.
+**Mô tả:** Sinh tài liệu thiết kế chi tiết cụ thể từ spec hiện tại mà không cần qua flow approve đầy đủ. Cho phép generate 1 hoặc nhiều document theo nhu cầu.
 
 ## Arguments
 

@@ -1,6 +1,6 @@
 # /design-kit:status
 
-Show current pipeline state for the active game project.
+**Mô tả:** Hiển thị trạng thái hiện tại của project: tên project, version spec, pipeline stage đang ở đâu (concept/prototype/feedback/approve), và knowledge base stats.
 
 ## Display
 

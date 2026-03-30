@@ -1,6 +1,6 @@
 # /design-kit:prototype
 
-Generate and serve a playable prototype from the current spec.
+**Mô tả:** Sinh prototype HTML5 chạy được trực tiếp từ spec.yaml hiện tại. Hỗ trợ renderer 2D (Canvas API) và 3D (Three.js). Tự động serve và trả về URL để playtest.
 
 ## Steps
 

@@ -1,6 +1,6 @@
 # /design-kit:feedback <feedback text>
 
-Process user feedback into controlled, theory-grounded spec updates.
+**Mô tả:** Xử lý feedback từ playtester và chuyển thành cập nhật spec có kiểm soát, dựa trên lý thuyết thiết kế. Phân tích root cause, đề xuất thay đổi, và regenerate prototype.
 
 ## Steps
 
