@@ -85,6 +85,7 @@ Design documents from concept phase (`gcd.md`, `gcd-gameplay.md`) must be writte
 
 ## Core Repository Directories
 
+- `references/`: shared design templates and theory references (used by commands, agents, skills)
 - `knowledge/`: source design books and references
 - `projects/`: generated game projects and specs
 - `templates/`: prototype templates and starting points

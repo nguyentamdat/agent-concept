@@ -42,7 +42,7 @@ Does NOT handle: poker/casino games (→ poker-game-design), implementation code
    - Trình danh sách concepts cho user chọn bằng `AskUserQuestion`
    - **DỪNG LẠI** — chờ user chọn 1 concept trước khi tiếp tục
 
-5. Generate Outline theo template `references/phase-a-outline-template.md` dựa trên concept đã được chọn
+5. Generate Outline theo template `@references/phase-a-outline-template.md` dựa trên concept đã được chọn
 6. Trình Outline cho user duyệt bằng `AskUserQuestion`
 7. **DỪNG LẠI** — chờ user approve trước khi sang Phase B
 
@@ -56,9 +56,9 @@ Phase B xuất ra **2 tài liệu**:
 
 **Bước thực hiện:**
 
-1. Đọc `references/game-design-theories.md` để nắm 12 lý thuyết
-2. Đọc `references/gcd-template.md` để nắm cấu trúc GCD (Tài liệu 1)
-3. Đọc `references/gcd-gameplay-template.md` để nắm cấu trúc GCD-Gameplay (Tài liệu 2)
+1. Đọc `@references/game-design-theories.md` để nắm 12 lý thuyết
+2. Đọc `@references/gcd-template.md` để nắm cấu trúc GCD (Tài liệu 1)
+3. Đọc `@references/gcd-gameplay-template.md` để nắm cấu trúc GCD-Gameplay (Tài liệu 2)
 4. **Generate Tài liệu 1 — GCD:**
    - Áp dụng 12 lý thuyết vào từng section
    - Với mỗi section, ghi rõ lý thuyết nào được áp dụng và tại sao
@@ -93,7 +93,7 @@ Phase B xuất ra **2 tài liệu**:
 | 11 | Intrinsic & Extrinsic Motivation | 6. Motivation & Retention |
 | 12 | 8 Kinds of Fun | 2. Trải Nghiệm Cốt Lõi |
 
-Chi tiết: `references/game-design-theories.md`
+Chi tiết: `@references/game-design-theories.md`
 
 ## Output Format
 
@@ -101,8 +101,8 @@ Phase B xuất ra **2 tài liệu** bằng **tiếng Việt**, sử dụng Markd
 
 | # | Tài liệu | Mô tả | Template |
 |---|----------|-------|----------|
-| 1 | **GCD** (Game Concept Document) | Phân tích thiết kế: MDA, Core Loop, Decision Points, Flow, Motivation, 12 lý thuyết | `references/gcd-template.md` |
-| 2 | **GCD-Gameplay** | Mô tả gameplay dạng rulebook: Hook, Setup, Luật chơi, Gameplay Loop, Kết thúc | `references/gcd-gameplay-template.md` |
+| 1 | **GCD** (Game Concept Document) | Phân tích thiết kế: MDA, Core Loop, Decision Points, Flow, Motivation, 12 lý thuyết | `@references/gcd-template.md` |
+| 2 | **GCD-Gameplay** | Mô tả gameplay dạng rulebook: Hook, Setup, Luật chơi, Gameplay Loop, Kết thúc | `@references/gcd-gameplay-template.md` |
 
 ## Security
 
