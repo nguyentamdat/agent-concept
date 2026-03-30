@@ -45,12 +45,12 @@ Game concept design follows 12 core theories (from Players Making Decisions + A 
 ## Standard Pipeline
 
 Run project work in this order:
-1. `/project:concept`
-2. `/project:prototype`
-3. `/project:feedback`
-4. `/project:approve`
+1. `/design-kit:concept`
+2. `/design-kit:prototype`
+3. `/design-kit:feedback`
+4. `/design-kit:approve`
 
-`/project:concept` runs in 2 phases:
+`/design-kit:concept` runs in 2 phases:
 - Phase A: collect inputs → brainstorm concept variants → user picks one → generate outline → wait for approval
 - Phase B: generate `gcd.md` + `gcd-gameplay.md` + `spec.yaml`
 

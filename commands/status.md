@@ -1,4 +1,4 @@
-# /project:status
+# /design-kit:status
 
 Show current pipeline state for the active game project.
 

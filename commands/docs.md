@@ -1,4 +1,4 @@
-# /project:docs [doc1,doc2,...|all]
+# /design-kit:docs [doc1,doc2,...|all]
 
 Generate specific detail design documents from current spec without the full approval flow.
 
@@ -35,9 +35,9 @@ Generate specific detail design documents from current spec without the full app
 ## Examples
 
 ```
-/project:docs gameplay,ui-ux     # Generate just 2 documents
-/project:docs all              # Generate all 7 documents
-/project:docs economy          # Generate only economy design doc
+/design-kit:docs gameplay,ui-ux     # Generate just 2 documents
+/design-kit:docs all              # Generate all 7 documents
+/design-kit:docs economy          # Generate only economy design doc
 ```
 
 ## Output Requirements

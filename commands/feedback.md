@@ -1,4 +1,4 @@
-# /project:feedback <feedback text>
+# /design-kit:feedback <feedback text>
 
 Process user feedback into controlled, theory-grounded spec updates.
 
@@ -13,7 +13,7 @@ Process user feedback into controlled, theory-grounded spec updates.
     - Run `spec_bump_version`
     - Apply approved changes
     - Run `spec_validate`
-    - Regenerate prototype via `/project:prototype`
+    - Regenerate prototype via `/design-kit:prototype`
 
 ## Output Requirements
 

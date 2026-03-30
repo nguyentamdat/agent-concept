@@ -1,4 +1,4 @@
-# /project:concept <game idea>
+# /design-kit:concept <game idea>
 
 Thiết kế concept theo quy trình 2 phase: Phase A (brainstorm + outline + chờ approve) và Phase B (GCD + GCD-Gameplay + spec).
 

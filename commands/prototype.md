@@ -1,4 +1,4 @@
-# /project:prototype
+# /design-kit:prototype
 
 Generate and serve a playable prototype from the current spec.
 

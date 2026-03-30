@@ -46,7 +46,7 @@ claude
 ```
 
 ```
-> /project:concept casual puzzle game with gardening theme for mobile
+> /design-kit:concept casual puzzle game with gardening theme for mobile
 ```
 
 ## Requirements
@@ -58,11 +58,11 @@ claude
 
 | Command | What it does |
 |---|---|
-| `/project:concept <idea>` | Phase A: brainstorm → outline → approve. Phase B: GCD + GCD-Gameplay + spec.yaml |
-| `/project:prototype` | Generate playable HTML5 prototype (2D Canvas or 3D Three.js) |
-| `/project:feedback <text>` | Process feedback → update spec → regenerate prototype |
-| `/project:approve` | Approve spec → generate 7 detail design documents |
-| `/project:status` | Show current project state |
+| `/design-kit:concept <idea>` | Phase A: brainstorm → outline → approve. Phase B: GCD + GCD-Gameplay + spec.yaml |
+| `/design-kit:prototype` | Generate playable HTML5 prototype (2D Canvas or 3D Three.js) |
+| `/design-kit:feedback <text>` | Process feedback → update spec → regenerate prototype |
+| `/design-kit:approve` | Approve spec → generate 7 detail design documents |
+| `/design-kit:status` | Show current project state |
 
 Design documents (`gcd.md`, `gcd-gameplay.md`) are written in Vietnamese.
 
