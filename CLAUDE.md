@@ -9,14 +9,14 @@ It combines a local game design knowledge base, structured game specs, and rapid
 ### Marketplace install
 
 ```bash
-/plugin marketplace add YOUR_GITHUB_USER/game-design-kit
-/plugin install game-design-kit@game-design-kit
+/plugin marketplace add nguyentamdat/agent-concept
+/plugin install game-design-kit@nguyentamdat-agent-concept
 ```
 
 ### Direct local plugin directory
 
 ```bash
-git clone <repo-url> game-design-kit
+git clone https://github.com/nguyentamdat/agent-concept.git game-design-kit
 claude --plugin-dir ./game-design-kit
 ```
 

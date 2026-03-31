@@ -8,23 +8,23 @@ AI game design pipeline plugin for Claude Code. Concept → Prototype → Feedba
 
 ```bash
 # Add the marketplace
-/plugin marketplace add YOUR_GITHUB_USER/game-design-kit
+/plugin marketplace add nguyentamdat/agent-concept
 
 # Install the plugin
-/plugin install game-design-kit@game-design-kit
+/plugin install game-design-kit@nguyentamdat-agent-concept
 ```
 
 ### Direct (Development/Testing)
 
 ```bash
-git clone <repo-url> game-design-kit
+git clone https://github.com/nguyentamdat/agent-concept.git game-design-kit
 claude --plugin-dir ./game-design-kit
 ```
 
 ### Manual Clone
 
 ```bash
-git clone <repo-url> game-design-kit
+git clone https://github.com/nguyentamdat/agent-concept.git game-design-kit
 cd game-design-kit
 bun run setup
 claude
@@ -33,7 +33,7 @@ claude
 ## Quick Start
 
 ```bash
-git clone <repo-url> game-design-kit
+git clone https://github.com/nguyentamdat/agent-concept.git game-design-kit
 cd game-design-kit
 bun install
 ```
@@ -77,11 +77,11 @@ Place these PDFs in `knowledge/`:
 
 ---
 
-Below is the original knowledge-layer library documentation.
+## Knowledge Layer Library
 
 ## Table of Contents
 
-- [Quick Start](#quick-start)
+- [Library Quick Start](#library-quick-start)
 - [Architecture](#architecture)
 - [API Reference](#api-reference)
   - [Ingest Documents](#ingest-documents)
@@ -107,7 +107,7 @@ Below is the original knowledge-layer library documentation.
 
 ---
 
-## Quick Start
+## Library Quick Start
 
 ```bash
 bun install
@@ -652,8 +652,12 @@ src/
 │   ├── citation.ts           #   CitationRef
 │   ├── api.ts                #   Search/GetDocument request/result
 │   └── extraction.ts         #   StructuredExtraction
-└── knowledge/
-    └── fixtures/             # Test fixtures (game design docs)
+├── e2e/                      # End-to-end pipeline tests
+│   └── pipeline.test.ts
+└── test-utils/               # Fixtures (7 formats), FakeIndex, mock LLM
+    ├── document-fixtures.ts
+    ├── chunk-fixtures.ts
+    └── citation-fixtures.ts
 ```
 
 ### Dependencies
@@ -667,6 +671,6 @@ src/
 | `csv-parse` | CSV parsing |
 | `js-yaml` | YAML parsing |
 | `gpt-tokenizer` | Token counting |
-| `commander` | CLI (future) |
+| `commander` | CLI framework |
 
 Zero external dependencies for the graph layer — uses plain `Map`-based adjacency list.
