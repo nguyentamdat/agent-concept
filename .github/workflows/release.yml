@@ -1,0 +1,92 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version (e.g. 1.2.0)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Determine version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+            TAG="v${VERSION}"
+          else
+            TAG="${GITHUB_REF#refs/tags/}"
+            VERSION="${TAG#v}"
+          fi
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Typecheck
+        run: bun run typecheck
+
+      - name: Test
+        run: bun test
+
+      - name: Build
+        run: bun run build
+
+      - name: Package ZIP
+        run: |
+          zip -r "game-design-kit-${{ steps.version.outputs.version }}.zip" \
+            .claude-plugin/ \
+            agents/ \
+            commands/ \
+            dist/ \
+            hooks/ \
+            knowledge/fixtures/ \
+            mcp-server/src/ \
+            mcp-server/package.json \
+            mcp-server/tsconfig.json \
+            references/ \
+            scripts/ \
+            skills/ \
+            src/ \
+            templates/ \
+            AGENTS.md \
+            CLAUDE.md \
+            README.md \
+            install.sh \
+            uninstall.sh \
+            package.json \
+            tsconfig.json \
+            tsconfig.build.json \
+            settings.json \
+            -x "**/*.test.ts" \
+               "**/test-utils/*" \
+               "**/e2e/*" \
+               "**/.DS_Store"
+
+      - name: Create tag (manual dispatch)
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          git tag "${{ steps.version.outputs.tag }}"
+          git push origin "${{ steps.version.outputs.tag }}"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: Game Design Kit ${{ steps.version.outputs.tag }}
+          files: game-design-kit-${{ steps.version.outputs.version }}.zip
+          generate_release_notes: true

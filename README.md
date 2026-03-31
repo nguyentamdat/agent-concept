@@ -4,46 +4,29 @@ AI game design pipeline plugin for Claude Code. Concept → Prototype → Feedba
 
 ## Install as Claude Code Plugin
 
-### From Marketplace (Recommended)
+### From ZIP (Recommended)
+
+Download the latest `game-design-kit-*.zip` from [Releases](https://github.com/nguyentamdat/agent-concept/releases), then:
 
 ```bash
-# Add the marketplace
-/plugin marketplace add nguyentamdat/agent-concept
-
-# Install the plugin
-/plugin install game-design-kit@nguyentamdat-agent-concept
+unzip game-design-kit-*.zip -d game-design-kit
+cd game-design-kit
+./install.sh
 ```
 
-### Direct (Development/Testing)
+The plugin auto-loads in all Claude Code sessions after install.
 
-```bash
-git clone https://github.com/nguyentamdat/agent-concept.git game-design-kit
-claude --plugin-dir ./game-design-kit
-```
+To uninstall: `./uninstall.sh`
 
-### Manual Clone
+### From Source
 
 ```bash
 git clone https://github.com/nguyentamdat/agent-concept.git game-design-kit
 cd game-design-kit
-bun run setup
-claude
+./install.sh
 ```
 
 ## Quick Start
-
-```bash
-git clone https://github.com/nguyentamdat/agent-concept.git game-design-kit
-cd game-design-kit
-bun install
-```
-
-Add your game design reference PDFs to `knowledge/`, then:
-
-```bash
-bun run setup:knowledge
-claude
-```
 
 ```
 > /design-kit:concept casual puzzle game with gardening theme for mobile

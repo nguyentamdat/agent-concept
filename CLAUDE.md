@@ -6,18 +6,20 @@ It combines a local game design knowledge base, structured game specs, and rapid
 
 ## Install / Run
 
-### Marketplace install
+### From ZIP
 
 ```bash
-/plugin marketplace add nguyentamdat/agent-concept
-/plugin install game-design-kit@nguyentamdat-agent-concept
+unzip game-design-kit-*.zip -d game-design-kit
+cd game-design-kit
+./install.sh
 ```
 
-### Direct local plugin directory
+### From Source
 
 ```bash
 git clone https://github.com/nguyentamdat/agent-concept.git game-design-kit
-claude --plugin-dir ./game-design-kit
+cd game-design-kit
+./install.sh
 ```
 
 ### Local development (standalone in this repo)
