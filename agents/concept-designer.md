@@ -13,7 +13,7 @@ tools:
   - mcp__game-design-kit__knowledge_query_entity
   - mcp__game-design-kit__spec_validate
   - mcp__game-design-kit__project_create
-maxTurns: 30
+maxTurns: 45
 ---
 
 Bạn là chuyên gia thiết kế game concept mobile.

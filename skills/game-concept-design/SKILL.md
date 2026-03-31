@@ -34,17 +34,19 @@ Does NOT handle: poker/casino games (→ poker-game-design), implementation code
    - Monetization direction (IAP, Ads, Premium)
    - Reference games
 
-4. **Brainstorm Concepts** — sau khi có đủ 3 thông tin bắt buộc:
+4. Invoke market-researcher agent (Chế độ 1 — Initial Research) dựa trên game idea + genre + audience. Lưu vào `{project}/market-research.md`.
+5. **Brainstorm Concepts** — sau khi có đủ 3 thông tin bắt buộc:
    - Tạo ra **3–5 concept ideas** khác nhau, mỗi concept:
      - Tiêu đề ngắn gọn (1 dòng)
      - Mô tả tối đa **5 câu**, tập trung vào **yếu tố hấp dẫn riêng** — cái gì khiến concept này độc đáo, cảm giác chơi như thế nào, vì sao target audience sẽ thích
      - Không mô tả kỹ mechanics hay rule — chỉ pitch cảm xúc và điểm khác biệt
    - Trình danh sách concepts cho user chọn bằng `AskUserQuestion`
    - **DỪNG LẠI** — chờ user chọn 1 concept trước khi tiếp tục
-
-5. Generate Outline theo template `@references/phase-a-outline-template.md` dựa trên concept đã được chọn
-6. Trình Outline cho user duyệt bằng `AskUserQuestion`
-7. **DỪNG LẠI** — chờ user approve trước khi sang Phase B
+6. Invoke market-researcher agent (Chế độ 2 — Validation Research) cho concept đã chọn. Cập nhật `{project}/market-research.md` với đánh giá khả thi.
+7. Generate Outline theo template `@references/phase-a-outline-template.md` dựa trên concept đã được chọn
+8. Trình Outline cho user duyệt bằng `AskUserQuestion`
+9. Invoke review-concept agent (Chế độ 1 — Review Outline). FAIL → concept-designer sửa → re-review (tối đa 2 lần). Vẫn FAIL → trình issues cho user.
+10. **DỪNG LẠI** — chờ user approve trước khi sang Phase B
 
 ### Phase B: Generate GCD + GCD-Gameplay (Sau Khi Approve)
 
@@ -75,6 +77,7 @@ Phase B xuất ra **2 tài liệu**:
    - Ghi chú placeholder cho hình ảnh minh họa (Section 2 - Setup)
 6. Output cả 2 tài liệu bằng **tiếng Việt**, xuất lần lượt: GCD trước → GCD-Gameplay sau
 7. Trình cả 2 tài liệu hoàn chỉnh cho user review
+8. Invoke review-concept agent (Chế độ 2 — Review GCD + GCD-Gameplay + spec.yaml). FAIL → concept-designer sửa → re-review (tối đa 2 lần). Vẫn FAIL → trình issues cho user.
 
 ## 12 Lý Thuyết Game Design — Quick Reference
 

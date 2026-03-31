@@ -9,15 +9,18 @@
    - Genre
    - Target audience (casual/mid-core/hardcore + độ tuổi)
 2. Nếu thiếu thông tin bắt buộc, hỏi bổ sung bằng câu hỏi ngắn gọn (ưu tiên multiple choice).
-3. Search knowledge base (`knowledge_search`) để lấy theory/pattern liên quan đến idea + genre + audience.
-4. Brainstorm 3-5 concept variants, mỗi concept gồm:
+3. Invoke market-researcher agent ở Chế độ 1 (Initial Research) dựa trên game idea + genre + audience thu thập được. Lưu kết quả vào `{project}/market-research.md`.
+4. Search knowledge base (`knowledge_search`) để lấy theory/pattern liên quan đến idea + genre + audience.
+5. Brainstorm 3-5 concept variants, mỗi concept gồm:
    - Tiêu đề (1 dòng)
    - Pitch tối đa 5 câu, tập trung điểm độc đáo và cảm giác chơi
-5. Trình bày danh sách concept và yêu cầu user chọn 1 concept.
-6. Sau khi user chọn, tạo Outline theo:
+6. Trình bày danh sách concept và yêu cầu user chọn 1 concept.
+7. Invoke market-researcher agent ở Chế độ 2 (Validation Research) cho concept vừa được chọn. Cập nhật `{project}/market-research.md` với phần đánh giá khả thi.
+8. Sau khi user chọn, tạo Outline theo:
    - @references/phase-a-outline-template.md
-7. Trình bày Outline và yêu cầu user approve.
-8. Dừng lại, không sang Phase B cho tới khi user approve.
+9. Trình bày Outline và yêu cầu user approve.
+10. Invoke review-concept agent ở Chế độ 1 (Review Outline). Nếu FAIL → yêu cầu concept-designer sửa các vấn đề cụ thể → re-review (tối đa 2 lần). Nếu vẫn FAIL → trình issues cho user.
+11. Dừng lại, không sang Phase B cho tới khi user approve.
 
 ## Phase B: Generate tài liệu sau khi approve Outline
 
@@ -35,6 +38,7 @@
    - `gcd-gameplay.md`
    - `spec.yaml`
 8. Chạy `spec_validate` cho `spec.yaml` và sửa mọi lỗi schema/consistency.
+9. Invoke review-concept agent ở Chế độ 2 (Review GCD + GCD-Gameplay + spec.yaml). Nếu FAIL → yêu cầu concept-designer sửa → re-review (tối đa 2 lần). Nếu vẫn FAIL → trình issues cho user.
 
 ## Output Requirements
 
