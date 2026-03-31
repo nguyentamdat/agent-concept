@@ -29,9 +29,17 @@
     - Search knowledge base for relevant best practices
     - Expand corresponding spec sections into implementable detail
 6. Show completion summary with all file paths (existing + newly generated).
+7. Invoke detail-doc-reviewer agent để review tất cả 7 tài liệu vừa tạo. Đọc `spec.yaml` làm baseline so sánh.
+8. Nếu reviewer trả về FAIL:
+   - Liệt kê issues theo từng tài liệu
+   - Yêu cầu document-writer sửa các tài liệu FAIL
+   - Re-review (tối đa 2 lần)
+   - Nếu vẫn FAIL sau 2 lần → trình issues cho user và đề nghị chạy lại sau khi sửa
+9. Nếu reviewer trả về `✅ APPROVED`: hiển thị kết quả review kèm confirmation và hoàn tất pipeline.
 
 ## Output Requirements
 
 - Keep documents actionable for production teams.
 - Cross-reference specs and related documents.
 - Cite source and page when design guidance is theory-dependent.
+- Tất cả 7 tài liệu phải vượt qua quality review trước khi hoàn tất.

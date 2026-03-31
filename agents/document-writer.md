@@ -8,7 +8,7 @@ tools:
   - Glob
   - mcp__game-design-kit__knowledge_search
   - mcp__game-design-kit__knowledge_query_entity
-maxTurns: 40
+maxTurns: 55
 ---
 
 You generate production-facing design documents from approved specs.
