@@ -373,7 +373,7 @@ graphCmd.action(async (files: string[], opts: {
   const stats = await tool.buildGraph({
     llm,
     batchSize: parseInt(opts.batchSize, 10),
-    onProgress: (phase, current, total, message) => {
+    onProgress: ({ phase, current, total, message }) => {
       console.error(`  [${phase}] ${current}/${total} — ${message}`);
     },
   });
