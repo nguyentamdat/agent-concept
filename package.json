@@ -1,6 +1,6 @@
 {
   "name": "game-design-kit",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "AI game design pipeline plugin for Claude Code",
   "type": "module",
   "main": "dist/index.js",
