@@ -31,11 +31,17 @@
 6. Show completion summary with all file paths (existing + newly generated).
 7. Invoke detail-doc-reviewer agent để review tất cả 7 tài liệu vừa tạo. Đọc `spec.yaml` làm baseline so sánh.
 8. Nếu reviewer trả về FAIL:
-   - Liệt kê issues theo từng tài liệu
-   - Yêu cầu document-writer sửa các tài liệu FAIL
-   - Re-review (tối đa 2 lần)
-   - Nếu vẫn FAIL sau 2 lần → trình issues cho user và đề nghị chạy lại sau khi sửa
-9. Nếu reviewer trả về `✅ APPROVED`: hiển thị kết quả review kèm confirmation và hoàn tất pipeline.
+    - Liệt kê issues theo từng tài liệu
+    - Yêu cầu document-writer sửa các tài liệu FAIL
+    - Re-review (tối đa 2 lần)
+    - Nếu vẫn FAIL sau 2 lần → trình issues cho user và đề nghị chạy lại sau khi sửa
+9. Sau khi detail-doc-reviewer PASS, invoke `ui-ux-reviewer` agent để review riêng `ui-ux-spec.md` và `art-direction.md` theo 6 tiêu chí thị giác, vẫn dùng `spec.yaml` làm baseline.
+10. Nếu UI/UX reviewer trả về FAIL:
+    - Liệt kê issues theo từng tiêu chí / từng tài liệu
+    - Yêu cầu document-writer sửa đúng các mục FAIL
+    - Re-review (tối đa 2 lần)
+    - Nếu vẫn FAIL sau 2 lần → trình issues cho user và đề nghị chạy lại sau khi sửa
+11. Nếu UI/UX reviewer trả về `✅ APPROVED`: hiển thị kết quả review kèm confirmation và hoàn tất pipeline.
 
 ## Output Requirements
 
@@ -43,3 +49,4 @@
 - Cross-reference specs and related documents.
 - Cite source and page when design guidance is theory-dependent.
 - Tất cả 7 tài liệu phải vượt qua quality review trước khi hoàn tất.
+- `ui-ux-spec.md` và `art-direction.md` phải vượt qua UI/UX quality gate bổ sung trước khi hoàn tất.

@@ -11,3 +11,6 @@
 - `skills/game-ui-ux/` should use relative `references/...` paths inside SKILL.md so the skill package stays portable
 - Copying the 4 reference markdown files verbatim preserves source knowledge and keeps the skill layer thin
 - Copied gui-section-guide.md and gameplay-section-guide.md exactly from the extracted designer ZIP into references/; verified line counts (84, 114) and bun test passed.
+- Đã thêm quality gate `ui-ux-reviewer` sau `detail-doc-reviewer` trong `/design-kit:approve`.
+- `/design-kit:review-docs` hỗ trợ target `ui-ux-review` và gọi `ui-ux-reviewer` cho `ui-ux-spec.md` + `art-direction.md`.
+- `bun test` pass: 279 tests, 0 fail.
