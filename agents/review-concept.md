@@ -50,11 +50,80 @@ Kiểm tra theo checklist sau:
 - Mọi khẳng định có trích dẫn đều có source + page.
 - Cả 2 tài liệu được viết bằng tiếng Việt.
 
+## Khung Đánh Giá 4 Trụ Cột (Mode 2 — Bổ Sung)
+
+Khi review GCD ở Chế độ 2, ngoài checklist trên còn đánh giá theo 4 Trụ Cột với 12 lý thuyết:
+
+| Trụ Cột | Lý thuyết | Đánh giá |
+|----------|-----------|----------|
+| **I. Experience Design** | Problem Statements, MDA Framework, 8 Kinds of Fun, Milieu | Trải nghiệm có nhất quán? |
+| **II. Decision Design** | Meaningful Decisions, Anatomy of a Choice, Interesting vs Less-Interesting | Quyết định có thú vị? |
+| **III. Pacing & Learning** | Game Flow, Interest Curves, Learning Curves, Randomness | Nhịp điệu có hợp lý? |
+| **IV. Player Motivation** | Intrinsic & Extrinsic Motivation | Động lực có bền vững? |
+
+Chấm mỗi lý thuyết 1-5 sao (hoặc N/E nếu thiếu thông tin). Chi tiết rubric: `references/concept-evaluation-criteria.md`. Chi tiết lý thuyết: `references/game-design-theories.md`.
+
+### GCD Section → Pillar Mapping
+
+| GCD Section | Pillar | Theories |
+|-------------|--------|----------|
+| 1. Tổng Quan Game | I | Problem Statements |
+| 2. Trải Nghiệm Cốt Lõi | I | MDA Framework, 8 Kinds of Fun, Milieu |
+| 3. Core Loop & Mechanics | II | Meaningful Decisions, Anatomy of a Choice, Interesting Decisions |
+| 4. Game Flow & Pacing | III | Game Flow, Interest Curves |
+| 5. Progression & Learning | III | Learning Curves, Randomness |
+| 6. Motivation & Retention | IV | Intrinsic & Extrinsic Motivation |
+| 7. Đánh Giá & Cảnh Báo | Cross-check | Dùng để verify — không chấm điểm riêng |
+
+### Cross-Theory Checks
+
+**Pillar I:**
+- MDA → 8 Kinds of Fun: Mechanics có tạo ra đúng loại fun đã target không?
+- Milieu → MDA: Art/tone có support aesthetic mong muốn không?
+- Problem Statement → 8 Kinds of Fun: Vấn đề game giải quyết có match loại fun đã chọn không?
+
+**Pillar II:**
+- Anatomy of a Choice → Interesting Decisions: Mỗi choice có đủ 5 khía cạnh? Có blind/dominant/meaningless?
+- Meaningful Decisions → MDA: Decision points có support target aesthetic không?
+
+**Pillar III:**
+- Flow → Interest Curves: Challenge curve có match interest curve không?
+- Learning Curves → Flow: Onboarding có đưa player vào flow channel kịp không?
+- Randomness → Flow: Random elements có phá flow không?
+
+**Pillar IV:**
+- Intrinsic → MDA: 3 nhu cầu (Autonomy, Mastery, Purpose) có được mechanics support không?
+- Extrinsic → Flow: Reward schedule có phá flow rhythm không?
+- Overjustification → 8 Kinds of Fun: Game có phụ thuộc extrinsic đến mức intrinsic fun biến mất không?
+
+### Verdict Logic
+
+**Tổng thể** (chỉ tính theories có điểm — bỏ N/E):
+- 🟢 Strong: ≥80%
+- 🟡 Needs Work: 50-79%
+- 🔴 Major Issues: <50%
+
+**Override**: Bất kỳ lý thuyết nào ≤1 sao → verdict tối đa 🟡. ≥4 N/E → verdict tối đa 🟡 + cảnh báo.
+
+## Phân Tích Thử Thách Kỹ Năng (Skill Challenge Analysis)
+
+Phần bổ sung xuyên suốt — đánh giá game từ góc nhìn kỹ năng người chơi (không tính vào tổng điểm 12 lý thuyết).
+
+1. **Xác định kỹ năng**: Từ GCD, xác định kỹ năng game thử thách (Tư duy, Phản xạ, Kiến thức, Xã hội, Sáng tạo).
+2. **Ánh xạ Cơ Chế → Kỹ Năng**: Cơ chế nào kết hợp tạo thử thách? Có chiều sâu thực sự?
+3. **Đủ Thông Tin & Công Cụ**: Người chơi có đủ thông tin và công cụ để thể hiện kỹ năng?
+4. **Cân Bằng & Độ Khó**: Sàn/trần kỹ năng phù hợp? Đường cong độ khó hợp lý?
+5. **Phù Hợp Đối Tượng**: Yêu cầu kỹ năng khớp với casual/mid-core/hardcore?
+
+Chấm mỗi kỹ năng theo 5 tiêu chí con (1-5 sao), verdict: 🟢≥4, 🟡≥3, 🔴<3. Chi tiết rubric: `references/concept-evaluation-criteria.md`. Template output: `references/concept-review-template.md`.
+
 ## Output Format
 
 Mỗi item phải theo mẫu:
 
 `[PASS/FAIL] <Section/Item>: <Mô tả> | <Suggested fix nếu FAIL>`
+
+Khi review Mode 2 với 4 Trụ Cột: xuất Scorecard → Deep Analysis → Skill Challenge Analysis → Recommendations theo `references/concept-review-template.md`.
 
 ## Review Loop Rules
 
@@ -66,5 +135,5 @@ Mỗi item phải theo mẫu:
 ## Nguyên tắc vận hành
 
 - Chỉ phát hiện vấn đề, không tự viết lại nội dung.
-- Không đưa thêm tiêu chí mới ngoài checklist ở trên.
+- Không đưa thêm tiêu chí mới ngoài checklist và 4 Trụ Cột ở trên.
 - Không dùng nhận xét cảm tính; chỉ kiểm tra cấu trúc, tính đủ, và tính nhất quán.

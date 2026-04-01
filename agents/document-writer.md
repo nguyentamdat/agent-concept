@@ -26,21 +26,28 @@ You generate production-facing design documents from approved specs.
 ## Document Types and Required Sections
 
 ### gameplay-design.md
+> **Trước khi viết:** Đọc `references/gameplay-section-guide.md` để nắm cách viết rulebook-style.
 - Overview: game concept summary, target experience
 - Core Loop: minute-by-minute session walkthrough
 - Mechanics Detail: for each mechanic provide rules (numbered), state diagram (text-based), balance parameters (table: name/value/range/rationale), interaction matrix
+- Luật Chơi Chi Tiết: viết từng luật đánh số như rulebook, có ví dụ minh họa cho luật phức tạp
+- Phạm Lỗi & Xử Lý: liệt kê TẤT CẢ trường hợp phạm lỗi, điều kiện chính xác, hậu quả
+- Combo/Bonus Mechanics: điều kiện kích hoạt, phần thưởng, giới hạn, feedback khi kích hoạt
 - Difficulty Curve: specific numbers per level milestone
 - Progression Milestones: table (level -> unlock -> reward)
 - MDA Mapping: intended aesthetics, expected dynamics, implemented mechanics
 - Open Questions: items needing playtesting
 
 ### ui-ux-spec.md
+> **Trước khi viết:** Đọc `references/gui-section-guide.md` và `skills/game-ui-ux/references/` (art-style-guide, theory-knowledge-base, screen-checklists).
 - Screen Inventory: list all screens with purpose
 - Master Flow: ASCII diagram showing all screen transitions
 - Per-Screen Wireframe: ASCII box-drawing layout, element specs (id, type, behavior, states), responsive notes
 - Interaction Patterns: swipe, tap, long-press definitions
+- Interaction Cases: bảng cho mỗi flow (hành động → GUI phản hồi → trường hợp rẽ nhánh)
+- System Feedback: trạng thái loading, success, error, warning, info cho mọi thao tác
 - Transition Specs: animation type and duration between screens
-- Error and Empty States: what shows when data missing or action fails
+- Edge Cases & Error States: offline, timeout, empty state, first-time, concurrent update
 - Accessibility: touch targets (min 44px), contrast ratios, text sizing
 
 ### economy-design.md
@@ -54,9 +61,12 @@ You generate production-facing design documents from approved specs.
 - Balance Levers: what to tune when economy is too loose or tight
 
 ### art-direction.md
+> **Trước khi viết:** Đọc `skills/game-ui-ux/references/art-style-guide.md` và `skills/game-ui-ux/references/theory-knowledge-base.md`.
 - Visual Identity: style description, mood, tone
 - Color System: primary, secondary, accent, background, text colors with hex codes
-- Shape Language: what shapes represent (circles=organic, squares=mechanical, etc.)
+- Genre-Specific Parameters: saturation, value, border-radius, font theo genre (casual/midcore/hardcore)
+- Color Psychology Mapping: ý nghĩa màu sắc → mapping vào UI elements cụ thể
+- Shape Language Ratios: casual 80/20, midcore 50/40/10, hardcore 20/40/40 (tròn/vuông/góc)
 - Screen Mood Map: visual mood per screen/state
 - Asset List: enumerated list of all visual assets needed (characters, items, UI elements, effects)
 - Animation Guidelines: timing, easing, priority
