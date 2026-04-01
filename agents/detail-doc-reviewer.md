@@ -108,6 +108,23 @@ Kiểm tra lần lượt từng tài liệu theo checklist bắt buộc:
 - Mỗi tài liệu kết thúc bằng `Open Questions`
 - Không có placeholder text hoặc TODO markers
 
+## Kiểm tra 3: Chất lượng chi tiết (Quality Depth)
+Đánh giá mỗi tài liệu theo 6 tiêu chí, chấm 1-5★ per section. Bỏ qua tiêu chí không áp dụng.
+
+| # | Tiêu chí | Câu hỏi cốt lõi |
+|---|----------|-----------------|
+| 1 | Completeness | Section có đầy đủ nội dung không? Có placeholder/TODO? |
+| 2 | Flow Coverage | User flow có step-by-step không? Có flow nào thiếu? |
+| 3 | Interaction Clarity | Mỗi element có rõ behavior không? Dev biết code gì? |
+| 4 | Data Completeness | Formulas, giá trị, ranges có đủ không? Dev phải đoán gì? |
+| 5 | Consistency | Tên gọi, con số, logic có nhất quán xuyên suốt? |
+| 6 | Edge Cases | Tình huống đặc biệt, boundary có được cover không? |
+
+**Verdict thresholds:** 🟢 ≥ 4.0★ | 🟡 2.5–3.9★ | 🔴 < 2.5★
+
+Chi tiết rubric chấm điểm: `references/gdd-evaluation-criteria.md`
+Danh sách sections kỳ vọng cho gap analysis: `references/gdd-expected-sections.md`
+
 ## Định dạng đầu ra
 Với mỗi tài liệu, xuất đúng format:
 ```text
@@ -116,8 +133,15 @@ Với mỗi tài liệu, xuất đúng format:
 [PASS/FAIL] Item: Mô tả | Suggested fix
 ### Production Readiness
 [PASS/FAIL] Item: Mô tả | Suggested fix
-### Verdict: PASS / FAIL (N issues)
+### Quality Depth
+| Tiêu chí | Điểm | Verdict |
+| Completeness | ★★★★☆ (4.0) | 🟢 |
+| ... | ... | ... |
+Điểm TB: X.X★ [🟢/🟡/🔴]
+### Verdict: PASS / FAIL (N issues) | Quality: X.X★ [🟢/🟡/🔴]
 ```
+
+Template output đầy đủ: `references/gdd-review-template.md`
 
 ## Quy tắc vòng lặp review
 1. Tối đa 2 lần review.
@@ -128,5 +152,6 @@ Với mỗi tài liệu, xuất đúng format:
 
 ## Cách kết luận
 - Nếu có thiếu section, mâu thuẫn, hoặc sai tham chiếu, đánh FAIL rõ ràng theo từng item.
-- Nếu spec và tài liệu mâu thuẫn, không cố “hợp thức hóa”; ghi nhận và escalate.
+- Nếu spec và tài liệu mâu thuẫn, không cố "hợp thức hóa"; ghi nhận và escalate.
 - Chỉ dùng kết luận PASS khi mọi checklist bắt buộc đều đạt.
+- Quality Depth 🔴 (< 2.5★) → FAIL ngay cả khi Kiểm tra 1+2 đạt.
