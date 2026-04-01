@@ -28,9 +28,11 @@ Claude Code plugin: AI game design pipeline (Concept > Prototype > Feedback > Do
 │   └── test-utils/           # Fixtures (7 formats), FakeIndex, mock LLM helpers
 ├── mcp-server/               # MCP server — separate package (see mcp-server/AGENTS.md)
 ├── commands/                  # Slash commands (markdown definitions for Claude Code)
-├── agents/                    # Role agents: concept-designer, code-prototyper, etc.
-├── skills/                    # Skill packages: game-concept-design, game-knowledge
-├── references/                # Design templates + theory references
+├── agents/                    # Role agents: concept-designer, code-prototyper, ui-ux-reviewer, etc.
+│   └── ui-ux-reviewer.md      # Read-only UI/UX review agent (ui-ux-spec.md + art-direction.md)
+├── skills/                    # Skill packages: game-concept-design, game-knowledge, game-ui-ux
+│   └── game-ui-ux/            # Skill package (SKILL.md + references/ subdirectory)
+├── references/                # Design templates + theory references + UI/UX & review guides
 ├── knowledge/                 # Source PDFs (5 books) + test fixtures
 ├── templates/                 # HTML5 prototype templates (Canvas/Three.js)
 ├── projects/                  # Generated game projects (gitignored output)
@@ -51,6 +53,10 @@ Claude Code plugin: AI game design pipeline (Concept > Prototype > Feedback > Do
 | Add MCP tool | `mcp-server/src/tools/` | Register in `mcp-server/src/server.ts`, add to `settings.json` allowlist |
 | Add slash command | `commands/` | Markdown file, referenced by `.claude-plugin/plugin.json` |
 | Add agent role | `agents/` | Markdown persona, invoked by commands |
+| Add/modify UI/UX review | `agents/ui-ux-reviewer.md` + `skills/game-ui-ux/` | Read-only review agent for `ui-ux-spec.md` + `art-direction.md`; skill references `skills/game-ui-ux/references/` |
+| Modify document writer behavior | `agents/document-writer.md` | Behavior-driven writing uses `references/gui-section-guide.md` and `references/gameplay-section-guide.md` |
+| Review concept quality | `agents/review-concept.md` | Criteria + template: `references/concept-evaluation-criteria.md`, `references/concept-review-template.md` |
+| Review GDD quality | `references/gdd-evaluation-criteria.md`, `references/gdd-expected-sections.md`, `references/gdd-review-template.md` | Use to assess GDD structure, coverage, and review output |
 | Add test fixtures | `src/test-utils/` | `document-fixtures.ts`, `chunk-fixtures.ts`, `citation-fixtures.ts` |
 | Modify spec schema | `mcp-server/src/tools/spec.ts` | `GameSpecSchema` Zod definition inline |
 | Prototype templates | `templates/` | Vanilla JS, Canvas API or Three.js CDN |
@@ -108,3 +114,4 @@ bun run cli                # Run CLI tool
 - `knowledge_graph` MCP tool is **stub only** — LLM provider integration deferred.
 - No CI/CD pipeline, no Docker, no linter config. Testing is manual via `bun test`.
 - No pre-commit hooks.
+- Added pipeline docs and references for UI/UX review and GDD/concept evaluation: `references/gui-section-guide.md`, `references/gameplay-section-guide.md`, `references/concept-evaluation-criteria.md`, `references/concept-review-template.md`, `references/gdd-evaluation-criteria.md`, `references/gdd-expected-sections.md`, `references/gdd-review-template.md`.

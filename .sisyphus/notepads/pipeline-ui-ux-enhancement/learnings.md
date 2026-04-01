@@ -14,3 +14,10 @@
 - Đã thêm quality gate `ui-ux-reviewer` sau `detail-doc-reviewer` trong `/design-kit:approve`.
 - `/design-kit:review-docs` hỗ trợ target `ui-ux-review` và gọi `ui-ux-reviewer` cho `ui-ux-spec.md` + `art-direction.md`.
 - `bun test` pass: 279 tests, 0 fail.
+
+## [2026-04-01] Session manual cleanup + AGENTS sync
+- `AGENTS.md` đã được cập nhật để phản ánh pipeline UI/UX: thêm `ui-ux-reviewer`, `game-ui-ux/`, và các reference guides/review criteria mới.
+- `WHERE TO LOOK` giờ có mục cho UI/UX review, document writer behavior, concept review, và GDD review.
+- `ui-ux/`, `designer/`, và `/tmp/designer-unzipped/` đã được xóa sau khi nội dung được copy sang đúng vị trí.
+- QA evidence saved under `.sisyphus/evidence/task-8-*.txt`.
+- `bun test` pass: 279 tests, 0 fail.
