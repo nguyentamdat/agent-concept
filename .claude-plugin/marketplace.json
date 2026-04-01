@@ -8,7 +8,7 @@
       "name": "game-design-kit",
       "source": "./",
       "description": "AI game design pipeline: concept → prototype → feedback → documents",
-      "version": "1.1.1"
+      "version": "1.1.2"
     }
   ]
 }
