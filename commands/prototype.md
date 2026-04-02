@@ -1,3 +1,7 @@
+---
+description: Sinh prototype HTML5 từ spec.yaml hiện tại (2D Canvas hoặc 3D Three.js)
+---
+
 # /design-kit:prototype
 
 **Mô tả:** Sinh prototype HTML5 chạy được trực tiếp từ spec.yaml hiện tại. Hỗ trợ renderer 2D (Canvas API) và 3D (Three.js). Tự động serve và trả về URL để playtest.

@@ -1,3 +1,7 @@
+---
+description: Duyệt spec và sinh 7 tài liệu thiết kế chi tiết cho production
+---
+
 # /design-kit:approve
 
 **Mô tả:** Hoàn thiện project và sinh toàn bộ tài liệu thiết kế chi tiết (7 documents). Dùng khi spec đã ổn định và sẵn sàng chuyển sang giai đoạn production.

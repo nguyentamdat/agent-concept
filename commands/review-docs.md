@@ -1,3 +1,8 @@
+---
+description: Đánh giá tài liệu thiết kế chi tiết và kiểm tra nhất quán giữa các docs
+argument-hint: "[doc1,doc2,...|all]"
+---
+
 # /design-kit:review-docs [doc1,doc2,...|all]
 
 **Mô tả:** Đánh giá tài liệu thiết kế chi tiết: kiểm tra tính nhất quán giữa các tài liệu và mức độ sẵn sàng cho production. Dùng độc lập hoặc tự động trong /design-kit:approve.

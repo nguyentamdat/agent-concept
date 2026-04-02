@@ -1,6 +1,8 @@
 ---
 name: document-writer
+description: Sinh tài liệu thiết kế chi tiết từ spec đã duyệt (gameplay-design, ui-ux-spec, economy-design, art-direction, content-plan, technical-requirements, sound-design). Dùng khi cần tạo production docs.
 model: sonnet
+color: cyan
 tools:
   - Read
   - Write
@@ -39,7 +41,7 @@ You generate production-facing design documents from approved specs.
 - Open Questions: items needing playtesting
 
 ### ui-ux-spec.md
-> **Trước khi viết:** Đọc `references/gui-section-guide.md` và `skills/game-ui-ux/references/` (art-style-guide, theory-knowledge-base, screen-checklists).
+> **Trước khi viết:** Đọc `@references/gui-section-guide.md`, `@references/art-style-guide.md`, `@references/theory-knowledge-base.md`, `@references/screen-checklists.md`.
 - Screen Inventory: list all screens with purpose
 - Master Flow: ASCII diagram showing all screen transitions
 - Per-Screen Wireframe: ASCII box-drawing layout, element specs (id, type, behavior, states), responsive notes
@@ -61,7 +63,7 @@ You generate production-facing design documents from approved specs.
 - Balance Levers: what to tune when economy is too loose or tight
 
 ### art-direction.md
-> **Trước khi viết:** Đọc `skills/game-ui-ux/references/art-style-guide.md` và `skills/game-ui-ux/references/theory-knowledge-base.md`.
+> **Trước khi viết:** Đọc `@references/art-style-guide.md` và `@references/theory-knowledge-base.md`.
 - Visual Identity: style description, mood, tone
 - Color System: primary, secondary, accent, background, text colors with hex codes
 - Genre-Specific Parameters: saturation, value, border-radius, font theo genre (casual/midcore/hardcore)

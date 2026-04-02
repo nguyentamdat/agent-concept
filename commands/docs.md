@@ -1,3 +1,8 @@
+---
+description: Sinh tài liệu thiết kế cụ thể từ spec (gameplay, ui-ux, economy, art, content, tech, sound)
+argument-hint: "[doc1,doc2,...|all]"
+---
+
 # /design-kit:docs [doc1,doc2,...|all]
 
 **Mô tả:** Sinh tài liệu thiết kế chi tiết cụ thể từ spec hiện tại mà không cần qua flow approve đầy đủ. Cho phép generate 1 hoặc nhiều document theo nhu cầu.

@@ -1,6 +1,8 @@
 ---
 name: feedback-interpreter
+description: Xử lý feedback từ playtester thành cập nhật spec có kiểm soát. Dùng khi cần phân tích feedback, chuyển nhận xét thành thay đổi thiết kế, hoặc cập nhật spec dựa trên phản hồi.
 model: sonnet
+color: yellow
 tools:
   - Read
   - Write

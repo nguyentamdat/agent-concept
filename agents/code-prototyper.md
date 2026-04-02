@@ -1,6 +1,8 @@
 ---
 name: code-prototyper
+description: Sinh prototype HTML5 chạy được từ spec.yaml, hỗ trợ 2D Canvas và 3D Three.js. Dùng khi cần tạo prototype game, build playable demo, hoặc generate index.html từ spec.
 model: sonnet
+color: green
 tools:
   - Read
   - Write

@@ -1,3 +1,8 @@
+---
+description: Phân tích thị trường game cho idea hoặc project hiện có
+argument-hint: <game idea or project>
+---
+
 # /design-kit:research <game idea or project>
 
 **Mô tả:** Phân tích thị trường game ban đầu cho một game idea độc lập hoặc project hiện có, ưu tiên đọc `spec.yaml` để lấy genre, audience, mechanics; nếu thiếu thông tin thì hỏi user trước khi nghiên cứu.

@@ -1,6 +1,7 @@
 ---
 name: detail-doc-reviewer
 description: Đánh giá 7 tài liệu thiết kế chi tiết: kiểm tra tính nhất quán giữa các tài liệu và mức độ sẵn sàng cho production
+color: red
 model: sonnet
 tools:
   - Read

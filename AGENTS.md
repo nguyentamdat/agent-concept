@@ -53,7 +53,7 @@ Claude Code plugin: AI game design pipeline (Concept > Prototype > Feedback > Do
 | Add MCP tool | `mcp-server/src/tools/` | Register in `mcp-server/src/server.ts`, add to `settings.json` allowlist |
 | Add slash command | `commands/` | Markdown file, referenced by `.claude-plugin/plugin.json` |
 | Add agent role | `agents/` | Markdown persona, invoked by commands |
-| Add/modify UI/UX review | `agents/ui-ux-reviewer.md` + `skills/game-ui-ux/` | Read-only review agent for `ui-ux-spec.md` + `art-direction.md`; skill references `skills/game-ui-ux/references/` |
+| Add/modify UI/UX review | `agents/ui-ux-reviewer.md` + `skills/game-ui-ux/` | Read-only review agent for `ui-ux-spec.md` + `art-direction.md`; all references consolidated in root `references/` |
 | Modify document writer behavior | `agents/document-writer.md` | Behavior-driven writing uses `references/gui-section-guide.md` and `references/gameplay-section-guide.md` |
 | Review concept quality | `agents/review-concept.md` | Criteria + template: `references/concept-evaluation-criteria.md`, `references/concept-review-template.md` |
 | Review GDD quality | `references/gdd-evaluation-criteria.md`, `references/gdd-expected-sections.md`, `references/gdd-review-template.md` | Use to assess GDD structure, coverage, and review output |

@@ -1,6 +1,7 @@
 ---
 name: market-researcher
 description: Nghiên cứu thị trường game: phân tích đối thủ, nhân khẩu học, xu hướng và tiêu chuẩn doanh thu
+color: magenta
 model: sonnet
 tools:
   - Read

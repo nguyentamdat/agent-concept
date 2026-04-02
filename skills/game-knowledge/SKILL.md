@@ -1,7 +1,6 @@
 ---
 name: game-knowledge
 description: Auto-invoked skill that searches the knowledge base when game design topics are discussed. Triggers on: game mechanics, MDA framework, player motivation, difficulty curves, core loops, retention, economy design, UX patterns.
-disable-model-invocation: true
 ---
 
 # Game Knowledge Auto-Search

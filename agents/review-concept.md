@@ -1,6 +1,7 @@
 ---
 name: review-concept
 description: Đánh giá chất lượng Outline và GCD theo checklist có hệ thống, quality gate cho Phase A và Phase B
+color: yellow
 model: sonnet
 tools:
   - Read

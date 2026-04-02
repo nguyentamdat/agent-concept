@@ -1,3 +1,8 @@
+---
+description: Đánh giá chất lượng Outline hoặc GCD theo checklist (quality gate)
+argument-hint: "[outline|gcd|all]"
+---
+
 # /design-kit:review-concept [outline|gcd|all]
 
 **Mô tả:** Đánh giá chất lượng Outline hoặc GCD/GCD-Gameplay/spec.yaml theo checklist. Dùng độc lập hoặc tự động trong /design-kit:concept. Đây là quality gate — nếu không đạt sẽ yêu cầu sửa.

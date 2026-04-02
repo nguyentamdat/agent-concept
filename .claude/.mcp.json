@@ -7,7 +7,8 @@
       "env": {
         "KNOWLEDGE_DIR": "./knowledge",
         "PROJECTS_DIR": "./projects",
-        "TEMPLATES_DIR": "./templates"
+        "TEMPLATES_DIR": "./templates",
+        "CACHE_DIR": "./.knowledge-cache"
       }
     }
   }

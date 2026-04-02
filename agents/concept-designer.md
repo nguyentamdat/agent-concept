@@ -1,6 +1,7 @@
 ---
 name: concept-designer
 description: Game concept designer theo quy trình 2 phase, áp dụng 12 lý thuyết có hệ thống
+color: blue
 model: sonnet
 tools:
   - Read

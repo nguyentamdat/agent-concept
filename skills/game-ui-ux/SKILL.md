@@ -13,11 +13,11 @@ Skill này chứa kiến thức UI/UX game mobile, tổng hợp từ các worksh
 
 | User muốn... | Hành động |
 |---|---|
-| Review UI mockup game | Đọc `references/review-checklist.md` → chấm điểm 6 tiêu chí + feedback |
-| Tạo UI checklist cho screen cụ thể | Đọc `references/screen-checklists.md` → output checklist |
-| Tạo art style guide / moodboard brief | Đọc `references/art-style-guide.md` → output brief |
-| Hỏi lý thuyết UI/UX game | Đọc `references/theory-knowledge-base.md` → giải thích |
-| Training team | Kết hợp tất cả `references/` → format phù hợp |
+| Review UI mockup game | Đọc `@references/review-checklist.md` → chấm điểm 6 tiêu chí + feedback |
+| Tạo UI checklist cho screen cụ thể | Đọc `@references/screen-checklists.md` → output checklist |
+| Tạo art style guide / moodboard brief | Đọc `@references/art-style-guide.md` → output brief |
+| Hỏi lý thuyết UI/UX game | Đọc `@references/theory-knowledge-base.md` → giải thích |
+| Training team | Kết hợp tất cả `@references/` → format phù hợp |
 
 ---
 
@@ -27,7 +27,7 @@ Skill này chứa kiến thức UI/UX game mobile, tổng hợp từ các worksh
 
 Khi user upload ảnh UI game và muốn feedback:
 
-1. **Đọc** `references/review-checklist.md` để có bộ tiêu chí đánh giá
+1. **Đọc** `@references/review-checklist.md` để có bộ tiêu chí đánh giá
 2. **Xác định genre** (Casual / Midcore / Hardcore) — hỏi user nếu chưa rõ
 3. **Phân tích ảnh** theo 2 tầng:
    - Tầng 1 — Art Quality: Visual Style, Color System, Consistency, Technical Readiness
@@ -40,7 +40,7 @@ Khi user upload ảnh UI game và muốn feedback:
 
 Khi user cần checklist cho một loại screen cụ thể:
 
-1. **Đọc** `references/screen-checklists.md` để lấy checklist template
+1. **Đọc** `@references/screen-checklists.md` để lấy checklist template
 2. **Hỏi user** genre game + screen type nếu chưa rõ
 3. **Output** checklist phù hợp, tùy format user muốn
 
@@ -48,7 +48,7 @@ Khi user cần checklist cho một loại screen cụ thể:
 
 Khi user có game concept và cần art direction:
 
-1. **Đọc** `references/art-style-guide.md` để có framework
+1. **Đọc** `@references/art-style-guide.md` để có framework
 2. **Thu thập thông tin** từ user: genre, theme, target audience, reference games
 3. **Output** Art Style Brief bao gồm:
    - Color palette (primary, secondary, accent, neutral) với mã hex
@@ -62,7 +62,7 @@ Khi user có game concept và cần art direction:
 
 Khi user hỏi về kiến thức UI/UX game:
 
-1. **Đọc** `references/theory-knowledge-base.md`
+1. **Đọc** `@references/theory-knowledge-base.md`
 2. **Trả lời** bằng tiếng Việt, kèm ví dụ thực tế
 3. Nếu user muốn training slides → dùng công cụ phù hợp để tạo
 
@@ -81,7 +81,7 @@ Khi user hỏi về kiến thức UI/UX game:
 
 | File | Nội dung | Khi nào đọc |
 |---|---|---|
-| `references/review-checklist.md` | Bộ tiêu chí review UI + thang điểm + sub-checks | Task 1: Review mockup |
-| `references/screen-checklists.md` | Checklist cho từng loại screen | Task 2: Generate checklist |
-| `references/art-style-guide.md` | Framework tạo art style guide + color/shape/font theory | Task 3: Art style guide |
-| `references/theory-knowledge-base.md` | Chủ đề UI/UX game, visual hierarchy, animation, onboarding, monetization, accessibility, pipeline | Task 4: Training/giải thích |
+| `@references/review-checklist.md` | Bộ tiêu chí review UI + thang điểm + sub-checks | Task 1: Review mockup |
+| `@references/screen-checklists.md` | Checklist cho từng loại screen | Task 2: Generate checklist |
+| `@references/art-style-guide.md` | Framework tạo art style guide + color/shape/font theory | Task 3: Art style guide |
+| `@references/theory-knowledge-base.md` | Chủ đề UI/UX game, visual hierarchy, animation, onboarding, monetization, accessibility, pipeline | Task 4: Training/giải thích |
