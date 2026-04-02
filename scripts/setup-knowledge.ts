@@ -7,7 +7,7 @@ const rootDir = process.cwd();
 const knowledgeDir = resolve(rootDir, process.env.KNOWLEDGE_DIR ?? "knowledge");
 const cacheDir = resolve(rootDir, ".knowledge-cache");
 
-const supported = new Set([".pdf"]);
+const supported = new Set([".pdf", ".md", ".docx", ".csv", ".json", ".yaml", ".yml", ".txt"]);
 
 async function main(): Promise<void> {
   await mkdir(knowledgeDir, { recursive: true });

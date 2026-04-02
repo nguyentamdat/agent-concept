@@ -16,7 +16,8 @@
       "mcp__game-design-kit__prototype_stop",
       "mcp__game-design-kit__prototype_validate",
       "mcp__game-design-kit__project_create",
-      "mcp__game-design-kit__project_list"
+      "mcp__game-design-kit__project_list",
+      "mcp__game-design-kit__knowledge_stats"
     ]
   }
 }

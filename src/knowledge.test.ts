@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it } from "bun:test";
+import { fileURLToPath } from "node:url";
 import {
   GetDocumentResultSchema,
   SearchKnowledgeResultSchema,
@@ -7,7 +8,7 @@ import {
 } from "./types";
 import { KnowledgeTool } from "./index";
 
-const sampleMarkdownPath = new URL("../knowledge/fixtures/sample.md", import.meta.url).pathname;
+const sampleMarkdownPath = fileURLToPath(new URL("../knowledge/fixtures/sample.md", import.meta.url));
 
 describe("KnowledgeTool", () => {
   let knowledgeTool: KnowledgeTool;

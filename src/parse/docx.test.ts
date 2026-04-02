@@ -1,7 +1,8 @@
 import { describe, expect, it } from "bun:test";
+import { fileURLToPath } from "node:url";
 import { parseDocx } from "./docx";
 
-const docxFixturePath = new URL("../../knowledge/fixtures/sample.docx", import.meta.url).pathname;
+const docxFixturePath = fileURLToPath(new URL("../../knowledge/fixtures/sample.docx", import.meta.url));
 
 describe("parseDocx", () => {
   it("parses the fixture with section hierarchy, paragraph attribution, and table structure", async () => {

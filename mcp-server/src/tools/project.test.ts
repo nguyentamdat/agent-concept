@@ -1,6 +1,6 @@
 import { describe, expect, it, beforeEach, afterEach } from "bun:test";
 import { mkdir, writeFile, rm, readdir } from "node:fs/promises";
-import { resolve } from "node:path";
+import { join, resolve } from "node:path";
 import { registerProjectTools } from "./project";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import yaml from "js-yaml";
@@ -69,7 +69,7 @@ describe("project tools", () => {
       const result = await tool.handler({ name: "nested/game" });
 
       const parsed = JSON.parse(result.content[0].text);
-      expect(parsed.projectDir).toContain("nested/game");
+      expect(parsed.projectDir).toContain(join("nested", "game"));
     });
   });
 

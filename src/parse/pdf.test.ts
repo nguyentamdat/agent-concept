@@ -1,7 +1,8 @@
 import { describe, expect, it } from "bun:test";
+import { fileURLToPath } from "node:url";
 import { parsePdf } from "./pdf";
 
-const pdfFixturePath = new URL("../../knowledge/fixtures/sample.pdf", import.meta.url).pathname;
+const pdfFixturePath = fileURLToPath(new URL("../../knowledge/fixtures/sample.pdf", import.meta.url));
 
 describe("parsePdf", () => {
   it("parses the fixture by page with pageNumber metadata", async () => {

@@ -1,16 +1,19 @@
 import { describe, expect, it } from "bun:test";
+import { fileURLToPath } from "node:url";
 import { evaluateRetrieval, type GoldenQuery } from "../eval/index";
 import { KnowledgeTool, type KnowledgeChunk, type SourceDocument } from "../index";
 
+const fixturePath = (name: string) => fileURLToPath(new URL(`../../knowledge/fixtures/${name}`, import.meta.url));
+
 const FIXTURE_PATHS = {
-  md: new URL("../../knowledge/fixtures/sample.md", import.meta.url).pathname,
-  csv: new URL("../../knowledge/fixtures/sample.csv", import.meta.url).pathname,
-  json: new URL("../../knowledge/fixtures/sample.json", import.meta.url).pathname,
-  yaml: new URL("../../knowledge/fixtures/sample.yaml", import.meta.url).pathname,
+  md: fixturePath("sample.md"),
+  csv: fixturePath("sample.csv"),
+  json: fixturePath("sample.json"),
+  yaml: fixturePath("sample.yaml"),
 } as const;
 
-const PDF_PATH = new URL("../../knowledge/fixtures/sample.pdf", import.meta.url).pathname;
-const DOCX_PATH = new URL("../../knowledge/fixtures/sample.docx", import.meta.url).pathname;
+const PDF_PATH = fixturePath("sample.pdf");
+const DOCX_PATH = fixturePath("sample.docx");
 
 describe("e2e pipeline", () => {
   it("ingests all required fixture formats", async () => {
