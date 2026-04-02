@@ -11,7 +11,7 @@
   "scripts": {
     "setup": "bun install && cd mcp-server && bun install && cd .. && bun run scripts/setup-knowledge.ts",
     "setup:knowledge": "bun run scripts/setup-knowledge.ts",
-    "postinstall": "cd mcp-server && bun install",
+    "postinstall": "node scripts/postinstall.cjs",
     "build": "bun build src/index.ts --outdir dist --target bun --format esm && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "test": "bun test",
