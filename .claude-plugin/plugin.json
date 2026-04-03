@@ -1,23 +1,34 @@
 {
   "name": "game-design-kit",
-  "version": "1.2.0",
-  "description": "AI game design pipeline: concept \u2192 prototype \u2192 feedback \u2192 documents. Powered by a game design knowledge base with 5 core references.",
+  "version": "2.0.0",
+  "description": "AI game design pipeline for mobile games: /create (idea → GCD → prototype + Figma → detail docs) with approval gates at every step. Powered by 5 game design books and Figma integration.",
   "author": {
     "name": "Game Design Kit"
   },
   "repository": "https://github.com/nguyentamdat/agent-concept",
   "license": "MIT",
-  "keywords": ["game-design", "game-development", "prototype", "mda-framework", "knowledge-base"],
+  "keywords": [
+    "game-design",
+    "game-development",
+    "prototype",
+    "mda-framework",
+    "knowledge-base",
+    "figma"
+  ],
   "mcpServers": {
     "game-design-kit": {
       "command": "bun",
       "args": ["run", "${CLAUDE_PLUGIN_ROOT}/mcp-server/src/server.ts"],
       "env": {
         "KNOWLEDGE_DIR": "${CLAUDE_PLUGIN_ROOT}/knowledge",
-        "PROJECTS_DIR": "./projects",
+        "PROJECTS_DIR": "${CLAUDE_PLUGIN_ROOT}/projects",
         "TEMPLATES_DIR": "${CLAUDE_PLUGIN_ROOT}/templates",
         "CACHE_DIR": "${CLAUDE_PLUGIN_DATA}/.knowledge-cache"
       }
+    },
+    "figma-mcp-go": {
+      "command": "npx",
+      "args": ["-y", "@vkhanhqui/figma-mcp-go"]
     }
   }
 }

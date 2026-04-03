@@ -21,3 +21,11 @@
 - `ui-ux/`, `designer/`, và `/tmp/designer-unzipped/` đã được xóa sau khi nội dung được copy sang đúng vị trí.
 - QA evidence saved under `.sisyphus/evidence/task-8-*.txt`.
 - `bun test` pass: 279 tests, 0 fail.
+
+## [2026-04-01] Plan compliance audit
+- F1 audit re-verified the plan end-to-end against the repository, not subagent claims.
+- Must-have deliverables exist and the main UI/UX pipeline additions are present in the markdown agents/commands.
+- Current repo state still passes `bun test` (279 pass) and `bun run typecheck`.
+- Evidence files for task-1 through task-8 are present under `.sisyphus/evidence/`.
+
+- 2026-04-01: Compliance audit rerun against corrected baseline `938d957` confirmed plan deliverables are present; no TypeScript or plugin.json drift introduced by this plan, tests and typecheck pass.

@@ -7,8 +7,8 @@
     {
       "name": "game-design-kit",
       "source": "./",
-      "description": "AI game design pipeline: concept → prototype → feedback → documents",
-      "version": "1.2.0"
+      "description": "AI game design pipeline: /create → GCD → prototype + Figma → detail docs",
+      "version": "2.0.0"
     }
   ]
 }
