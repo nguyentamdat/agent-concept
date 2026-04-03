@@ -3,7 +3,6 @@ import { mkdir, writeFile, rm, readdir } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { registerProjectTools } from "./project";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import yaml from "js-yaml";
 
 const TEST_DIR = resolve(process.cwd(), "test-temp-projects");
 
@@ -44,24 +43,19 @@ describe("project tools", () => {
 
       const parsed = JSON.parse(result.content[0].text);
       expect(parsed.projectDir).toContain("test-game");
-      expect(parsed.specPath).toContain("spec.yaml");
 
       const entries = await readdir(resolve(TEST_DIR, "test-game"));
-      expect(entries).toContain("spec-history");
       expect(entries).toContain("prototype");
       expect(entries).toContain("documents");
     });
 
-    it("should create default spec.yaml", async () => {
+    it("should NOT create spec.yaml", async () => {
       const tool = mockServer.tools.get("project_create");
       await tool.handler({ name: "my-game" });
 
-      const specPath = resolve(TEST_DIR, "my-game", "spec.yaml");
-      const specContent = await readFile(specPath, "utf-8");
-      const spec = yaml.load(specContent) as { meta: { title: string; version: number } };
-      
-      expect(spec.meta.title).toBe("my-game");
-      expect(spec.meta.version).toBe(1);
+      const entries = await readdir(resolve(TEST_DIR, "my-game"));
+      expect(entries).not.toContain("spec.yaml");
+      expect(entries).not.toContain("spec-history");
     });
 
     it("should handle nested paths correctly", async () => {
@@ -82,7 +76,7 @@ describe("project tools", () => {
       expect(parsed.projects).toEqual([]);
     });
 
-    it("should list all projects with valid specs", async () => {
+    it("should list all projects", async () => {
       const createTool = mockServer.tools.get("project_create");
       await createTool.handler({ name: "game-one" });
       await createTool.handler({ name: "game-two" });
@@ -98,26 +92,13 @@ describe("project tools", () => {
       expect(names).toContain("game-two");
     });
 
-    it("should include spec version and lastUpdated", async () => {
+    it("should detect concept stage from concept-pitch.md", async () => {
       const createTool = mockServer.tools.get("project_create");
-      await createTool.handler({ name: "versioned-game" });
+      await createTool.handler({ name: "concept-game" });
 
-      const listTool = mockServer.tools.get("project_list");
-      const result = await listTool.handler({});
-
-      const parsed = JSON.parse(result.content[0].text);
-      const project = parsed.projects.find((p: { name: string }) => p.name === "versioned-game");
-      
-      expect(project.specVersion).toBe(1);
-      expect(project.lastUpdated).toBeDefined();
-      expect(project.status).toBe("ready");
-    });
-
-    it("should mark projects with missing/invalid specs", async () => {
-      await mkdir(resolve(TEST_DIR, "invalid-project"), { recursive: true });
       await writeFile(
-        resolve(TEST_DIR, "invalid-project", "spec.yaml"),
-        "invalid: yaml: content",
+        resolve(TEST_DIR, "concept-game", "concept-pitch.md"),
+        "# Concept Pitch",
         "utf-8"
       );
 
@@ -125,10 +106,77 @@ describe("project tools", () => {
       const result = await listTool.handler({});
 
       const parsed = JSON.parse(result.content[0].text);
-      const project = parsed.projects.find((p: { name: string }) => p.name === "invalid-project");
+      const project = parsed.projects.find((p: { name: string }) => p.name === "concept-game");
       
-      expect(project.status).toBe("missing-or-invalid-spec");
-      expect(project.specVersion).toBeNull();
+      expect(project.status).toBe("concept");
+      expect(project.lastUpdated).toBeDefined();
+    });
+
+    it("should detect design stage from gcd.md", async () => {
+      const createTool = mockServer.tools.get("project_create");
+      await createTool.handler({ name: "design-game" });
+
+      await writeFile(
+        resolve(TEST_DIR, "design-game", "concept-pitch.md"),
+        "# Concept Pitch",
+        "utf-8"
+      );
+      await writeFile(
+        resolve(TEST_DIR, "design-game", "gcd.md"),
+        "# GCD",
+        "utf-8"
+      );
+
+      const listTool = mockServer.tools.get("project_list");
+      const result = await listTool.handler({});
+
+      const parsed = JSON.parse(result.content[0].text);
+      const project = parsed.projects.find((p: { name: string }) => p.name === "design-game");
+      
+      expect(project.status).toBe("design");
+    });
+
+    it("should detect prototype stage from index.html", async () => {
+      const createTool = mockServer.tools.get("project_create");
+      await createTool.handler({ name: "proto-game" });
+
+      await writeFile(
+        resolve(TEST_DIR, "proto-game", "concept-pitch.md"),
+        "# Concept Pitch",
+        "utf-8"
+      );
+      await writeFile(
+        resolve(TEST_DIR, "proto-game", "gcd.md"),
+        "# GCD",
+        "utf-8"
+      );
+      await writeFile(
+        resolve(TEST_DIR, "proto-game", "index.html"),
+        "<html></html>",
+        "utf-8"
+      );
+
+      const listTool = mockServer.tools.get("project_list");
+      const result = await listTool.handler({});
+
+      const parsed = JSON.parse(result.content[0].text);
+      const project = parsed.projects.find((p: { name: string }) => p.name === "proto-game");
+      
+      expect(project.status).toBe("prototype");
+    });
+
+    it("should show initialized status for empty projects", async () => {
+      const createTool = mockServer.tools.get("project_create");
+      await createTool.handler({ name: "fresh-game" });
+
+      const listTool = mockServer.tools.get("project_list");
+      const result = await listTool.handler({});
+
+      const parsed = JSON.parse(result.content[0].text);
+      const project = parsed.projects.find((p: { name: string }) => p.name === "fresh-game");
+      
+      expect(project.status).toBe("initialized");
+      expect(project.lastUpdated).toBeDefined();
     });
 
     it("should sort projects alphabetically", async () => {
@@ -164,8 +212,3 @@ describe("project tools", () => {
     });
   });
 });
-
-async function readFile(path: string, encoding: BufferEncoding): Promise<string> {
-  const { readFile: rf } = await import("node:fs/promises");
-  return rf(path, encoding);
-}
