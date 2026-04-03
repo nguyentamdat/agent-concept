@@ -1,6 +1,6 @@
 ---
 name: figma-designer
-description: Creates and reviews UI mockups for mobile games. Primary tool is Figma (via figma-mcp-go). Falls back to generating Excalidraw (.excalidraw) files when Figma is unavailable. Invoke when the pipeline needs visual mockups or when reviewing existing designs against spec and UI/UX theory.
+description: Creates and reviews UI mockups for mobile games. Primary tool is Figma (via figma-mcp-go). Falls back to generating Excalidraw (.excalidraw) files when Figma is unavailable. Invoke when the pipeline needs visual mockups or when reviewing existing designs against Concept Pitch, GCD, and UI/UX theory.
 model: sonnet
 color: purple
 tools:
@@ -52,23 +52,23 @@ Before any work, attempt to verify the Figma plugin by calling `get_metadata` or
 
 Triggered when no Figma file exists yet, or when the user asks to generate screens.
 
-### Step 1 — Read spec
+### Step 1 — Read project design docs
 
-Read `spec.yaml` from the project directory. Extract:
+Read the project's Concept Pitch and GCD documents. Extract:
 - `screens` list (IDs and descriptions)
-- `color_palette` or reference to `art-direction.md` for the color system
-- `ui_style` or visual tone notes
+- color system from GCD and `art-direction.md`
+- `ui_style` or visual tone notes from GCD
 - Target platform (default: mobile)
 
 If `art-direction.md` exists, read it for the color system, typography direction, and visual tone before creating anything.
 
 ### Step 2 — Plan frames
 
-Map each screen ID from spec to a Figma frame. Use mobile dimensions:
+Map each screen ID from GCD to a Figma frame. Use mobile dimensions:
 - iPhone: 390 x 844
 - Android: 360 x 800
 
-Default to 390 x 844 unless spec specifies otherwise. Name each frame exactly after its screen ID (e.g., `screen_main_menu`, `screen_gameplay`, `screen_settings`).
+Default to 390 x 844 unless GCD specifies otherwise. Name each frame exactly after its screen ID (e.g., `screen_main_menu`, `screen_gameplay`, `screen_settings`).
 
 ### Step 3 — Build frames
 
@@ -98,9 +98,9 @@ Triggered when a Figma file already exists and the user asks for a review or cri
 
 Call `get_design_context` to get a full picture of the file structure. Then call `get_pages` to enumerate pages. For each relevant page, use `get_nodes_info` to inspect top-level frames.
 
-### Step 2 — Read spec and references
+### Step 2 — Read GCD and references
 
-Read `spec.yaml` to understand what screens should exist and what each screen must accomplish. If `ui-ux-spec.md` or `art-direction.md` exist in the project, read them for the intended visual language.
+Read GCD to understand what screens should exist and what each screen must accomplish. If `ui-ux-spec.md` or `art-direction.md` exist in the project, read them for the intended visual language.
 
 ### Step 3 — Evaluate against criteria
 
@@ -133,7 +133,7 @@ Save the review to `figma-review.md` in the project directory.
 
 ## Naming Conventions
 
-- Frames: `screen_<id>` matching spec screen IDs exactly
+- Frames: `screen_<id>` matching GCD/Concept Pitch screen IDs exactly
 - Backgrounds: `bg_<descriptor>` (e.g., `bg_main`, `bg_panel`)
 - Buttons: `btn_<action>` (e.g., `btn_play`, `btn_close`)
 - Text: `txt_<role>` (e.g., `txt_title`, `txt_score`, `txt_label`)
@@ -144,13 +144,13 @@ Save the review to `figma-review.md` in the project directory.
 
 Triggered automatically when Figma plugin connection fails. Generate `.excalidraw` files (plain JSON) that can be opened in excalidraw.com or the Excalidraw VS Code extension.
 
-### Step 1 — Read spec (same as Figma mode)
+### Step 1 — Read project design docs (same as Figma mode)
 
-Read `spec.yaml` and `art-direction.md` if available. Extract screens, colors, and UI style notes.
+Read the project's Concept Pitch and GCD documents, plus `art-direction.md` if available. Extract screens, colors, and UI style notes.
 
 ### Step 2 — Generate .excalidraw file per screen
 
-For each screen in the spec, create a separate `.excalidraw` file named `{screen_id}.excalidraw` in the project directory.
+For each screen in GCD/Concept Pitch, create a separate `.excalidraw` file named `{screen_id}.excalidraw` in the project directory.
 
 Use this JSON structure:
 
@@ -241,4 +241,4 @@ At the end of any mode, report:
 - Screens processed
 - Output files (screenshots for Figma, .excalidraw files for fallback, review file for Review mode)
 - Design token summary: colors and typography used
-- Any warnings (missing screens from spec, Figma connection issues, color mismatches)
+- Any warnings (missing screens from GCD/Concept Pitch, Figma connection issues, color mismatches)

@@ -9,7 +9,6 @@ tools:
   - Grep
   - mcp__game-design-kit__knowledge_search
   - mcp__game-design-kit__knowledge_query_entity
-  - mcp__game-design-kit__spec_validate
 maxTurns: 20
 ---
 
@@ -18,18 +17,18 @@ Quality gate cho 7 tài liệu thiết kế chi tiết.
 
 ## Nguyên tắc làm việc
 - Chỉ đọc và đánh giá; không sửa, không viết lại, không đề xuất nội dung thay thế.
-- Chỉ kiểm tra tính cấu trúc, tính nhất quán, và tính đầy đủ theo spec.
-- Nếu phát hiện mâu thuẫn đến từ `spec.yaml`, escalate lên user; không đề xuất đổi spec.
+- Chỉ kiểm tra tính cấu trúc, tính nhất quán, và tính đầy đủ theo GCD/Concept Pitch.
+- Nếu phát hiện mâu thuẫn đến từ GCD hoặc Concept Pitch, escalate lên user; không tự đề xuất đổi định hướng nền tảng.
 - Không đánh giá “hay/dở” về mặt sáng tạo; chỉ kiểm tra factual/structural.
 
 ## Kiểm tra 1: Tính nhất quán giữa các tài liệu (Cross-Doc Consistency)
-Đối chiếu `spec.yaml` và toàn bộ 7 tài liệu để xác nhận:
-- Tất cả mechanics từ `spec.yaml` xuất hiện trong `gameplay-design.md`
+Đối chiếu GCD/Concept Pitch và toàn bộ 7 tài liệu để xác nhận:
+- Tất cả mechanics từ GCD xuất hiện trong `gameplay-design.md`
 - Tên mechanics/currencies/screens nhất quán giữa 7 tài liệu (không đổi tên giữa docs)
-- `economy-design.md` currencies khớp với `spec.yaml.economy.currencies`
-- `ui-ux-spec.md` screens khớp với `spec.yaml.screens`
-- `art-direction.md` color system khớp với `spec.yaml.visualDirection.colorPalette`
-- `technical-requirements.md` tham chiếu đúng renderer từ `spec.yaml.prototypeScope.renderer`
+- `economy-design.md` currencies khớp với economy section trong GCD
+- `ui-ux-spec.md` screens khớp với screens described trong GCD hoặc Concept Pitch
+- `art-direction.md` color system khớp với color system từ `art-direction.md` hoặc GCD
+- `technical-requirements.md` tham chiếu đúng technical requirements từ GCD
 - `content-plan.md` inventory khớp với số lượng mechanics trong `gameplay-design.md`
 - `sound-design.md` SFX actions map với mechanics trong `gameplay-design.md`
 - Không có contradiction giữa bất kỳ 2 tài liệu nào
@@ -153,6 +152,6 @@ Template output đầy đủ: `references/gdd-review-template.md`
 
 ## Cách kết luận
 - Nếu có thiếu section, mâu thuẫn, hoặc sai tham chiếu, đánh FAIL rõ ràng theo từng item.
-- Nếu spec và tài liệu mâu thuẫn, không cố "hợp thức hóa"; ghi nhận và escalate.
+- Nếu GCD/Concept Pitch và tài liệu chi tiết mâu thuẫn, không cố "hợp thức hóa"; ghi nhận và escalate.
 - Chỉ dùng kết luận PASS khi mọi checklist bắt buộc đều đạt.
 - Quality Depth 🔴 (< 2.5★) → FAIL ngay cả khi Kiểm tra 1+2 đạt.

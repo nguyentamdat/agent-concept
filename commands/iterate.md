@@ -17,11 +17,11 @@ Receive the feedback text from the user argument (or ask for it if not provided)
 **Step 1: Analyze impact**
 
 Read the current project directory. Identify which artifacts exist:
+- `concept-pitch.md` — concept pitch document
 - `gcd.md` — game concept document
-- `spec.yaml` — game spec
 - `index.html` — prototype
-- `ui-ux-spec.md`, `art-direction.md`, and any Figma mockup references — design artifacts
-- `gameplay-design.md`, `technical-design.md`, and other detail docs
+- `ui-ux-spec.md`, `art-direction.md`, and any Figma mockup or `.excalidraw` files — design artifacts
+- `gameplay-design.md`, `technical-requirements.md`, and other detail docs
 
 Based on the feedback text, determine which artifacts are most likely affected. State this analysis clearly before proceeding.
 
@@ -39,9 +39,7 @@ Do not apply any changes until the user approves the diff preview.
 
 **Step 3: Apply approved changes**
 
-Apply only the changes the user approved. After applying:
-- If `spec.yaml` changed, bump the spec version using `spec_bump_version`
-- Confirm each file was updated successfully
+Apply only the changes the user approved. Confirm each file was updated successfully.
 
 **Step 4: Determine downstream impact**
 
@@ -49,9 +47,9 @@ After changes are applied, reason about what downstream artifacts may now be out
 
 | Changed artifact | Possible downstream effects |
 |---|---|
-| `gcd.md` | `spec.yaml` may need updating |
-| `spec.yaml` | `index.html`, Figma mockups, detail docs may need regenerating |
-| `ui-ux-spec.md` | Figma mockups, `art-direction.md` may need updating |
+| `concept-pitch.md` | `gcd.md`, prototype, mockups, detail docs may need updating |
+| `gcd.md` | Prototype, Figma/Excalidraw mockups, detail docs may need regenerating |
+| `ui-ux-spec.md` | Figma/Excalidraw mockups, `art-direction.md` may need updating |
 
 List the downstream artifacts that could be affected. Ask the user which ones to regenerate — do not assume.
 
@@ -59,10 +57,11 @@ List the downstream artifacts that could be affected. Ask the user which ones to
 
 For each artifact the user selects, invoke the appropriate agent:
 
+- Concept Pitch (`concept-pitch.md`) → invoke `concept-designer`
+- GCD (`gcd.md`) → invoke `concept-designer`
 - Prototype (`index.html`) → invoke `code-prototyper`
-- Figma mockups → invoke `figma-designer`
-- Detail docs (`gameplay-design.md`, `technical-design.md`, etc.) → invoke `document-writer`
-- Spec (`spec.yaml`) → invoke `spec-writer` or update inline with `spec_validate` after
+- Figma/Excalidraw mockups → invoke `figma-designer`
+- Detail docs (`gameplay-design.md`, `technical-requirements.md`, etc.) → invoke `document-writer`
 
 For each agent invocation:
 1. Present the result or diff to the user

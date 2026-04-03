@@ -19,10 +19,10 @@ Read the project directory. For each artifact below, note whether it exists:
 | File | Artifact |
 |---|---|
 | `market-research.md` | Market Research |
-| `outline.md` | Outline |
+| `concept-pitch.md` | Concept Pitch |
 | `gcd.md` | GCD |
-| `spec.yaml` | Spec |
 | `index.html` | Prototype |
+| `figma-summary.md` OR any `.excalidraw` file | UI Mockups |
 | `ui-ux-spec.md` | UI/UX Spec |
 | `art-direction.md` | Art Direction |
 | `gameplay-design.md` | Gameplay Design |
@@ -33,7 +33,6 @@ Read the project directory. For each artifact below, note whether it exists:
 
 Count how many of the 7 detail docs exist (the docs below `index.html` in the list above, starting from `ui-ux-spec.md`).
 
-Read `spec.yaml` if it exists and extract the `version` field.
 
 **Step 3: Get knowledge base stats**
 
@@ -43,12 +42,12 @@ Call the `knowledge_stats` MCP tool. Extract document count and chunk count.
 
 Use this logic to determine the current stage:
 
-1. Nothing exists → `research`
-2. `market-research.md` exists → `concept`
-3. `outline.md` exists → `outline`
-4. `gcd.md` exists → `gcd`
-5. `spec.yaml` exists → `prototype+figma`
-6. `index.html` exists → `docs`
+1. Nothing exists → `not started`
+2. `market-research.md` only → `research`
+3. `concept-pitch.md` exists → `concept`
+4. `gcd.md` exists → `design`
+5. `index.html` OR any `.excalidraw`/`figma-summary.md` exists → `prototype`
+6. Any detail doc exists → `documentation`
 7. All 7 detail docs exist → `complete`
 
 Pick the highest stage that applies.
@@ -60,15 +59,13 @@ Print the following card, filling in real values. Use ✅ for done, ⬜ for not 
 ```
 📋 Project: {project name}
 📌 Stage: {current stage}
-📄 Spec Version: {version or "—"}
 
 Artifacts:
 {✅/⬜} Market Research
-{✅/⬜} Outline
+{✅/⬜} Concept Pitch
 {✅/⬜} GCD
-{✅/⬜} Spec
 {✅/⬜} Prototype
-{✅/⬜} Figma Mockups
+{✅/⬜} UI Mockups (Figma / Excalidraw)
 {✅/⬜} Detail Documents ({count}/7)
 
 Knowledge Base:

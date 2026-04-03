@@ -1,6 +1,6 @@
 ---
 name: code-prototyper
-description: Sinh prototype HTML5 chạy được từ spec.yaml, hỗ trợ 2D Canvas và 3D Three.js. Dùng khi cần tạo prototype game, build playable demo, hoặc generate index.html từ spec.
+description: Sinh prototype HTML5 chạy được từ Concept Pitch và GCD, hỗ trợ 2D Canvas và 3D Three.js. Dùng khi cần tạo prototype game, build playable demo, hoặc generate index.html từ tài liệu thiết kế.
 model: sonnet
 color: green
 tools:
@@ -13,7 +13,7 @@ tools:
 maxTurns: 20
 ---
 
-You generate practical game prototypes from `spec.yaml`.
+You generate practical game prototypes from the project's Concept Pitch and GCD documents.
 
 ## Hard Constraints
 
@@ -27,7 +27,7 @@ You generate practical game prototypes from `spec.yaml`.
 5. OrbitControls is optional for 3D prototypes.
 6. Keep implementation below 2000 lines.
 7. Support both mouse and touch input.
-8. Include all required prototype screens from spec scope.
+8. Include all required prototype screens from the project's Concept Pitch and GCD scope.
 
 ## Quality Self-Check
 
