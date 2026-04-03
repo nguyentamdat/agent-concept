@@ -1,12 +1,12 @@
 ---
 name: game-concept-design
 version: 1.0.0
-description: "This skill should be used when the user asks to 'design a game concept', 'create GCD', 'brainstorm game idea', 'thiết kế concept game', 'tạo GCD', 'core loop design', 'MDA analysis', 'Phase A outline', 'Phase B GCD generation', or discusses game concept design for mobile games (casual, mid-core, hardcore)."
+description: "This skill should be used when the user asks to 'design a game concept', 'create GCD', 'brainstorm game idea', 'thiết kế concept game', 'tạo GCD', 'core loop design', 'MDA analysis', 'concept pitch', 'brainstorm mechanics', or discusses game concept design for mobile games (casual, mid-core, hardcore)."
 ---
 
 # Game Concept Design
 
-Design Game Concept Documents (GCD) for mobile games through a structured pipeline: gather info → brainstorm with knowledge base and memory recall → outline → generate GCD. Ground every design decision in 12 game design theories drawn from "Players Making Decisions" (Zack Hiwiller) and "A Theory of Fun for Game Design" (Raph Koster).
+Design Game Concept Documents (GCD) for mobile games through a structured pipeline: gather info → choose brainstorm direction → brainstorm concepts → concept pitch → generate GCD. Ground every design decision in 12 game design theories drawn from "Players Making Decisions" (Zack Hiwiller) and "A Theory of Fun for Game Design" (Raph Koster).
 
 The GCD output document is written in Vietnamese. Platform defaults to Mobile unless explicitly overridden.
 
@@ -18,65 +18,67 @@ The GCD output document is written in Vietnamese. Platform defaults to Mobile un
 
 ---
 
-## Phase A: Gather, Brainstorm, Outline
+## Phase A: Gather, Brainstorm, Concept Pitch
 
-Phase A ends with an approved outline. Do not proceed to Phase B without explicit user approval.
+Phase A ends with an approved Concept Pitch. Do not proceed to Phase B without explicit user approval.
 
-### Step 1: Collect Required Information
+### Step 1: Collect Information
 
-Identify what the user has already provided. If any of the three required fields are missing, ask via `AskUserQuestion` (max 3-5 questions, prefer multiple choice):
+Analyze user input. Identify what is already provided vs what is missing.
 
-**Required:**
+**Required** (must have all 4):
 - Game idea / theme
 - Genre (Action, Puzzle, RPG, Strategy, Simulation, etc.)
-- Target audience (Casual, Mid-core, or Hardcore + age range)
+- Player type (Casual / Mid-core / Hardcore)
+- Age group (Under 13 / 13-17 / 18-25 / 26-35 / 35+)
 
-**Optional** (infer from context if not provided):
-- Sub-genre or platform detail (Idle RPG, Hyper-casual, etc.) — platform defaults to Mobile
-- Mechanisms: user specifies, OR auto-select from knowledge base + `references/game-design-theories.md` based on genre and audience
+**Optional** (infer or skip):
+- Sub-genre (Idle RPG, Hyper-casual, Roguelike)
+- Core mechanic preference
+- Monetization direction (IAP, Ads, Premium)
 - Reference games
 
-Do NOT ask about monetization.
+Ask ONLY for missing required fields. Do not re-ask what is already provided.
 
-### Step 2: Initial Market Research
+### Step 2: Choose Brainstorm Direction
 
-Invoke the market-researcher agent in Mode 1 (Initial Research) using the game idea, genre, and audience. Save output to `{project}/market-research.md`.
+Present two options to the user:
+- **AI tự do sáng tạo**: generate original concepts freely from idea + genre + audience + knowledge base
+- **Kết hợp mechanics từ các game**: analyze mechanics from existing games, propose novel combinations
+
+**Stop and wait** for user selection.
 
 ### Step 3: Brainstorm Concepts
 
-Once all three required fields are confirmed:
+Search the knowledge base using `knowledge_search`. Read `references/game-design-theories.md`.
 
-1. Search the knowledge base using `knowledge_search` for game design patterns matching the genre and audience.
-2. Recall prior game design context using `hindsight_recall` and `hindsight_reflect` tools.
-3. Read `references/game-design-theories.md` for theory grounding.
-4. If mechanisms were set to auto-select, pick mechanisms from the knowledge base that fit the genre + audience.
-5. Generate 3-5 distinct concept ideas. For each concept:
-   - Write a short title (one line)
-   - Write a description of max 5 sentences focused on the unique appeal: what makes this concept distinct, what the play feel is, why the target audience will care
-   - Do not describe mechanics or rules in detail; pitch the emotion and differentiator
-6. Present the list to the user via `AskUserQuestion`.
+Generate 3-5 distinct concepts. Present with a style choice:
+- **Pitch cảm xúc và điểm khác biệt**: emotional pitch, unique appeal, play feel (no detailed mechanics)
+- **Liệt kê mechanics sources + cách kết hợp**: list source games/mechanics, explain combination, describe emergent gameplay
 
-### Step 4: Validation Research
+**Stop and wait** for user to pick a concept.
 
-Invoke the market-researcher agent in Mode 2 (Validation Research) for the selected concept. Update `{project}/market-research.md` with a feasibility assessment.
+### Step 4: Concept Pitch
 
-### Step 5: Generate Outline
+Generate a structured Concept Pitch with 4 sections:
 
-Generate the Phase A outline using the template at `references/phase-a-outline-template.md`, based on the selected concept and market research.
+**Section 1 — Target Aesthetics**: Select 2-3 from 8 Kinds of Fun (Sensation, Fantasy, Narrative, Challenge, Fellowship, Discovery, Expression, Submission). Explain why each fits.
 
-### Step 6: Review and Approve Outline
+**Section 2 — Core Pillars**: 3-4 non-negotiable design pillars. Each: name + 2-3 sentence explanation.
 
-Present the outline to the user via `AskUserQuestion`.
+**Section 3 — Core Loop Summary**: How one session works — core loop, primary actions (2-3 main verbs), flow of one session (start → middle → end with timing).
 
-Invoke the review-concept agent in Mode 1 (Review Outline). If the review fails, revise and re-review (max 2 iterations). If it still fails after 2 attempts, surface the issues to the user.
+**Section 4 — Meaningful Decisions Analysis**: Apply 12 theories from `references/game-design-theories.md`. Key decision points, Anatomy of each Choice (Before/Communication/Action/Consequences/Feedback), check for blind/dominant/meaningless decisions, flow and interest curve, skill-luck positioning.
 
-**Stop and wait** for user approval before starting Phase B.
+Invoke review-concept agent automatically. Present to user.
+
+**Stop and wait** for approval before Phase B.
 
 ---
 
 ## Phase B: Generate GCD
 
-Start Phase B only after the user has approved the Phase A outline.
+Start Phase B only after the user has approved the Concept Pitch from Phase A.
 
 Phase B produces one document, written in Vietnamese:
 

@@ -161,7 +161,7 @@ knowledge_search("battle pass subscription model")
 **From "{Book Title}" (p.{page}):**
 {Key insight synthesized from source — 1-3 sentences}
 
-**Application to your game:**
+**Application to the current design:**
 {How this applies to the specific design challenge — concrete, actionable}
 ```
 
