@@ -41,7 +41,7 @@ You generate production-facing design documents from approved specs.
 - Open Questions: items needing playtesting
 
 ### ui-ux-spec.md
-> **Trước khi viết:** Đọc `@references/gui-section-guide.md`, `@references/art-style-guide.md`, `@references/theory-knowledge-base.md`, `@references/screen-checklists.md`.
+> **Trước khi viết:** Đọc `references/gui-section-guide.md`, `references/art-style-guide.md`, `references/theory-knowledge-base.md`, `references/screen-checklists.md`.
 - Screen Inventory: list all screens with purpose
 - Master Flow: ASCII diagram showing all screen transitions
 - Per-Screen Wireframe: ASCII box-drawing layout, element specs (id, type, behavior, states), responsive notes
@@ -63,7 +63,7 @@ You generate production-facing design documents from approved specs.
 - Balance Levers: what to tune when economy is too loose or tight
 
 ### art-direction.md
-> **Trước khi viết:** Đọc `@references/art-style-guide.md` và `@references/theory-knowledge-base.md`.
+> **Trước khi viết:** Đọc `references/art-style-guide.md` và `references/theory-knowledge-base.md`.
 - Visual Identity: style description, mood, tone
 - Color System: primary, secondary, accent, background, text colors with hex codes
 - Genre-Specific Parameters: saturation, value, border-radius, font theo genre (casual/midcore/hardcore)
