@@ -2,7 +2,7 @@
 
 Game Design Kit is a Claude Code plugin for an AI game design pipeline: Concept → Prototype → Feedback → Documents.
 
-It combines a local game design knowledge base, structured game specs, and rapid HTML prototype generation in one workflow.
+It combines a local game design knowledge base, Concept Pitch + GCD design documents, and rapid HTML prototype generation in one workflow.
 
 ## Install / Run
 
@@ -52,23 +52,19 @@ Run project work in this order:
 3. `/design-kit:feedback`
 4. `/design-kit:approve`
 
-`/design-kit:concept` runs in 2 phases:
-- Phase A: collect inputs → brainstorm concept variants → user picks one → generate outline → wait for approval
-- Phase B: generate `gcd.md` + `gcd-gameplay.md` + `spec.yaml`
+`/design-kit:create` runs the full pipeline: collect inputs → brainstorm → Concept Pitch → GCD → Prototype + Mockups → Feedback Gate → Detail Docs.
 
-Design documents from concept phase (`gcd.md`, `gcd-gameplay.md`) must be written in Vietnamese.
+Design documents (`gcd.md`) must be written in Vietnamese.
 
-## Spec Conventions
+## Design Document Conventions
 
-- Primary project spec format is YAML (`spec.yaml`).
-- Validate specs after every edit with `spec_validate`.
-- Bump spec version whenever behavior or design intent changes (`spec_bump_version`).
+- Primary design reference is the Concept Pitch (`concept-pitch.md`) + GCD (`gcd.md`).
 - Maintain internal consistency across pillars, mechanics, progression, and scope.
 
 ## Prototype Conventions
 
 - Prototype output is a single `index.html` per project.
-- Renderer comes from `spec.yaml` (`prototypeScope.renderer`):
+- Renderer comes from Concept Pitch / GCD:
   - `2d`: Canvas API
   - `3d`: Three.js via CDN
 - Use vanilla JavaScript (no framework/runtime dependency).

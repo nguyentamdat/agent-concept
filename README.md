@@ -41,11 +41,9 @@ cd game-design-kit
 
 | Command | What it does |
 |---|---|
-| `/design-kit:concept <idea>` | Phase A: brainstorm → outline → approve. Phase B: GCD + GCD-Gameplay + spec.yaml |
-| `/design-kit:prototype` | Generate playable HTML5 prototype (2D Canvas or 3D Three.js) |
-| `/design-kit:feedback <text>` | Process feedback → update spec → regenerate prototype |
-| `/design-kit:approve` | Approve spec → generate 7 detail design documents |
-| `/design-kit:status` | Show current project state |
+| `/design-kit:create <idea>` | Full pipeline: brainstorm → Concept Pitch → GCD → Prototype + Mockups → Detail Docs |
+| `/design-kit:iterate <feedback>` | Re-enter pipeline with feedback, update any artifact |
+| `/design-kit:status` | Show current project stage, artifacts, knowledge stats |
 
 Design documents (`gcd.md`, `gcd-gameplay.md`) are written in Vietnamese.
 

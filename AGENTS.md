@@ -58,7 +58,7 @@ Claude Code plugin: AI game design pipeline (Concept > Prototype > Feedback > Do
 | Review concept quality | `agents/review-concept.md` | Criteria + template: `references/concept-evaluation-criteria.md`, `references/concept-review-template.md` |
 | Review GDD quality | `references/gdd-evaluation-criteria.md`, `references/gdd-expected-sections.md`, `references/gdd-review-template.md` | Use to assess GDD structure, coverage, and review output |
 | Add test fixtures | `src/test-utils/` | `document-fixtures.ts`, `chunk-fixtures.ts`, `citation-fixtures.ts` |
-| Modify spec schema | `mcp-server/src/tools/spec.ts` | `GameSpecSchema` Zod definition inline |
+| Modify concept/pitch | `agents/concept-designer.md` | Generates Concept Pitch + GCD |
 | Prototype templates | `templates/` | Vanilla JS, Canvas API or Three.js CDN |
 
 ## CONVENTIONS
@@ -72,7 +72,7 @@ Claude Code plugin: AI game design pipeline (Concept > Prototype > Feedback > Do
 - **Graph**: Opt-in via `buildGraph(llm)`. Focused search degrades to lexical without graph.
 - **LLM**: BYOLLM via `LLMProvider` interface (`{ chat(messages): Promise<string> }`). Library bundles no LLM SDK.
 - **Design docs**: `gcd.md` and `gcd-gameplay.md` must be written in **Vietnamese**.
-- **Spec format**: YAML (`spec.yaml`). Validate with `spec_validate` after every edit. Bump version on behavior changes.
+- **Concept Pitch**: Structured concept document (`concept-pitch.md`). Generated in Step 4 of create pipeline. Core design reference for all downstream artifacts.
 - **Prototypes**: Single `index.html` per project. Vanilla JS, geometric placeholders.
 - **Dependencies**: All `"latest"` — no pinned versions.
 
@@ -81,8 +81,8 @@ Claude Code plugin: AI game design pipeline (Concept > Prototype > Feedback > Do
 - **No `as any` / `@ts-ignore`**. Use proper typing or Zod.
 - **No framework deps in prototypes**. Canvas API or Three.js CDN only.
 - **No Node.js APIs**. Use Bun equivalents.
-- **Never remove mechanics** from spec unless user explicitly requests.
-- **Never edit spec without bumping version** (`spec_bump_version`).
+- **Never remove mechanics** from Concept Pitch or GCD unless user explicitly requests.
+- **Never auto-apply feedback changes** — show diff preview first.
 - **Never auto-apply feedback changes** — show diff preview first.
 - Existing unsafe `as unknown as` cast in `mcp-server/src/tools/knowledge.ts:43` — known tech debt, do not replicate.
 
