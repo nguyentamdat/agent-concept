@@ -2,7 +2,6 @@ import { extname, resolve } from "node:path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { readFile, stat } from "node:fs/promises";
-import { readGameSpec } from "./spec";
 
 type PrototypeRuntime = {
   getPrototypeServer: () => Bun.Server<unknown> | null;
@@ -40,7 +39,7 @@ export function registerPrototypeTools(server: McpServer, runtime: PrototypeRunt
       description: "Serve a prototype directory over Bun static HTTP.",
       inputSchema: z.object({
         dir: z.string(),
-        port: z.number().int().min(1).max(65535).default(4173),
+        port: z.number().int().min(0).max(65535).default(0),
       }),
     },
     async ({ dir, port }: { dir: string; port: number }) => {
@@ -80,7 +79,7 @@ export function registerPrototypeTools(server: McpServer, runtime: PrototypeRunt
         content: [
           {
             type: "text",
-            text: JSON.stringify({ url: `http://localhost:${port}`, port }, null, 2),
+            text: JSON.stringify({ url: `http://localhost:${bunServer.port}`, port: bunServer.port }, null, 2),
           },
         ],
       };
@@ -114,44 +113,52 @@ export function registerPrototypeTools(server: McpServer, runtime: PrototypeRunt
     "prototype_validate",
     {
       title: "Validate prototype",
-      description: "Check prototype HTML coverage against spec screens/mechanics.",
+      description: "Check prototype HTML against design document for screen and mechanic references.",
       inputSchema: z.object({
         htmlPath: z.string(),
-        specPath: z.string(),
+        designDocPath: z.string().describe("Path to GCD or concept-pitch.md"),
       }),
     },
-    async ({ htmlPath, specPath }: { htmlPath: string; specPath: string }) => {
+    async ({ htmlPath, designDocPath }: { htmlPath: string; designDocPath: string }) => {
       const resolvedHtml = resolve(htmlPath);
-      const resolvedSpec = resolve(specPath);
+      const resolvedDesignDoc = resolve(designDocPath);
 
-      const [spec, html] = await Promise.all([
-        readGameSpec(resolvedSpec),
+      const [designDoc, html] = await Promise.all([
+        readFile(resolvedDesignDoc, "utf-8"),
         readFile(resolvedHtml, "utf-8"),
       ]);
 
       const lowerHtml = html.toLowerCase();
       const issues: Array<{ type: string; message: string }> = [];
 
-      for (const screen of spec.screens) {
-        if (!lowerHtml.includes(screen.id.toLowerCase())) {
+      // Extract screen-like references from design doc (markdown list: '- name screen:')
+      const screenMatches = [...designDoc.matchAll(/^-\s+(\S+)\s+(?:screen|view|page|menu)\s*:/gim)];
+      const screens = [...new Set(screenMatches.map((m) => m[1].toLowerCase()))];
+
+      for (const screen of screens) {
+        if (!lowerHtml.includes(screen.toLowerCase())) {
           issues.push({
             type: "screen-missing",
-            message: `Screen id '${screen.id}' is not referenced in prototype HTML.`,
+            message: `Screen/view '${screen}' referenced in design doc is not found in prototype HTML.`,
           });
         }
       }
 
-      for (const mechanicId of spec.prototypeScope.includedMechanics) {
-        if (!lowerHtml.includes(mechanicId.toLowerCase())) {
+      // Extract mechanic-like references (markdown list: '- name mechanic:')
+      const mechanicMatches = [...designDoc.matchAll(/^-\s+(\S+)\s+(?:mechanic|action|feature)\s*:/gim)];
+      const mechanics = [...new Set(mechanicMatches.map((m) => m[1].toLowerCase()))];
+
+      for (const mechanic of mechanics) {
+        if (!lowerHtml.includes(mechanic.toLowerCase())) {
           issues.push({
             type: "mechanic-missing",
-            message: `Included mechanic '${mechanicId}' is not referenced in prototype HTML.`,
+            message: `Mechanic/feature '${mechanic}' referenced in design doc is not found in prototype HTML.`,
           });
         }
       }
 
       return {
-        content: [{ type: "text", text: JSON.stringify({ valid: issues.length === 0, issues }, null, 2) }],
+        content: [{ type: "text", text: JSON.stringify({ valid: issues.length === 0, issues, screensChecked: screens.length, mechanicsChecked: mechanics.length }, null, 2) }],
       };
     }
   );
