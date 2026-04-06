@@ -3,36 +3,24 @@
   "version": "2.0.0",
   "description": "AI game design pipeline plugin for Claude Code",
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "bin": {
-    "knowledge-layer": "src/cli.ts"
-  },
+  "private": true,
+  "workspaces": ["packages/*"],
   "scripts": {
-    "setup": "bun install && cd mcp-server && bun install && cd .. && bun run scripts/setup-knowledge.ts",
-    "setup:knowledge": "bun run scripts/setup-knowledge.ts",
-    "postinstall": "node scripts/postinstall.cjs",
-    "build": "bun build src/index.ts --outdir dist --target bun --format esm && tsc -p tsconfig.build.json",
-    "typecheck": "tsc --noEmit",
-    "test": "bun test",
-    "clean": "rm -rf dist .knowledge-cache",
-    "cli": "bun run src/cli.ts",
-    "mcp": "bun run mcp-server/src/server.ts"
-  },
-  "dependencies": {
-    "@orama/orama": "latest",
-    "@orama/plugin-data-persistence": "latest",
-    "commander": "latest",
-    "csv-parse": "latest",
-    "gpt-tokenizer": "latest",
-    "js-yaml": "latest",
-    "mammoth": "latest",
-    "unpdf": "latest",
-    "zod": "latest"
+    "setup": "npm install && npx tsx scripts/setup-knowledge.ts",
+    "setup:knowledge": "npx tsx scripts/setup-knowledge.ts",
+    "build": "npx tsup packages/knowledge-layer/src/index.ts --outDir packages/knowledge-layer/dist --format esm && cd packages/mcp-server && npx tsup && cd ../.. && tsc -p packages/knowledge-layer/tsconfig.build.json",
+    "typecheck": "tsc --noEmit -p packages/knowledge-layer/tsconfig.json && tsc --noEmit -p packages/mcp-server/tsconfig.json",
+    "test": "npx vitest run",
+    "test:watch": "npx vitest",
+    "clean": "rm -rf packages/knowledge-layer/dist packages/mcp-server/dist .knowledge-cache",
+    "cli": "npx tsx packages/knowledge-layer/src/cli.ts",
+    "mcp": "node packages/mcp-server/dist/server.js"
   },
   "devDependencies": {
-    "@types/bun": "latest",
-    "@types/js-yaml": "latest",
+    "@types/node": "latest",
+    "tsx": "latest",
+    "tsup": "latest",
+    "vitest": "latest",
     "typescript": "latest"
   }
 }

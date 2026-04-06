@@ -1,0 +1,31 @@
+{
+  "name": "knowledge-layer",
+  "version": "2.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./graph/graph-store": "./src/graph/graph-store.ts",
+    "./graph/types": "./src/graph/types.ts"
+  },
+  "bin": {
+    "knowledge-layer": "src/cli.ts"
+  },
+  "dependencies": {
+    "@orama/orama": "latest",
+    "@orama/plugin-data-persistence": "latest",
+    "commander": "latest",
+    "csv-parse": "latest",
+    "gpt-tokenizer": "latest",
+    "js-yaml": "latest",
+    "mammoth": "latest",
+    "unpdf": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/js-yaml": "latest",
+    "typescript": "latest"
+  }
+}

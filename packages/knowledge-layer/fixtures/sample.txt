@@ -1,0 +1,11 @@
+Game Design Fundamentals
+
+A core loop is the primary interaction cycle that players repeat throughout the game. It defines the moment-to-moment gameplay experience.
+
+Progression systems provide long-term goals and a sense of advancement. They keep players engaged beyond the core loop by offering new challenges and rewards.
+
+Feedback loops reinforce player actions with immediate consequences. Positive feedback rewards player skill, while negative feedback creates challenge and tension.
+
+Testing and Iteration
+
+Game design requires continuous testing and iteration. Prototype core mechanics quickly and test with real players early and often.

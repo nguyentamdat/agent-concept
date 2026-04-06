@@ -1,6 +1,7 @@
 node_modules/
-.bun/
-dist/
+packages/knowledge-layer/dist/
+/dist/
+.opencode/
 *.log
 *.tsbuildinfo
 

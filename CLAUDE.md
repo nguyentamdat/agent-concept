@@ -87,13 +87,14 @@ Design documents (`gcd.md`) must be written in Vietnamese.
 - `knowledge/`: source design books and references
 - `projects/`: generated game projects and specs
 - `templates/`: prototype templates and starting points
-- `mcp-server/`: MCP server implementation and tool handlers
+- `packages/knowledge-layer/`: knowledge layer TypeScript library
+- `packages/mcp-server/`: MCP server implementation and tool handlers
 
 ## MCP Runtime / Test Commands
 
-- Run tests: `bun test`
-- Type-check: `bun run typecheck`
-- Run MCP server: `bun run mcp-server/src/server.ts`
+- Run tests: `npm test`
+- Type-check: `npm run typecheck`
+- Run MCP server: `npm run mcp`
 
 ## Operational Guidance
 

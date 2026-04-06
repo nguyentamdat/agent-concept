@@ -1,0 +1,32 @@
+import { describe, expect, it } from "vitest";
+import { access } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
+import { parsePdf } from "./pdf";
+
+const pdfFixturePath = fileURLToPath(new URL("../../fixtures/sample.pdf", import.meta.url));
+
+describe("parsePdf", () => {
+  it("parses the fixture by page with pageNumber metadata", async () => {
+    let exists = true;
+    try { await access(pdfFixturePath); } catch { exists = false; }
+    
+    if (!exists) {
+      console.log("PDF fixture not found, skipping test");
+      return;
+    }
+    
+    const result = await parsePdf(pdfFixturePath);
+    const pageNumbers = new Set(result.nodes.map((node) => node.pageNumber));
+    const firstPageNodes = result.nodes.filter((node) => node.pageNumber === 1);
+
+    expect(result.document.sourceType).toBe("pdf");
+    expect(result.document.parseStatus).toBe("success");
+    expect(Array.isArray(result.document.warnings)).toBe(true);
+    expect(pageNumbers.size).toBe(19);
+    expect(firstPageNodes.length).toBeGreaterThan(0);
+    expect(firstPageNodes[0]?.text).toContain("Shared MIME-info Database");
+    expect(firstPageNodes[0]?.path).toMatch(/^page:1\/block:\d+$/);
+    expect(result.nodes.every((node) => (node.pageNumber ?? 0) >= 1)).toBe(true);
+    expect(result.nodes.every((node) => /^page:\d+\/block:\d+$/.test(node.path))).toBe(true);
+  });
+});

@@ -17,8 +17,8 @@
   ],
   "mcpServers": {
     "game-design-kit": {
-      "command": "bun",
-      "args": ["run", "${CLAUDE_PLUGIN_ROOT}/mcp-server/src/server.ts"],
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/packages/mcp-server/dist/server.js"],
       "env": {
         "KNOWLEDGE_DIR": "${CLAUDE_PLUGIN_ROOT}/knowledge",
         "PROJECTS_DIR": "${CLAUDE_PLUGIN_ROOT}/projects",

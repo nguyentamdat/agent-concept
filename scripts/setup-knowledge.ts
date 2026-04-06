@@ -1,7 +1,7 @@
 import { mkdir, readdir } from "node:fs/promises";
 import { extname, resolve } from "node:path";
-import { KnowledgeTool } from "../src/knowledge";
-import { saveKnowledgeCache } from "../mcp-server/src/tools/knowledge";
+import { KnowledgeTool } from "../packages/knowledge-layer/src/knowledge";
+import { saveKnowledgeCache } from "../packages/mcp-server/src/tools/knowledge";
 
 const rootDir = process.cwd();
 const knowledgeDir = resolve(rootDir, process.env.KNOWLEDGE_DIR ?? "knowledge");

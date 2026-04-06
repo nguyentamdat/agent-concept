@@ -34,7 +34,7 @@ cd game-design-kit
 
 ## Requirements
 
-- [Bun](https://bun.sh/) v1.0+
+- [Node.js](https://nodejs.org/) v18+
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI
 
 ## Pipeline
@@ -91,7 +91,7 @@ Place these PDFs in `knowledge/`:
 ## Library Quick Start
 
 ```bash
-bun install
+npm install
 ```
 
 ```typescript
@@ -583,19 +583,19 @@ const localLLM: LLMProvider = {
 
 ```bash
 # Install dependencies
-bun install
+npm install
 
-# Run tests (232 tests)
-bun test
+# Run tests (281 tests)
+npm test
 
 # TypeScript check
-bun run typecheck
+npm run typecheck
 
 # Build
-bun run build
+npm run build
 
 # Run evaluator
-bun run src/eval/evaluator.ts
+npx tsx packages/knowledge-layer/src/eval/evaluator.ts
 ```
 
 ### Project Structure

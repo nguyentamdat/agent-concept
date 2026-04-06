@@ -1,7 +1,7 @@
 {
   "permissions": {
     "allow": [
-      "Bash(bun *)",
+      "Bash(npm *)",
       "Bash(npx *)",
       "Bash(node *)",
       "mcp__game-design-kit__knowledge_ingest",

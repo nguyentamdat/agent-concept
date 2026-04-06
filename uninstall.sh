@@ -27,8 +27,8 @@ if [ -f "$INSTALLED_JSON" ] && command -v jq &>/dev/null; then
   jq --arg key "$PLUGIN_KEY" 'del(.plugins[$key])' \
     "$INSTALLED_JSON" > "${INSTALLED_JSON}.tmp" \
     && mv "${INSTALLED_JSON}.tmp" "$INSTALLED_JSON"
-elif [ -f "$INSTALLED_JSON" ] && command -v bun &>/dev/null; then
-  bun -e "
+elif [ -f "$INSTALLED_JSON" ] && command -v node &>/dev/null; then
+  node -e "
     const fs = require('fs');
     const data = JSON.parse(fs.readFileSync('$INSTALLED_JSON', 'utf8'));
     delete (data.plugins || {})['$PLUGIN_KEY'];
@@ -40,8 +40,8 @@ if [ -f "$SETTINGS_JSON" ] && command -v jq &>/dev/null; then
   jq --arg key "$PLUGIN_KEY" 'del(.enabledPlugins[$key])' \
     "$SETTINGS_JSON" > "${SETTINGS_JSON}.tmp" \
     && mv "${SETTINGS_JSON}.tmp" "$SETTINGS_JSON"
-elif [ -f "$SETTINGS_JSON" ] && command -v bun &>/dev/null; then
-  bun -e "
+elif [ -f "$SETTINGS_JSON" ] && command -v node &>/dev/null; then
+  node -e "
     const fs = require('fs');
     const data = JSON.parse(fs.readFileSync('$SETTINGS_JSON', 'utf8'));
     delete (data.enabledPlugins || {})['$PLUGIN_KEY'];

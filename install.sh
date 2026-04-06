@@ -21,10 +21,10 @@ echo "Plugin:  $PLUGIN_NAME v$PLUGIN_VERSION"
 echo "Target:  $CACHE_DIR"
 echo ""
 
-# Check bun
-if ! command -v bun &>/dev/null; then
-  echo "Error: Bun is required but not installed."
-  echo "Install it: curl -fsSL https://bun.sh/install | bash"
+# Check node
+if ! command -v node &>/dev/null; then
+  echo "Error: Node.js is required but not installed."
+  echo "Install it: https://nodejs.org/"
   exit 1
 fi
 
@@ -42,16 +42,16 @@ rsync -a --delete \
   --exclude='projects' \
   --exclude='knowledge/*.pdf' \
   --exclude='*.test.ts' \
-  --exclude='src/test-utils' \
-  --exclude='src/e2e' \
+  --exclude='packages/knowledge-layer/src/test-utils' \
+  --exclude='packages/knowledge-layer/src/e2e' \
   --exclude='install.sh' \
   --exclude='uninstall.sh' \
   "$SCRIPT_DIR/" "$CACHE_DIR/"
 
 # Install dependencies
 echo "[2/4] Installing dependencies..."
-(cd "$CACHE_DIR" && bun install --production 2>/dev/null)
-(cd "$CACHE_DIR/mcp-server" && bun install --production 2>/dev/null)
+(cd "$CACHE_DIR" && npm install --production 2>/dev/null)
+(cd "$CACHE_DIR/packages/mcp-server" && npm install --production 2>/dev/null)
 
 # Update installed_plugins.json
 echo "[3/4] Registering plugin..."
@@ -74,8 +74,8 @@ if [ -f "$INSTALLED_JSON" ]; then
       '.plugins[$key] = $entry' "$INSTALLED_JSON" > "${INSTALLED_JSON}.tmp" \
       && mv "${INSTALLED_JSON}.tmp" "$INSTALLED_JSON"
   else
-    # Fallback: use bun to manipulate JSON
-    bun -e "
+    # Fallback: use node to manipulate JSON
+    node -e "
       const fs = require('fs');
       const data = JSON.parse(fs.readFileSync('$INSTALLED_JSON', 'utf8'));
       data.plugins = data.plugins || {};
@@ -105,7 +105,7 @@ if [ -f "$SETTINGS_JSON" ]; then
       "$SETTINGS_JSON" > "${SETTINGS_JSON}.tmp" \
       && mv "${SETTINGS_JSON}.tmp" "$SETTINGS_JSON"
   else
-    bun -e "
+    node -e "
       const fs = require('fs');
       const data = JSON.parse(fs.readFileSync('$SETTINGS_JSON', 'utf8'));
       data.enabledPlugins = data.enabledPlugins || {};
@@ -131,4 +131,4 @@ echo "Run 'claude' to start using it."
 echo ""
 echo "To add knowledge base PDFs, place them in:"
 echo "  $CACHE_DIR/knowledge/"
-echo "Then run: cd $CACHE_DIR && bun run setup:knowledge"
+echo "Then run: cd $CACHE_DIR && npm run setup:knowledge"

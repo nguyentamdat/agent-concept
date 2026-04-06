@@ -1,0 +1,22 @@
+{
+  "name": "game-design-kit-mcp-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/server.js",
+  "scripts": {
+    "start": "node dist/server.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "js-yaml": "latest",
+    "knowledge-layer": "*",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/js-yaml": "latest",
+    "typescript": "latest"
+  }
+}
