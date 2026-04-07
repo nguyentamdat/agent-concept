@@ -1,14 +1,18 @@
 {
-  "name": "local",
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "nguyentamdat",
+  "description": "Game Design Kit - AI game design pipeline plugin",
   "owner": {
-    "name": "Game Design Kit"
+    "name": "Nguyen Tam Dat"
   },
   "plugins": [
     {
       "name": "game-design-kit",
-      "source": "./",
       "description": "AI game design pipeline: /create → GCD → prototype + Figma → detail docs",
-      "version": "2.0.0"
+      "version": "2.0.0",
+      "source": "./",
+      "category": "development",
+      "homepage": "https://github.com/nguyentamdat/agent-concept"
     }
   ]
 }

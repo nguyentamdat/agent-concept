@@ -9,8 +9,13 @@ if ! command -v npm &>/dev/null; then
   exit 0
 fi
 
-# Install MCP server dependencies if not present
-# The server is pre-built (dist/server.js) but needs external npm deps
+# Install all workspace dependencies if not present
+if [ ! -d "$PLUGIN_ROOT/node_modules" ]; then
+  cd "$PLUGIN_ROOT"
+  npm install --production 2>/dev/null || npm install --production
+fi
+
+# Install MCP server dependencies if not present (in case hoisting missed them)
 MCP_DIR="$PLUGIN_ROOT/packages/mcp-server"
 if [ ! -d "$MCP_DIR/node_modules" ]; then
   cd "$MCP_DIR"
