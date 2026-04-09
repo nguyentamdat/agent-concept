@@ -1,6 +1,6 @@
 import { mkdir } from "node:fs/promises";
 import type { Server } from "node:http";
-import { resolve } from "node:path";
+import { isAbsolute, resolve } from "node:path";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { KnowledgeTool } from "knowledge-layer";
@@ -25,10 +25,18 @@ type SourceRecord = {
   documentId?: string;
 };
 
-const pluginRoot = process.env.CLAUDE_PLUGIN_ROOT;
-const rootDir = pluginRoot ?? process.cwd();
+// Resolve a config path: absolute paths are used as-is,
+// relative paths resolve from the workspace (cwd), not the plugin root.
+function resolveConfigPath(rootDir: string, envValue: string | undefined, defaultRelative: string): string {
+  const raw = envValue ?? defaultRelative;
+  if (isAbsolute(raw)) return raw;
+  return resolve(process.cwd(), raw);
+}
+
+const pluginRoot = process.env.CLAUDE_PLUGIN_ROOT ?? process.cwd();
+const rootDir = pluginRoot;
 const knowledgeDir = resolve(rootDir, process.env.KNOWLEDGE_DIR ?? "knowledge");
-const projectsDir = resolve(rootDir, process.env.PROJECTS_DIR ?? "projects");
+const projectsDir = resolveConfigPath(rootDir, process.env.PROJECTS_DIR, "projects");
 const templatesDir = resolve(rootDir, process.env.TEMPLATES_DIR ?? "templates");
 const cacheDir = resolve(process.env.CACHE_DIR ?? resolve(rootDir, ".knowledge-cache"));
 
