@@ -1,12 +1,12 @@
 ---
 name: game-knowledge
-version: 1.0.0
+version: 2.0.0
 description: "This skill should be used when the user discusses game design topics such as 'game mechanics', 'MDA framework', 'player motivation', 'difficulty curves', 'core loops', 'retention strategies', 'economy design', 'UX patterns', 'monetization', 'player psychology', 'reward systems', 'engagement loops', or asks questions that require searching the game design knowledge base."
 ---
 
 # Game Knowledge Auto-Search
 
-This is a behavioral skill. When game design topics appear in conversation, automatically invoke the knowledge base MCP tools to ground responses in theory from the five source books.
+This is a behavioral skill. When game design topics appear in conversation, automatically invoke the Hindsight memory MCP tools to ground responses in theory from the five source books.
 
 **Knowledge base sources:**
 - *The Art of Game Design* (Jesse Schell)
@@ -15,11 +15,13 @@ This is a behavioral skill. When game design topics appear in conversation, auto
 - *A Theory of Fun for Game Designers* (Raph Koster)
 - *Players Making Decisions* (Zack Hiwiller)
 
+**Backend:** Hindsight MCP server (bank: `game-knowledge`)
+
 ---
 
 ## Trigger Keywords
 
-Invoke `knowledge_search` when any of these topics appear in the conversation:
+Invoke `recall` when any of these topics appear in the conversation:
 
 | Category | Trigger Keywords |
 |----------|-----------------|
@@ -41,53 +43,53 @@ Invoke `knowledge_search` when any of these topics appear in the conversation:
 ### Mechanics and Core Loops
 
 ```
-knowledge_search("MDA framework mechanics")
-knowledge_search("core loop design {genre}")
-knowledge_search("meaningful decisions game design")
+recall(query="MDA framework mechanics")
+recall(query="core loop design {genre}")
+reflect(query="meaningful decisions in game design")
 ```
 
 ### Player Motivation and Psychology
 
 ```
-knowledge_search("intrinsic motivation game design")
-knowledge_search("extrinsic rewards variable ratio schedule")
-knowledge_search("player types motivation {target audience}")
-knowledge_search("hook model trigger action reward investment")
+recall(query="intrinsic motivation game design")
+recall(query="extrinsic rewards variable ratio schedule")
+recall(query="player types motivation {target audience}")
+reflect(query="hook model trigger action reward investment")
 ```
 
 ### Difficulty and Balance
 
 ```
-knowledge_search("difficulty curve design")
-knowledge_search("flow state challenge skill balance")
-knowledge_search("learning curve skill ceiling")
-knowledge_search("dynamic difficulty adjustment")
+recall(query="difficulty curve design")
+recall(query="flow state challenge skill balance")
+reflect(query="learning curve and skill ceiling relationship")
+recall(query="dynamic difficulty adjustment")
 ```
 
 ### Economy and Monetization
 
 ```
-knowledge_search("economy design {monetization type}")
-knowledge_search("currency flow balance sink faucet")
-knowledge_search("IAP monetization player psychology")
-knowledge_search("inflation game economy")
+recall(query="economy design {monetization type}")
+recall(query="currency flow balance sink faucet")
+reflect(query="IAP monetization and player psychology")
+recall(query="inflation game economy")
 ```
 
 ### Retention and Engagement
 
 ```
-knowledge_search("retention engagement loop design")
-knowledge_search("session length daily active users")
-knowledge_search("habit formation game design")
-knowledge_search("engagement loop reward schedule")
+recall(query="retention engagement loop design")
+recall(query="session length daily active users")
+reflect(query="habit formation in game design")
+recall(query="engagement loop reward schedule")
 ```
 
 ### UX and Onboarding
 
 ```
-knowledge_search("onboarding tutorial design")
-knowledge_search("UI UX game interface patterns")
-knowledge_search("friction reduction player experience")
+recall(query="onboarding tutorial design")
+recall(query="UI UX game interface patterns")
+reflect(query="friction reduction in player experience")
 ```
 
 ---
@@ -96,21 +98,22 @@ knowledge_search("friction reduction player experience")
 
 **Run searches proactively.** Don't wait for the user to ask for references. When a game design topic appears, search first, then respond.
 
+**Use `recall` for factual retrieval, `reflect` for synthesis.** `recall` returns matching knowledge chunks. `reflect` reasons across all stored knowledge to form a synthesized answer. Use both:
+
+```
+recall(query="reward systems progression")          # Find specific facts
+reflect(query="How do reward systems affect long-term player retention?")  # Synthesize reasoning
+```
+
 **Use 2-3 searches per topic.** A single query rarely captures the full picture. Run parallel searches from different angles: theory, application, and player psychology.
 
-**Combine `knowledge_search` with `knowledge_query_entity`.** After finding relevant chunks, query specific entities to get relationship context.
-
+**Use tags to filter.** If knowledge is tagged by book or topic, use tags parameter:
 ```
-knowledge_search("reward systems progression")
-knowledge_query_entity("Reward System")
-knowledge_query_entity("Progression System")
+recall(query="core loop", tags=["schell"])
+recall(query="motivation", tags=["self-determination"])
 ```
 
-**Check stats when uncertain.** Use `knowledge_stats` to verify the knowledge base is loaded before searching.
-
-```
-knowledge_stats()
-```
+**Check stats when uncertain.** Use `get_bank` to verify the knowledge base has content before searching.
 
 ---
 
@@ -121,31 +124,49 @@ For complex design questions, decompose into sub-topics and search each:
 **Example: "How should I design a progression system for a casual mobile game?"**
 
 ```
-knowledge_search("progression design casual mobile")
-knowledge_search("difficulty curve casual games")
-knowledge_search("retention progression systems")
-knowledge_search("intrinsic motivation casual players")
-knowledge_query_entity("Progression System")
+recall(query="progression design casual mobile")
+recall(query="difficulty curve casual games")
+recall(query="retention progression systems")
+reflect(query="What progression patterns work best for casual mobile games based on player psychology?")
 ```
 
 **Example: "What monetization model fits a mid-core RPG?"**
 
 ```
-knowledge_search("monetization mid-core RPG")
-knowledge_search("IAP player psychology spending")
-knowledge_search("economy design RPG currency")
-knowledge_search("battle pass subscription model")
+recall(query="monetization mid-core RPG")
+recall(query="IAP player psychology spending")
+recall(query="economy design RPG currency")
+reflect(query="Compare monetization models for mid-core RPGs: battle pass vs IAP vs subscription")
 ```
+
+---
+
+## Storing New Knowledge
+
+When the user provides new design insights, playtest results, or design decisions, store them:
+
+```
+retain(content="Playtest showed 60% of casual players drop off at level 3 difficulty spike", tags=["playtest", "difficulty", "retention"])
+retain(content="Core loop: Plant → Grow → Harvest → Trade. 30-sec cycle targets Competence (SDT)", tags=["core-loop", "sdt"])
+```
+
+**When to retain:**
+- User shares playtest feedback or data
+- Design decisions are finalized
+- New insights emerge from discussion
+- Cross-referencing reveals a novel pattern
 
 ---
 
 ## Quality Guidelines
 
-**Cite every claim.** Include the book title and page number when making theory-backed recommendations. Don't assert design principles without a source.
+**Cite every claim.** Include the book title and relevant context when making theory-backed recommendations. Don't assert design principles without a source.
 
 **Synthesize, don't quote.** Summarize what the source says and connect it to the user's specific context. Raw text dumps are not useful.
 
 **Cross-reference across books.** The five books often complement each other. Schell on mechanics + Eyal on habit loops + MDA on aesthetics gives a richer answer than any single source.
+
+**Use `reflect` for cross-reference.** When you need to combine insights from multiple books, use `reflect` — it reasons across all stored knowledge.
 
 **Acknowledge gaps.** If searches return limited results, say so clearly and suggest alternative query terms.
 
@@ -158,7 +179,7 @@ knowledge_search("battle pass subscription model")
 ### When knowledge is found
 
 ```
-**From "{Book Title}" (p.{page}):**
+**From "{Book Title}":**
 {Key insight synthesized from source — 1-3 sentences}
 
 **Application to the current design:**
@@ -175,23 +196,22 @@ knowledge_search("battle pass subscription model")
 {What this means for the user's specific situation}
 ```
 
+### When reflect provides deep synthesis
+
+```
+**Synthesis across knowledge base:**
+{Reasoned analysis combining multiple sources and relationships}
+
+**Key takeaway:**
+{Actionable recommendation grounded in the synthesis}
+```
+
 ### When knowledge base coverage is limited
 
 ```
 **Note:** The knowledge base has limited coverage on this specific topic.
 **What was found:** {Brief summary of closest matches}
 **Suggested follow-up searches:** {2-3 alternative query terms}
-```
-
-### When entity relationships are relevant
-
-```
-**Entity relationships found:**
-- {Entity A} depends on {Entity B}
-- {Entity C} conflicts with {Entity D}
-
-**Design consideration:**
-{What these relationships mean for the feature being discussed}
 ```
 
 ---
@@ -204,4 +224,4 @@ Skip knowledge base searches for:
 - Questions about specific games that aren't in the knowledge base
 - Requests for opinions or preferences rather than design theory
 
-For those, respond directly without invoking MCP tools.
+For those, respond directly without invoking Hindsight tools.

@@ -32,7 +32,7 @@ fi
 mkdir -p "$CACHE_DIR"
 
 # Copy plugin files (exclude dev/test artifacts)
-echo "[1/4] Copying plugin files..."
+echo "[1/5] Copying plugin files..."
 rsync -a --delete \
   --exclude='node_modules' \
   --exclude='.git' \
@@ -46,15 +46,40 @@ rsync -a --delete \
   --exclude='packages/knowledge-layer/src/e2e' \
   --exclude='install.sh' \
   --exclude='uninstall.sh' \
+  --exclude='.env' \
   "$SCRIPT_DIR/" "$CACHE_DIR/"
 
 # Install dependencies
-echo "[2/4] Installing dependencies..."
+echo "[2/5] Installing dependencies..."
 (cd "$CACHE_DIR" && npm install --production 2>/dev/null)
 (cd "$CACHE_DIR/packages/mcp-server" && npm install --production 2>/dev/null)
 
+# Set up Hindsight API key
+echo "[3/5] Configuring knowledge base..."
+ENV_FILE="$CACHE_DIR/.env"
+if [ -f "$ENV_FILE" ] && grep -q 'HINDSIGHT_API_KEY=' "$ENV_FILE" 2>/dev/null; then
+  echo "  Hindsight API key already configured."
+else
+  echo ""
+  echo "  The knowledge base requires a Hindsight API key."
+  echo "  Server: https://hindsight.zingplay.dev/"
+  echo ""
+  if [ -t 0 ]; then
+    read -rp "  Enter your Hindsight API key (or press Enter to skip): " api_key
+    if [ -n "$api_key" ]; then
+      echo "HINDSIGHT_API_KEY=$api_key" > "$ENV_FILE"
+      echo "  ✅ API key saved."
+    else
+      echo "  Skipped. You can set it later in: $CACHE_DIR/.env"
+    fi
+  else
+    echo "  Non-interactive mode. Set it later:"
+    echo "    echo 'HINDSIGHT_API_KEY=your-key' > $CACHE_DIR/.env"
+  fi
+fi
+
 # Update installed_plugins.json
-echo "[3/4] Registering plugin..."
+echo "[4/5] Registering plugin..."
 mkdir -p "$PLUGINS_DIR"
 
 INSTALL_ENTRY=$(cat <<EOF
@@ -96,7 +121,7 @@ EOF
 fi
 
 # Update settings.json — enable the plugin
-echo "[4/4] Enabling plugin..."
+echo "[5/5] Enabling plugin..."
 mkdir -p "$CLAUDE_DIR"
 
 if [ -f "$SETTINGS_JSON" ]; then
@@ -129,6 +154,11 @@ echo ""
 echo "The plugin will auto-load in all new Claude Code sessions."
 echo "Run 'claude' to start using it."
 echo ""
+if [ -z "${api_key:-}" ] && ! grep -q 'HINDSIGHT_API_KEY=' "$CACHE_DIR/.env" 2>/dev/null; then
+  echo "⚠️  Remember to set your Hindsight API key:"
+  echo "  echo 'HINDSIGHT_API_KEY=your-key' > $CACHE_DIR/.env"
+  echo ""
+fi
 echo "To add knowledge base PDFs, place them in:"
 echo "  $CACHE_DIR/knowledge/"
 echo "Then run: cd $CACHE_DIR && npm run setup:knowledge"

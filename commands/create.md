@@ -66,7 +66,8 @@ Ask the user via AskUserQuestion:
 **STOP. Wait for the user to choose a direction.**
 
 After selection:
-- If "AI tự do sáng tạo": search knowledge base using `knowledge_search`, read `references/game-design-theories.md`. Generate concepts freely.
+- If "AI tự do sáng tạo": search knowledge base using `mcp__hindsight__recall`, read `references/game-design-theories.md`. Generate concepts freely.
+- If "Kết hợp mechanics từ các game": search knowledge base for mechanics patterns across the genre, search for reference game mechanics, identify mechanics from different games that could combine in novel ways. Generate concepts as combinations.
 - If "Kết hợp mechanics từ các game": search knowledge base for mechanics patterns across the genre, search for reference game mechanics, identify mechanics from different games that could combine in novel ways. Generate concepts as combinations.
 
 ---

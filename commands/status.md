@@ -36,7 +36,7 @@ Count how many of the 7 detail docs exist (the docs below `index.html` in the li
 
 **Step 3: Get knowledge base stats**
 
-Call the `knowledge_stats` MCP tool. Extract document count and chunk count.
+Call the `mcp__hindsight__get_bank` MCP tool. Extract document count and memory stats.
 
 **Step 4: Determine pipeline stage**
 
@@ -68,7 +68,9 @@ Artifacts:
 {✅/⬜} UI Mockups (Figma / Excalidraw)
 {✅/⬜} Detail Documents ({count}/7)
 
-Knowledge Base:
+| Knowledge Base:
+| 📚 Memories: {count}
+| 🏦 Bank: game-knowledge
 📚 Documents: {count}
 🔍 Chunks: {count}
 ```

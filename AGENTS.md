@@ -1,12 +1,12 @@
 # PROJECT KNOWLEDGE BASE
 
-**Generated:** 2026-03-31
-**Commit:** 65abcdf
+**Generated:** 2026-04-09
+**Commit:** (pre-release)
 **Branch:** master
 
 ## OVERVIEW
 
-Claude Code plugin: AI game design pipeline (Concept > Prototype > Feedback > Documents). Knowledge layer library (BM25 + knowledge graph) + MCP server exposing tools to Claude.
+Claude Code plugin: AI game design pipeline (Concept > Prototype > Feedback > Documents). 10 agents (Director → Leads → Specialists → Gates hierarchy). Knowledge via Hindsight MCP (recall/reflect/retain). MCP server for prototypes + projects. Figma integration.
 
 ## STRUCTURE
 
@@ -37,19 +37,18 @@ Claude Code plugin: AI game design pipeline (Concept > Prototype > Feedback > Do
 │       ├── tsconfig.json
 │       └── src/
 ├── commands/                  # Slash commands (markdown definitions for Claude Code)
-├── agents/                    # Role agents: concept-designer, code-prototyper, ui-ux-reviewer, etc.
-│   └── ui-ux-reviewer.md      # Read-only UI/UX review agent (ui-ux-spec.md + art-direction.md)
-├── skills/                    # Skill packages: game-concept-design, game-knowledge, game-ui-ux
-│   └── game-ui-ux/            # Skill package (SKILL.md + references/ subdirectory)
+├── agents/                    # 10 role agents: creative-director, concept-designer, code-prototyper, etc.
+│   └── (CCGS-inspired hierarchy: 1 Director + 3 Leads + 3 Specialists + 3 Gates)
+├── skills/                    # Skill packages: game-concept-design, game-knowledge, game-ui-ux, figma-design
 ├── references/                # Design templates + theory references + UI/UX & review guides
 ├── knowledge/                 # Source PDFs (5 books)
 ├── templates/                 # HTML5 prototype templates (Canvas/Three.js)
 ├── projects/                  # Generated game projects (gitignored output)
 ├── docs/                      # Architecture docs, pipeline plans
-├── scripts/                   # setup-knowledge.ts, plugin-setup.sh
+├── scripts/                   # setup-knowledge.ts, plugin-setup.sh, push-knowledge.py
 ├── hooks/                     # SessionStart hook → plugin-setup.sh
 ├── .claude-plugin/            # plugin.json + marketplace.json
-├── package.json               # Workspace root (bun workspaces)
+├── package.json               # Workspace root (npm workspaces)
 └── settings.json              # Plugin permission manifest
 ```
 
@@ -100,7 +99,7 @@ Claude Code plugin: AI game design pipeline (Concept > Prototype > Feedback > Do
 
 - Commands and agents defined as **markdown files**, not code.
 - Plugin uses `${CLAUDE_PLUGIN_ROOT}` env var for path resolution.
-- Knowledge cache persisted to `.knowledge-cache/` (index.json + graph.json).
+- Knowledge served via **Hindsight MCP** at `https://hindsight.zingplay.dev/mcp/game-knowledge/`. Agents use `recall`/`reflect`/`retain`.
 - Game design ontology: 9 entity types, 9 relation types (see `packages/knowledge-layer/src/graph/types.ts`).
 - Mock LLM pattern in tests: `{ chat: async () => jsonString }`.
 - Fixtures cover all 7 doc formats with factories: `getDocumentFixtureByType()`, `getAllChunkFixtures()`.
@@ -122,7 +121,8 @@ npm run cli                # Run CLI tool
 - Monorepo with npm workspaces. `packages/knowledge-layer` and `packages/mcp-server` are workspace packages. `npm install` at root installs all deps.
 - MCP server depends on knowledge-layer via npm workspace resolution.
 - YAML comments are **not preserved** after parsing (`packages/knowledge-layer/src/parse/yaml.ts` — known limitation).
-- `knowledge_graph` MCP tool is **stub only** — LLM provider integration deferred.
+- Knowledge layer (`packages/knowledge-layer`) and MCP server (`packages/mcp-server`) still exist but agents now use **Hindsight MCP** for knowledge operations. The `game-design-kit` MCP provides prototype + project tools only.
+- `HINDSIGHT_API_KEY` required — stored in `.env`, loaded by `scripts/plugin-setup.sh` at session start.
 - No CI/CD pipeline, no Docker, no linter config. Testing is manual via `npm test`.
 - No pre-commit hooks.
 - Added pipeline docs and references for UI/UX review and GDD/concept evaluation: `references/gui-section-guide.md`, `references/gameplay-section-guide.md`, `references/concept-evaluation-criteria.md`, `references/concept-review-template.md`, `references/gdd-evaluation-criteria.md`, `references/gdd-expected-sections.md`, `references/gdd-review-template.md`.

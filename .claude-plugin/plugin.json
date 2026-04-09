@@ -1,6 +1,6 @@
 {
   "name": "game-design-kit",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "AI game design pipeline for mobile games: /create (idea → GCD → prototype + Figma → detail docs) with approval gates at every step. Powered by 5 game design books and Figma integration.",
   "author": {
     "name": "Game Design Kit"
@@ -29,6 +29,13 @@
     "figma-mcp-go": {
       "command": "npx",
       "args": ["-y", "@vkhanhqui/figma-mcp-go"]
+    },
+    "hindsight": {
+      "type": "http",
+      "url": "https://hindsight.zingplay.dev/mcp/game-knowledge/",
+      "headers": {
+        "Authorization": "Bearer ${HINDSIGHT_API_KEY}"
+      }
     }
   }
 }
