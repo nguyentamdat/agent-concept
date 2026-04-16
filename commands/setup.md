@@ -69,19 +69,21 @@ Then show: "Updated to v{new_version}. Restart Claude Code to apply."
 
 ### If Marketplace installer (nguyentamdat):
 
-Show the one-liner for the user's platform:
+Detect the current shell to pick the right installer:
+- If shell is `bash` (check `$BASH` or `$SHELL` contains "bash") — use the **bash** one-liner. This works on macOS, Linux, and Git Bash on Windows.
+- If shell is PowerShell — use the **PowerShell** one-liner.
 
-**macOS / Linux:**
+**Bash:**
 ```bash
 curl -fsSL https://gist.githubusercontent.com/nguyentamdat/da04f07bee67718d5c293d5e29a4790b/raw/install.sh | bash
 ```
 
-**Windows (PowerShell):**
+**PowerShell:**
 ```powershell
 irm https://gist.githubusercontent.com/nguyentamdat/9776a90bf3cf7fedc7575c04230f0f06/raw/install.ps1 | iex
 ```
 
-Ask the user if they want to run it now. If yes, execute the appropriate command.
+Ask the user if they want to run it now. If yes, execute the command matching the detected shell.
 
 ### If Local install (install.sh):
 
