@@ -2,7 +2,7 @@
 name: creative-director
 description: "Vision guardian and quality gate authority for game design pipeline. Maintains design coherence, pillar integrity, and cross-agent coordination."
 model: opus
-color: gold
+color: yellow
 tools:
   - Read
   - Glob

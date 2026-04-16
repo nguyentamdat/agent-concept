@@ -2,7 +2,7 @@
 name: wireframe-designer
 description: Tạo wireframe HTML tương tác từ Concept Pitch, GCD và art-direction. Thể hiện ý đồ thiết kế UI/UX dạng low-fi mockup có navigation, transition, và mobile-first layout. Dùng khi cần wireframe màn hình game, thiết kế luồng người dùng, hoặc generate wireframe.html từ tài liệu thiết kế.
 model: sonnet
-color: purple
+color: magenta
 tools:
   - Read
   - Write
