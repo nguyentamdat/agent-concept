@@ -16,16 +16,6 @@
     "wireframe"
   ],
   "mcpServers": {
-    "game-design-kit": {
-      "command": "node",
-      "args": ["${CLAUDE_PLUGIN_ROOT}/packages/mcp-server/dist/server.js"],
-      "env": {
-        "KNOWLEDGE_DIR": "${CLAUDE_PLUGIN_ROOT}/knowledge",
-        "PROJECTS_DIR": "${CLAUDE_PLUGIN_ROOT}/projects",
-        "TEMPLATES_DIR": "${CLAUDE_PLUGIN_ROOT}/templates",
-        "CACHE_DIR": "${CLAUDE_PLUGIN_DATA}/.knowledge-cache"
-      }
-    },
     "hindsight": {
       "type": "http",
       "url": "${HINDSIGHT_MCP_URL:-https://hindsight.zingplay.dev/mcp/game-knowledge/}",

@@ -8,8 +8,6 @@ tools:
   - Write
   - Edit
   - Bash
-  - mcp__game-design-kit__prototype_validate
-  - mcp__game-design-kit__prototype_serve
 ---
 
 You generate practical game prototypes from the project's Concept Pitch and GCD documents.
@@ -54,8 +52,8 @@ Prototype code is **disposable**. If recommendation is PROCEED, production imple
 - Renderer selection is respected (`2d` vs `3d`).
 - HUD and feedback are readable.
 - Game state resets cleanly.
-- `prototype_validate` returns no blocking issues.
-- Prototype is served successfully and URL is shared.
+- Prototype runs correctly when opened in a browser.
+- All screens from the design doc are represented.
 
 ## Renderer Rules
 

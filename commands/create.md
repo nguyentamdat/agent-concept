@@ -18,7 +18,7 @@ Do this BEFORE every step, every agent invocation, and every approval gate. The 
 
 ## Step 0: Project Setup
 
-Call the `project_create` MCP tool to initialize the project. Use the user's game idea as the project name.
+Create the project directory under `projects/`. Use the user's game idea as the project name (kebab-case). Create subdirectories `prototype/` and `documents/` inside it.
 
 Ask the user via AskUserQuestion:
 
@@ -236,5 +236,5 @@ Once all selected documents are approved or skipped:
    - Wireframe (`wireframe.html`, if generated)
    - Market research (if requested)
    - Each detail document generated
-2. Show the current project status using the appropriate MCP tool.
+2. Show the current project status by listing the artifacts in the project directory.
 3. Let the user know the pipeline is complete and they can invoke individual commands to regenerate or revise any artifact.

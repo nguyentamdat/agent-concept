@@ -1,16 +1,5 @@
 {
   "mcpServers": {
-    "game-design-kit": {
-      "type": "stdio",
-      "command": "node",
-      "args": ["packages/mcp-server/dist/server.js"],
-      "env": {
-        "KNOWLEDGE_DIR": "./knowledge",
-        "PROJECTS_DIR": "./projects",
-        "TEMPLATES_DIR": "./templates",
-        "CACHE_DIR": "./.knowledge-cache"
-      }
-    },
     "hindsight": {
       "type": "http",
       "url": "https://hindsight.zingplay.dev/mcp/game-knowledge/",

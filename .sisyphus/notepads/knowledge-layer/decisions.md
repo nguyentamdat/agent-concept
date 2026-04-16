@@ -1,4 +1,0 @@
-- Kept evaluation metrics pure and deterministic: recall@k, MRR, NDCG@k, citation fidelity, and nearest-rank latency percentiles all operate on passed inputs without touching index state.
-- The report aggregates recall/MRR/NDCG as per-query means and citation fidelity over all returned results so the written evidence file reflects the whole retrieval run.
-- T10 `getDocument` exposes view-specific overloads so `raw`/`normalized` return `string`, `structure` returns `DocumentStructureNode[]`, and `chunks` returns `KnowledgeChunk[]` while still conforming to the existing `GetDocumentResult` contract.
-- Approved the retrieval quality gate because the golden dataset has 16 queries covering all 7 supported source types (`pdf`, `docx`, `md`, `txt`, `csv`, `json`, `yaml`), and every chunk fixture uses a `primaryCitation` whose `exactness` is explicitly set to `exact`.

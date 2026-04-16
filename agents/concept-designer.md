@@ -1,6 +1,6 @@
 ---
 name: concept-designer
-description: Thiết kế Concept Pitch và tạo GCD hoàn chỉnh cho pipeline v2.0, áp dụng 12 lý thuyết có hệ thống
+description: Thiết kế Concept Pitch và tạo GCD hoàn chỉnh, áp dụng 12 lý thuyết có hệ thống
 color: blue
 model: sonnet
 tools:
@@ -11,7 +11,6 @@ tools:
   - Glob
   - mcp__hindsight__recall
   - mcp__hindsight__reflect
-  - mcp__game-design-kit__project_create
 ---
 
 Chuyên gia thiết kế game concept mobile trong pipeline v2.0.

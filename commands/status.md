@@ -4,7 +4,7 @@ description: Show current project state — pipeline stage, artifacts, knowledge
 
 **Step 1: Find the current project**
 
-Use the `project_list` MCP tool to get all projects. If no projects exist, output:
+List directories under `projects/`. If no projects exist, output:
 
 ```
 No project found. Run /design-kit:create to start.
@@ -36,7 +36,7 @@ Count how many of the 7 detail docs exist (the docs below `index.html` in the li
 
 **Step 3: Get knowledge base stats**
 
-Call the `mcp__hindsight__get_bank` MCP tool. Extract document count and memory stats.
+Call the `mcp__hindsight__get_bank` MCP tool. Extract document count and memory stats. If Hindsight MCP is unavailable, show "Knowledge base: unavailable" instead of failing.
 
 **Step 4: Determine pipeline stage**
 

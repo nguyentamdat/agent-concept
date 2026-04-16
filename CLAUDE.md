@@ -2,7 +2,7 @@
 
 Game Design Kit is a Claude Code plugin for an AI game design pipeline: Concept → Prototype → Detail Docs + Wireframe.
 
-It combines a local game design knowledge base, Concept Pitch + GCD design documents, and rapid HTML prototype generation in one workflow.
+It combines a Hindsight-powered game design knowledge base, Concept Pitch + GCD design documents, and rapid HTML prototype generation in one workflow.
 
 ## Install / Run
 
@@ -25,7 +25,6 @@ cd game-design-kit
 ### Local development (standalone in this repo)
 
 ```bash
-bun run setup
 claude
 ```
 
@@ -33,26 +32,20 @@ claude
 
 ## Knowledge Base
 
-The knowledge base contains 5 core PDF references:
-- Schell (The Art of Game Design)
-- MDA framework material
-- Hooked
-- A Theory of Fun
-- Players Making Decisions
+The knowledge base is served via **Hindsight MCP** with a dedicated `game-knowledge` memory bank (483+ memories, 22 tags). No local PDF files are needed.
 
-Use MCP knowledge tools to ground design decisions in these sources before proposing mechanics, economy, retention, or UX choices.
+Use Hindsight tools (`recall`, `reflect`) to ground design decisions in game design theory before proposing mechanics, economy, retention, or UX choices.
 
 Game concept design follows 12 core theories (from Players Making Decisions + A Theory of Fun), including MDA, Problem Statements, Meaningful Decisions, Flow, Interest Curves, Learning Curves, Anatomy of a Choice, decision quality checks, Randomness, Milieu, and motivation frameworks.
 
 ## Standard Pipeline
 
-Run project work in this order:
-1. `/design-kit:concept`
-2. `/design-kit:prototype`
-3. `/design-kit:feedback`
-4. `/design-kit:approve`
-
-`/design-kit:create` runs the full pipeline: collect inputs → brainstorm → Concept Pitch → GCD → Prototype → Feedback Gate → Detail Docs + Wireframe.
+| Command | Purpose |
+|---------|---------|
+| `/design-kit:create <idea>` | Full pipeline: brainstorm → Concept Pitch → GCD → Prototype → Detail Docs + Wireframe |
+| `/design-kit:iterate <feedback>` | Re-enter pipeline with feedback, update any artifact |
+| `/design-kit:status` | Show current project stage, artifacts, knowledge stats |
+| `/design-kit:setup` | Check version, update plugin, or diagnose issues |
 
 `/design-kit:setup` checks plugin version, updates to latest, or runs diagnostics (`setup update`, `setup doctor`).
 
@@ -75,7 +68,7 @@ Design documents (`gcd.md`) must be written in Vietnamese.
 
 ## Plugin Structure
 
-- `.claude-plugin/plugin.json`: plugin metadata + MCP server config (uses `${CLAUDE_PLUGIN_ROOT}`)
+- `.claude-plugin/plugin.json`: plugin metadata + Hindsight MCP config
 - `.claude-plugin/marketplace.json`: marketplace declaration
 - `commands/`: slash-command definitions
 - `agents/`: role agents for each pipeline phase
@@ -86,20 +79,10 @@ Design documents (`gcd.md`) must be written in Vietnamese.
 ## Core Repository Directories
 
 - `references/`: shared design templates and theory references (used by commands, agents, skills)
-- `knowledge/`: source design books and references
 - `projects/`: generated game projects and specs
-- `templates/`: prototype templates and starting points
-- `packages/knowledge-layer/`: knowledge layer TypeScript library
-- `packages/mcp-server/`: MCP server implementation and tool handlers
-
-## MCP Runtime / Test Commands
-
-- Run tests: `npm test`
-- Type-check: `npm run typecheck`
-- Run MCP server: `npm run mcp`
 
 ## Operational Guidance
 
-- Prefer MCP tool calls over shell commands for project logic.
+- Use Hindsight MCP (`recall`, `reflect`) for knowledge base queries.
 - Cite source + page when claims depend on knowledge base material.
 - Keep command outputs concise and actionable.

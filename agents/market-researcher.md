@@ -9,7 +9,7 @@ tools:
   - Glob
   - Grep
   - WebFetch
-  - web_search_exa
+  - WebSearch
   - mcp__hindsight__recall
   - mcp__hindsight__reflect
 ---

@@ -1,5 +1,0 @@
----
-name: game-ui-ux
-description: "Kiến thức UI/UX game mobile toàn diện — từ casual đến midcore/hardcore. Dùng skill này khi user cần review UI mockup, tạo UI checklist cho screen game, tạo art style guide / moodboard brief, hoặc training team về UI/UX game. Trigger khi user nhắc đến review UI game, critique mockup, UI checklist, art style guide game, moodboard game, game UI feedback, phân tích UI, hoặc hỏi về shape language, color theory, visual hierarchy, CTA design, onboarding, accessibility, responsive layout, localization, dark UI, offer popup, gacha UI."
----
-

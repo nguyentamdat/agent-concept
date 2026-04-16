@@ -1,7 +1,6 @@
 {
   "permissions": {
     "allow": [
-      "Bash(bun *)",
       "Bash(npx *)",
       "Bash(node *)",
       "Read",
@@ -9,19 +8,15 @@
       "Edit",
       "Glob",
       "Grep",
-      "mcp__game-design-kit__knowledge_ingest",
-      "mcp__game-design-kit__knowledge_search",
-      "mcp__game-design-kit__knowledge_graph",
-      "mcp__game-design-kit__knowledge_query_entity",
-      "mcp__game-design-kit__knowledge_stats",
-      "mcp__game-design-kit__spec_validate",
-      "mcp__game-design-kit__spec_diff",
-      "mcp__game-design-kit__spec_bump_version",
-      "mcp__game-design-kit__prototype_serve",
-      "mcp__game-design-kit__prototype_stop",
-      "mcp__game-design-kit__prototype_validate",
-      "mcp__game-design-kit__project_create",
-      "mcp__game-design-kit__project_list"
+      "mcp__hindsight__recall",
+      "mcp__hindsight__reflect",
+      "mcp__hindsight__retain",
+      "mcp__hindsight__get_bank",
+      "mcp__hindsight__list_memories",
+      "mcp__hindsight__create_mental_model",
+      "mcp__hindsight__list_mental_models",
+      "mcp__hindsight__get_mental_model",
+      "mcp__hindsight__list_tags"
     ],
     "deny": [
       "Bash(rm -rf *)",

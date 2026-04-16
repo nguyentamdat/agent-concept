@@ -2,25 +2,5 @@
   "name": "game-design-kit",
   "version": "2.2.0",
   "description": "AI game design pipeline plugin for Claude Code",
-  "type": "module",
-  "private": true,
-  "workspaces": ["packages/*"],
-  "scripts": {
-    "setup": "npm install && npx tsx scripts/setup-knowledge.ts",
-    "setup:knowledge": "npx tsx scripts/setup-knowledge.ts",
-    "build": "npx tsup packages/knowledge-layer/src/index.ts --outDir packages/knowledge-layer/dist --format esm && cd packages/mcp-server && npx tsup && cd ../.. && tsc -p packages/knowledge-layer/tsconfig.build.json",
-    "typecheck": "tsc --noEmit -p packages/knowledge-layer/tsconfig.json && tsc --noEmit -p packages/mcp-server/tsconfig.json",
-    "test": "npx vitest run",
-    "test:watch": "npx vitest",
-    "clean": "rm -rf packages/knowledge-layer/dist packages/mcp-server/dist .knowledge-cache",
-    "cli": "npx tsx packages/knowledge-layer/src/cli.ts",
-    "mcp": "node packages/mcp-server/dist/server.js"
-  },
-  "devDependencies": {
-    "@types/node": "latest",
-    "tsx": "latest",
-    "tsup": "latest",
-    "vitest": "latest",
-    "typescript": "latest"
-  }
+  "private": true
 }

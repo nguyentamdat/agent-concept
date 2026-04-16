@@ -63,7 +63,6 @@ Where:
 ```bash
 cd {plugin_root}
 git pull origin master
-npm install --production
 ```
 
 Then show: "Updated to v{new_version}. Restart Claude Code to apply."
@@ -119,47 +118,32 @@ Verify these files/directories exist in the plugin root:
 | `skills/game-concept-design/SKILL.md` | Yes |
 | `skills/game-knowledge/SKILL.md` | Yes |
 | `skills/game-ui-ux-guide/SKILL.md` | Yes |
-| `packages/mcp-server/dist/server.js` | Yes |
-| `node_modules/` | Yes |
+| `references/` | Yes |
 
-**Step 2: Check MCP server**
+**Step 2: Check Hindsight MCP**
 
-Verify the MCP server can start:
-```bash
-node -e "require('{plugin_root}/packages/mcp-server/dist/server.js')" 2>&1 | head -5
-```
+Call `mcp__hindsight__get_bank` to verify the knowledge bank is reachable.
 
-If error → report "MCP server: FAIL" with error message.
+If error → report "Hindsight MCP: FAIL" with error message.
+If success → report memory count from `mcp__hindsight__list_memories` (limit 1, use total).
 
 **Step 3: Check version consistency**
 
-Read version from all sources:
+Read version from:
 - `package.json` (root)
 - `.claude-plugin/plugin.json`
 - `.claude-plugin/marketplace.json`
-- `packages/mcp-server/package.json`
-- `packages/knowledge-layer/package.json`
 
 All must match. If mismatch → report which files are out of sync.
 
-**Step 4: Check dependencies**
-
-```bash
-cd {plugin_root} && npm ls --production --depth=0 2>&1 | grep -c "MISSING\|ERR\|missing"
-```
-
-If count > 0 → report "Dependencies: {count} missing. Run: npm install --production"
-
-**Step 5: Output diagnostic card**
+**Step 4: Output diagnostic card**
 
 ```
 Doctor: Game Design Kit v{version}
 
-Structure:    {OK/FAIL} ({count}/10 files)
-MCP Server:   {OK/FAIL}
-Versions:     {OK/MISMATCH}
-Dependencies: {OK/MISSING}
-Knowledge:    {count} PDFs in knowledge/
+Structure:      {OK/FAIL} ({count}/9 files)
+Hindsight MCP:  {OK/FAIL} ({memory_count} memories)
+Versions:       {OK/MISMATCH}
 
 {issues_list_if_any}
 ```

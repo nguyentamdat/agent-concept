@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Release version (e.g. 2.1.0)"
+        description: "Release version (e.g. 2.2.0)"
         required: true
 
 permissions:
@@ -18,10 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
 
       - name: Determine version
         id: version
@@ -36,18 +32,6 @@ jobs:
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
           echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Typecheck
-        run: npm run typecheck
-
-      - name: Test
-        run: npm test
-
-      - name: Build
-        run: npm run build
-
       - name: Package ZIP
         run: |
           zip -r "game-design-kit-${{ steps.version.outputs.version }}.zip" \
@@ -55,33 +39,19 @@ jobs:
             agents/ \
             commands/ \
             hooks/ \
-            knowledge/fixtures/ \
-            packages/knowledge-layer/src/ \
-            packages/knowledge-layer/package.json \
-            packages/knowledge-layer/tsconfig.json \
-            packages/knowledge-layer/tsconfig.build.json \
-            packages/knowledge-layer/fixtures/ \
-            packages/mcp-server/dist/ \
-            packages/mcp-server/package.json \
-            packages/mcp-server/tsconfig.json \
             references/ \
             scripts/plugin-setup.sh \
-            scripts/setup-knowledge.ts \
             skills/ \
-            templates/ \
             AGENTS.md \
             CLAUDE.md \
             README.md \
+            LICENSE \
             install.sh \
             uninstall.sh \
             package.json \
-            tsconfig.json \
             settings.json \
-            vitest.config.ts \
-            -x "**/*.test.ts" \
-               "**/test-utils/*" \
-               "**/e2e/*" \
-               "**/.DS_Store"
+            .gitignore \
+            -x "**/.DS_Store"
 
       - name: Create tag (manual dispatch)
         if: github.event_name == 'workflow_dispatch'

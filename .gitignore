@@ -1,5 +1,4 @@
 node_modules/
-packages/knowledge-layer/dist/
 /dist/
 .opencode/
 *.log
@@ -12,9 +11,9 @@ Thumbs.db
 .vscode/
 
 .sisyphus/
+.omc/
 
 .knowledge-cache/
-knowledge/*.pdf
 projects/*/
 
 *.tar.gz
