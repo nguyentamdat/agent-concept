@@ -54,6 +54,8 @@ Run project work in this order:
 
 `/design-kit:create` runs the full pipeline: collect inputs → brainstorm → Concept Pitch → GCD → Prototype → Feedback Gate → Detail Docs + Wireframe.
 
+`/design-kit:setup` checks plugin version, updates to latest, or runs diagnostics (`setup update`, `setup doctor`).
+
 Design documents (`gcd.md`) must be written in Vietnamese.
 
 ## Design Document Conventions

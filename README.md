@@ -57,6 +57,7 @@ If `HINDSIGHT_API_KEY` is unset, the knowledge-base tools (`recall`/`reflect`/`r
 | `/design-kit:create <idea>` | Full pipeline: brainstorm → Concept Pitch → GCD → Prototype → Detail Docs + Wireframe |
 | `/design-kit:iterate <feedback>` | Re-enter pipeline with feedback, update any artifact |
 | `/design-kit:status` | Show current project stage, artifacts, knowledge stats |
+| `/design-kit:setup` | Check version, update plugin, or diagnose issues |
 
 Design documents (`gcd.md`) are written in Vietnamese.
 

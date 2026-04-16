@@ -56,7 +56,7 @@ Claude Code plugin: AI game design pipeline (Concept > Prototype > Feedback > Do
 │       ├── package.json       # depends on knowledge-layer via workspace:*
 │       ├── tsconfig.json
 │       └── src/
-├── commands/                  # Slash commands (markdown definitions for Claude Code)
+├── commands/                  # Slash commands: create, iterate, status, setup
 ├── agents/                    # Role agents: creative-director, concept-designer, code-prototyper, wireframe-designer, etc.
 │   └── (3-tier hierarchy: T1 Director + T2 Producers + T3 Reviewers)
 ├── skills/                    # Skill packages: game-concept-design, game-knowledge, game-ui-ux-guide
