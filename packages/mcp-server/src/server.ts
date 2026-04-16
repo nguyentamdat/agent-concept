@@ -77,7 +77,7 @@ async function persistKnowledgeCache(): Promise<void> {
 
 const server = new McpServer({
   name: "game-design-kit",
-  version: "0.1.0",
+  version: "2.2.0",
 });
 
 registerKnowledgeTools(server, {

@@ -100,7 +100,7 @@ Claude Code plugin: AI game design pipeline (Concept > Prototype > Feedback > Do
 - **Search**: `search()` is sync (BM25 in-memory). `deepSearch()` is async (requires LLM).
 - **Graph**: Opt-in via `buildGraph(llm)`. Focused search degrades to lexical without graph.
 - **LLM**: BYOLLM via `LLMProvider` interface (`{ chat(messages): Promise<string> }`). Library bundles no LLM SDK.
-- **Design docs**: `gcd.md` and `gcd-gameplay.md` must be written in **Vietnamese**.
+- **Design docs**: `gcd.md` must be written in **Vietnamese**.
 - **Concept Pitch**: Structured concept document (`concept-pitch.md`). Generated in Step 4 of create pipeline. Core design reference for all downstream artifacts.
 - **Prototypes**: Single `index.html` per project. Vanilla JS, geometric placeholders.
 - **Dependencies**: All `"latest"` — no pinned versions.

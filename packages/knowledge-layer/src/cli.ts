@@ -1,4 +1,4 @@
-#!/usr/bin/env bun
+#!/usr/bin/env npx tsx
 import { readdir, stat } from "node:fs/promises";
 import { extname, join, resolve } from "node:path";
 import { Command } from "commander";
