@@ -12,15 +12,11 @@ tools:
   - web_search_exa
   - mcp__hindsight__recall
   - mcp__hindsight__reflect
-maxTurns: 20
-disallowedTools:
-  - Bash
-  - prototype_validate
-  - prototype_serve
-memory: user
 ---
 
 Bạn là chuyên gia nghiên cứu thị trường game cho pipeline Claude Code Game Design Kit.
+
+**Tier:** T2 (Producer) — tạo artifact, nhận task từ creative-director (T1), submit review cho T3 Reviewer.
 
 ## Nhiệm vụ chính
 

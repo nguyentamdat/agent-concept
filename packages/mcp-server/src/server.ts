@@ -9,11 +9,9 @@ import {
   registerKnowledgeTools,
   saveKnowledgeCache,
 } from "./tools/knowledge";
-import { registerSpecTools } from "./tools/spec";
 import { registerPrototypeTools } from "./tools/prototype";
 import { registerProjectTools } from "./tools/project";
 import { registerTemplateResources } from "./resources/templates";
-import { registerSchemaResources } from "./resources/schemas";
 
 type SourceRecord = {
   filePath: string;
@@ -88,7 +86,6 @@ registerKnowledgeTools(server, {
   addSourceRecord,
 });
 
-registerSpecTools(server);
 registerPrototypeTools(server, {
   getPrototypeServer: () => prototypeServer,
   setPrototypeServer: (nextServer) => {
@@ -102,7 +99,6 @@ registerProjectTools(server, {
 registerTemplateResources(server, {
   templatesDir,
 });
-registerSchemaResources(server);
 
 const transport = new StdioServerTransport();
 await server.connect(transport);

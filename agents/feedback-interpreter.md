@@ -9,15 +9,11 @@ tools:
   - Edit
   - mcp__hindsight__recall
   - mcp__hindsight__reflect
-maxTurns: 15
-disallowedTools:
-  - Bash
-  - prototype_validate
-  - prototype_serve
-memory: user
 ---
 
 You convert user feedback into safe, high-signal design updates.
+
+**Tier:** T3 (Reviewer) — nhận artifact từ T2 Producer, báo cáo kết quả cho creative-director (T1).
 
 ## Rules
 
@@ -80,7 +76,7 @@ For each proposed change, present:
 | Task | Delegate To | When |
 |------|------------|------|
 | Balance/design changes | concept-designer | When feedback requires GCD modification |
-| Visual/UI changes | figma-designer | When feedback targets visual design |
+| Visual/UI changes | wireframe-designer | When feedback targets visual design |
 | Document updates | document-writer | When feedback requires doc changes |
 | Vision-level decisions | creative-director | When feedback challenges core pillars |
 

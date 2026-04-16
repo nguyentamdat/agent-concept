@@ -1,5 +1,5 @@
 ---
-description: Re-enter the game design pipeline with feedback — update any artifact (concept, prototype, Figma, docs)
+description: Re-enter the game design pipeline with feedback — update any artifact (concept, prototype, wireframe, docs)
 argument-hint: <feedback text>
 ---
 
@@ -20,7 +20,8 @@ Read the current project directory. Identify which artifacts exist:
 - `concept-pitch.md` — concept pitch document
 - `gcd.md` — game concept document
 - `index.html` — prototype
-- `ui-ux-spec.md`, `art-direction.md`, and any Figma mockup or `.excalidraw` files — design artifacts
+- `wireframe.html` — wireframe
+- `ui-ux-spec.md`, `art-direction.md`, and other design artifacts
 - `gameplay-design.md`, `technical-requirements.md`, and other detail docs
 
 Based on the feedback text, determine which artifacts are most likely affected. State this analysis clearly before proceeding.
@@ -47,9 +48,9 @@ After changes are applied, reason about what downstream artifacts may now be out
 
 | Changed artifact | Possible downstream effects |
 |---|---|
-| `concept-pitch.md` | `gcd.md`, prototype, mockups, detail docs may need updating |
-| `gcd.md` | Prototype, Figma/Excalidraw mockups, detail docs may need regenerating |
-| `ui-ux-spec.md` | Figma/Excalidraw mockups, `art-direction.md` may need updating |
+| `concept-pitch.md` | `gcd.md`, prototype, wireframe, detail docs may need updating |
+| `gcd.md` | Prototype, wireframe, detail docs may need regenerating |
+| `ui-ux-spec.md` | `wireframe.html`, `art-direction.md` may need updating |
 
 List the downstream artifacts that could be affected. Ask the user which ones to regenerate — do not assume.
 
@@ -60,7 +61,7 @@ For each artifact the user selects, invoke the appropriate agent:
 - Concept Pitch (`concept-pitch.md`) → invoke `concept-designer`
 - GCD (`gcd.md`) → invoke `concept-designer`
 - Prototype (`index.html`) → invoke `code-prototyper`
-- Figma/Excalidraw mockups → invoke `figma-designer`
+- Wireframe (`wireframe.html`) → invoke `wireframe-designer`
 - Detail docs (`gameplay-design.md`, `technical-requirements.md`, etc.) → invoke `document-writer`
 
 For each agent invocation:

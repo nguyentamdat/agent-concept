@@ -1,6 +1,6 @@
 # Game Design Kit Claude Code Plugin
 
-Game Design Kit is a Claude Code plugin for an AI game design pipeline: Concept → Prototype → Feedback → Documents.
+Game Design Kit is a Claude Code plugin for an AI game design pipeline: Concept → Prototype → Detail Docs + Wireframe.
 
 It combines a local game design knowledge base, Concept Pitch + GCD design documents, and rapid HTML prototype generation in one workflow.
 
@@ -52,7 +52,7 @@ Run project work in this order:
 3. `/design-kit:feedback`
 4. `/design-kit:approve`
 
-`/design-kit:create` runs the full pipeline: collect inputs → brainstorm → Concept Pitch → GCD → Prototype + Mockups → Feedback Gate → Detail Docs.
+`/design-kit:create` runs the full pipeline: collect inputs → brainstorm → Concept Pitch → GCD → Prototype → Feedback Gate → Detail Docs + Wireframe.
 
 Design documents (`gcd.md`) must be written in Vietnamese.
 
@@ -77,7 +77,7 @@ Design documents (`gcd.md`) must be written in Vietnamese.
 - `.claude-plugin/marketplace.json`: marketplace declaration
 - `commands/`: slash-command definitions
 - `agents/`: role agents for each pipeline phase
-- `skills/`: skill packages and references
+- `skills/`: skill packages and references (includes `game-ui-ux-guide/`)
 - `hooks/hooks.json`: plugin session hooks
 - `settings.json`: plugin permission manifest
 

@@ -10,12 +10,10 @@ mcp-server/
 │   ├── server.ts              # Entry point: McpServer init, tool/resource registration, stdio connect
 │   ├── tools/
 │   │   ├── knowledge.ts       # knowledge_ingest, knowledge_search, knowledge_graph, knowledge_query_entity, knowledge_stats
-│   │   ├── spec.ts            # spec_validate, spec_diff, spec_bump_version (GameSpecSchema inline)
 │   │   ├── prototype.ts       # prototype_serve, prototype_stop, prototype_validate
 │   │   └── project.ts         # project_create, project_list
 │   ├── resources/
-│   │   ├── templates.ts       # template://index, template://{name}
-│   │   └── schemas.ts         # Schema resources (GameSpecSchema)
+│   │   └── templates.ts       # template://index, template://{name}
 │   └── types/
 │       └── modelcontextprotocol-server.d.ts  # SDK type augmentation
 ├── package.json               # Separate deps: @modelcontextprotocol/sdk, knowledge-layer (file:..)
@@ -30,14 +28,13 @@ mcp-server/
 | Modify tool registration | `src/server.ts` | Import + call `registerXxxTools()` |
 | Add MCP resource | `src/resources/` | Follow `templates.ts` pattern |
 | Fix knowledge cache | `src/tools/knowledge.ts` | `loadKnowledgeCache()` / `saveKnowledgeCache()` + JSON serialization |
-| Modify spec schema | `src/tools/spec.ts` | `GameSpecSchema` Zod definition is inline (not in types/) |
 | Add prototype serving | `src/tools/prototype.ts` | Uses Node `http.createServer()` for local HTTP server |
 
 ## CONVENTIONS
 
 - Each tool file exports a `registerXxxTools(server, runtime)` function.
 - `runtime` object passes shared state (getKnowledge, projectsDir, etc.) — no globals in tool files.
-- Tool names use `snake_case` with domain prefix: `knowledge_*`, `spec_*`, `prototype_*`, `project_*`.
+- Tool names use `snake_case` with domain prefix: `knowledge_*`, `prototype_*`, `project_*`.
 - Tests co-located: `knowledge.test.ts` next to `knowledge.ts`.
 - Depends on knowledge-layer via npm workspace resolution.
 

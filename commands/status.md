@@ -22,7 +22,7 @@ Read the project directory. For each artifact below, note whether it exists:
 | `concept-pitch.md` | Concept Pitch |
 | `gcd.md` | GCD |
 | `index.html` | Prototype |
-| `figma-summary.md` OR any `.excalidraw` file | UI Mockups |
+| `wireframe.html` | Wireframe |
 | `ui-ux-spec.md` | UI/UX Spec |
 | `art-direction.md` | Art Direction |
 | `gameplay-design.md` | Gameplay Design |
@@ -46,7 +46,7 @@ Use this logic to determine the current stage:
 2. `market-research.md` only → `research`
 3. `concept-pitch.md` exists → `concept`
 4. `gcd.md` exists → `design`
-5. `index.html` OR any `.excalidraw`/`figma-summary.md` exists → `prototype`
+5. `index.html` OR `wireframe.html` exists → `prototype`
 6. Any detail doc exists → `documentation`
 7. All 7 detail docs exist → `complete`
 
@@ -65,7 +65,7 @@ Artifacts:
 {✅/⬜} Concept Pitch
 {✅/⬜} GCD
 {✅/⬜} Prototype
-{✅/⬜} UI Mockups (Figma / Excalidraw)
+{✅/⬜} Wireframe
 {✅/⬜} Detail Documents ({count}/7)
 
 | Knowledge Base:

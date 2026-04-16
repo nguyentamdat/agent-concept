@@ -68,7 +68,6 @@ Ask the user via AskUserQuestion:
 After selection:
 - If "AI tự do sáng tạo": search knowledge base using `mcp__hindsight__recall`, read `references/game-design-theories.md`. Generate concepts freely.
 - If "Kết hợp mechanics từ các game": search knowledge base for mechanics patterns across the genre, search for reference game mechanics, identify mechanics from different games that could combine in novel ways. Generate concepts as combinations.
-- If "Kết hợp mechanics từ các game": search knowledge base for mechanics patterns across the genre, search for reference game mechanics, identify mechanics from different games that could combine in novel ways. Generate concepts as combinations.
 
 ---
 
@@ -158,24 +157,17 @@ Present the complete Concept Pitch to the user via AskUserQuestion.
 - If "Approve" or "Skip": continue to Step 6.
 ---
 
-## Step 6: Prototype + UI Mockups (Parallel)
+## Step 6: Prototype
 
-Invoke both agents simultaneously, in parallel:
+Invoke the **code-prototyper** agent to generate an HTML5 prototype from the Concept Pitch + GCD.
 
-- **code-prototyper** agent: generate an HTML5 prototype from the Concept Pitch + GCD.
-- **figma-designer** agent: create UI mockups from the GCD + art-direction guidance.
-  - The figma-designer agent will automatically check if Figma is available.
-  - If Figma plugin is running: create mockups in Figma.
-  - If Figma is unavailable: fall back to generating `.excalidraw` files (plain JSON, viewable at excalidraw.com).
-  - No user action needed — the fallback is automatic.
-
-Wait for both to complete. Present both results to the user via AskUserQuestion.
+Wait for it to complete. Present the result to the user via AskUserQuestion.
 
 **STOP. Wait for approval.**
 
 > Options: "Approve" / "Request changes" / "Skip"
 
-- If "Request changes": apply revisions to whichever artifact the user flags, then re-present.
+- If "Request changes": apply revisions and re-present.
 - If "Approve" or "Skip": continue to Step 7.
 ---
 
@@ -183,7 +175,7 @@ Wait for both to complete. Present both results to the user via AskUserQuestion.
 
 Ask the user via AskUserQuestion:
 
-> "Do you have any feedback to improve the concept, prototype, or mockups before we move to detailed documents?"
+> "Do you have any feedback to improve the concept or prototype before we move to detailed documents?"
 > Options: "Yes, I have feedback" / "No, everything looks good"
 
 - If "Yes, I have feedback":
@@ -211,15 +203,15 @@ Record the user's selections. Proceed to Step 9.
 
 ---
 
-## Step 9: Generate Detail Documents (One by One)
+## Step 9: Generate Detail Documents + Wireframe (Parallel per document)
 
 For each document the user selected, in order:
 
-1. Invoke the **document-writer** agent to generate the document.
-2. Immediately after:
-   - If the document is `ui-ux-spec.md`: invoke the **ui-ux-reviewer** agent automatically.
+1. Invoke the **document-writer** agent to generate the document. At the same time, if the document is `ui-ux-spec.md`, invoke the **wireframe-designer** agent in parallel to generate `wireframe.html`.
+2. Immediately after document generation:
+   - If the document is `ui-ux-spec.md`: invoke the **ui-ux-reviewer** agent automatically (wireframe-designer runs in parallel during generation).
    - For all other documents: invoke the **detail-doc-reviewer** agent automatically.
-3. Present the document (with review notes) to the user via AskUserQuestion.
+3. Present the document (with review notes, and wireframe result if applicable) to the user via AskUserQuestion.
 
 **STOP. Wait for approval before generating the next document.**
 
@@ -241,7 +233,7 @@ Once all selected documents are approved or skipped:
    - Concept Pitch
    - GCD (Vietnamese)
    - HTML5 prototype
-   - UI mockups (Figma or Excalidraw)
+   - Wireframe (`wireframe.html`, if generated)
    - Market research (if requested)
    - Each detail document generated
 2. Show the current project status using the appropriate MCP tool.

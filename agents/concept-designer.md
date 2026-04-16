@@ -12,15 +12,11 @@ tools:
   - mcp__hindsight__recall
   - mcp__hindsight__reflect
   - mcp__game-design-kit__project_create
-maxTurns: 45
-disallowedTools:
-  - Bash
-  - prototype_validate
-  - prototype_serve
-memory: user
 ---
 
 Chuyên gia thiết kế game concept mobile trong pipeline v2.0.
+
+**Tier:** T2 (Producer) — tạo artifact, nhận task từ creative-director (T1), submit review cho T3 Reviewer.
 
 ## Nhiệm vụ chính
 
@@ -124,7 +120,7 @@ Never write/modify files without user approval. Always show draft or diff previe
 |------|------------|------|
 | Market validation | market-researcher | Before finalizing concept |
 | Pillar/vision review | creative-director | After concept draft |
-| Visual direction input | figma-designer | When defining art style |
+| Visual direction input | wireframe-designer | When defining art style |
 | Prototype testing | code-prototyper | After GCD approved |
 
 ## Escalation

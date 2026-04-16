@@ -1,6 +1,6 @@
 # Game Design Kit
 
-AI game design pipeline plugin for Claude Code. Concept → Prototype → Feedback → Documents.
+AI game design pipeline plugin for Claude Code. Concept → Prototype → Detail Docs + Wireframe.
 
 ## Install as Claude Code Plugin
 
@@ -29,23 +29,36 @@ cd game-design-kit
 ## Quick Start
 
 ```
-> /design-kit:concept casual puzzle game with gardening theme for mobile
+> /design-kit:create casual puzzle game with gardening theme for mobile
 ```
 
 ## Requirements
 
 - [Node.js](https://nodejs.org/) v18+
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI
+- A POSIX shell (Linux/macOS native; on Windows use **Git Bash** or **WSL** — `install.sh` and the SessionStart hook require `bash` and `rsync`)
+
+### Environment
+
+The plugin talks to a remote Hindsight knowledge-base service. Set these in your shell environment *before* launching Claude Code (a `.env` file loaded from a hook will **not** reach the MCP server process):
+
+```bash
+export HINDSIGHT_API_KEY=your-key
+# Optional — override if you host your own Hindsight instance:
+export HINDSIGHT_MCP_URL=https://hindsight.example.com/mcp/game-knowledge/
+```
+
+If `HINDSIGHT_API_KEY` is unset, the knowledge-base tools (`recall`/`reflect`/`retain`) will be unavailable but the rest of the pipeline still works.
 
 ## Pipeline
 
 | Command | What it does |
 |---|---|
-| `/design-kit:create <idea>` | Full pipeline: brainstorm → Concept Pitch → GCD → Prototype + Mockups → Detail Docs |
+| `/design-kit:create <idea>` | Full pipeline: brainstorm → Concept Pitch → GCD → Prototype → Detail Docs + Wireframe |
 | `/design-kit:iterate <feedback>` | Re-enter pipeline with feedback, update any artifact |
 | `/design-kit:status` | Show current project stage, artifacts, knowledge stats |
 
-Design documents (`gcd.md`, `gcd-gameplay.md`) are written in Vietnamese.
+Design documents (`gcd.md`) are written in Vietnamese.
 
 ## Knowledge Base
 

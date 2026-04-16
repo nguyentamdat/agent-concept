@@ -6,7 +6,27 @@
 
 ## OVERVIEW
 
-Claude Code plugin: AI game design pipeline (Concept > Prototype > Feedback > Documents). 10 agents (Director → Leads → Specialists → Gates hierarchy). Knowledge via Hindsight MCP (recall/reflect/retain). MCP server for prototypes + projects. Figma integration.
+Claude Code plugin: AI game design pipeline (Concept > Prototype > Feedback > Documents). Agents organized in a 3-tier hierarchy (Director → Producers → Reviewers). Knowledge via Hindsight MCP (recall/reflect/retain). MCP server for prototypes + projects.
+
+## AGENT HIERARCHY
+
+3-tier structure:
+
+**T1 Director**
+- `creative-director` — Orchestrates the full pipeline; delegates to Producers and Reviewers
+
+**T2 Producers**
+- `concept-designer` — Generates Concept Pitch and GCD
+- `code-prototyper` — Generates HTML5 prototype (`index.html`)
+- `wireframe-designer` — Generates wireframe (`wireframe.html`)
+- `document-writer` — Writes detail design documents
+- `market-researcher` — Produces market research report
+
+**T3 Reviewers**
+- `review-concept` — Quality-checks Concept Pitch and GCD
+- `ui-ux-reviewer` — Reviews `ui-ux-spec.md` and `art-direction.md`
+- `detail-doc-reviewer` — Reviews all other detail documents
+- `feedback-interpreter` — Interprets and structures user feedback
 
 ## STRUCTURE
 
@@ -37,9 +57,9 @@ Claude Code plugin: AI game design pipeline (Concept > Prototype > Feedback > Do
 │       ├── tsconfig.json
 │       └── src/
 ├── commands/                  # Slash commands (markdown definitions for Claude Code)
-├── agents/                    # 10 role agents: creative-director, concept-designer, code-prototyper, etc.
-│   └── (CCGS-inspired hierarchy: 1 Director + 3 Leads + 3 Specialists + 3 Gates)
-├── skills/                    # Skill packages: game-concept-design, game-knowledge, game-ui-ux, figma-design
+├── agents/                    # Role agents: creative-director, concept-designer, code-prototyper, wireframe-designer, etc.
+│   └── (3-tier hierarchy: T1 Director + T2 Producers + T3 Reviewers)
+├── skills/                    # Skill packages: game-concept-design, game-knowledge, game-ui-ux-guide
 ├── references/                # Design templates + theory references + UI/UX & review guides
 ├── knowledge/                 # Source PDFs (5 books)
 ├── templates/                 # HTML5 prototype templates (Canvas/Three.js)
@@ -62,7 +82,7 @@ Claude Code plugin: AI game design pipeline (Concept > Prototype > Feedback > Do
 | Add MCP tool | `packages/mcp-server/src/tools/` | Register in `packages/mcp-server/src/server.ts`, add to `settings.json` allowlist |
 | Add slash command | `commands/` | Markdown file, referenced by `.claude-plugin/plugin.json` |
 | Add agent role | `agents/` | Markdown persona, invoked by commands |
-| Add/modify UI/UX review | `agents/ui-ux-reviewer.md` + `skills/game-ui-ux/` | Read-only review agent for `ui-ux-spec.md` + `art-direction.md`; all references consolidated in root `references/` |
+| Add/modify UI/UX review | `agents/ui-ux-reviewer.md` + `skills/game-ui-ux-guide/` | Read-only review agent for `ui-ux-spec.md` + `art-direction.md`; all references consolidated in root `references/` |
 | Modify document writer behavior | `agents/document-writer.md` | Behavior-driven writing uses `references/gui-section-guide.md` and `references/gameplay-section-guide.md` |
 | Review concept quality | `agents/review-concept.md` | Criteria + template: `references/concept-evaluation-criteria.md`, `references/concept-review-template.md` |
 | Review GDD quality | `references/gdd-evaluation-criteria.md`, `references/gdd-expected-sections.md`, `references/gdd-review-template.md` | Use to assess GDD structure, coverage, and review output |

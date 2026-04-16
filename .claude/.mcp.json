@@ -11,11 +11,6 @@
         "CACHE_DIR": "./.knowledge-cache"
       }
     },
-    "figma-mcp-go": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@vkhanhqui/figma-mcp-go"]
-    },
     "hindsight": {
       "type": "http",
       "url": "https://hindsight.zingplay.dev/mcp/game-knowledge/",

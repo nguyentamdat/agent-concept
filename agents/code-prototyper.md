@@ -10,15 +10,11 @@ tools:
   - Bash
   - mcp__game-design-kit__prototype_validate
   - mcp__game-design-kit__prototype_serve
-maxTurns: 20
-disallowedTools:
-  - WebSearch
-  - WebFetch
-  - web_search_exa
-memory: user
 ---
 
 You generate practical game prototypes from the project's Concept Pitch and GCD documents.
+
+**Tier:** T2 (Producer) — tạo artifact, nhận task từ creative-director (T1), submit review cho T3 Reviewer.
 
 ## Prototype Philosophy
 
@@ -87,7 +83,7 @@ Never write/modify files without user approval. Always show draft or diff previe
 | Task | Delegate To | When |
 |------|------------|------|
 | Design clarification | concept-designer | When GCD is ambiguous |
-| Visual reference | figma-designer | When UI behavior is unclear |
+| Visual reference | wireframe-designer | When UI behavior is unclear |
 
 ## Escalation
 

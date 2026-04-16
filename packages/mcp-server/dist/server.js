@@ -6846,13 +6846,13 @@ var require_thenables = __commonJS({
         promise._captureStackTrace();
         if (context) context._popContext();
         var synchronous = true;
-        var result2 = util.tryCatch(then).call(x, resolve7, reject2);
+        var result2 = util.tryCatch(then).call(x, resolve6, reject2);
         synchronous = false;
         if (promise && result2 === errorObj2) {
           promise._rejectCallback(result2.e, true, true);
           promise = null;
         }
-        function resolve7(value) {
+        function resolve6(value) {
           if (!promise) return;
           promise._resolveCallback(value);
           promise = null;
@@ -7387,9 +7387,9 @@ var require_debuggability = __commonJS({
         return false;
       }
       Promise2.prototype._fireEvent = defaultFireEvent;
-      Promise2.prototype._execute = function(executor, resolve7, reject2) {
+      Promise2.prototype._execute = function(executor, resolve6, reject2) {
         try {
-          executor(resolve7, reject2);
+          executor(resolve6, reject2);
         } catch (e) {
           return e;
         }
@@ -7412,10 +7412,10 @@ var require_debuggability = __commonJS({
         ;
         ;
       };
-      function cancellationExecute(executor, resolve7, reject2) {
+      function cancellationExecute(executor, resolve6, reject2) {
         var promise = this;
         try {
-          executor(resolve7, reject2, function(onCancel) {
+          executor(resolve6, reject2, function(onCancel) {
             if (typeof onCancel !== "function") {
               throw new TypeError("onCancel must be a function, got: " + util.toString(onCancel));
             }
@@ -11062,14 +11062,14 @@ var require_promises = __commonJS({
       });
     };
     function defer() {
-      var resolve7;
+      var resolve6;
       var reject2;
       var promise = new bluebird.Promise(function(resolveArg, rejectArg) {
-        resolve7 = resolveArg;
+        resolve6 = resolveArg;
         reject2 = rejectArg;
       });
       return {
-        resolve: resolve7,
+        resolve: resolve6,
         reject: reject2,
         promise
       };
@@ -13743,8 +13743,8 @@ var require_lib2 = __commonJS({
         return this;
       }
       var p = this.constructor;
-      return this.then(resolve8, reject3);
-      function resolve8(value) {
+      return this.then(resolve7, reject3);
+      function resolve7(value) {
         function yes() {
           return value;
         }
@@ -13897,8 +13897,8 @@ var require_lib2 = __commonJS({
       }
       return out;
     }
-    Promise2.resolve = resolve7;
-    function resolve7(value) {
+    Promise2.resolve = resolve6;
+    function resolve6(value) {
       if (value instanceof this) {
         return value;
       }
@@ -14430,10 +14430,10 @@ var require_utils = __commonJS({
       var promise = external.Promise.resolve(inputData).then(function(data) {
         var isBlob = support.blob && (data instanceof Blob || ["[object File]", "[object Blob]"].indexOf(Object.prototype.toString.call(data)) !== -1);
         if (isBlob && typeof FileReader !== "undefined") {
-          return new external.Promise(function(resolve7, reject2) {
+          return new external.Promise(function(resolve6, reject2) {
             var reader = new FileReader();
             reader.onload = function(e) {
-              resolve7(e.target.result);
+              resolve6(e.target.result);
             };
             reader.onerror = function(e) {
               reject2(e.target.error);
@@ -14988,7 +14988,7 @@ var require_StreamHelper = __commonJS({
       }
     }
     function accumulate(helper, updateCallback) {
-      return new external.Promise(function(resolve7, reject2) {
+      return new external.Promise(function(resolve6, reject2) {
         var dataArray = [];
         var chunkType = helper._internalType, resultType = helper._outputType, mimeType = helper._mimeType;
         helper.on("data", function(data, meta) {
@@ -15002,7 +15002,7 @@ var require_StreamHelper = __commonJS({
         }).on("end", function() {
           try {
             var result2 = transformZipOutput(resultType, concat(chunkType, dataArray), mimeType);
-            resolve7(result2);
+            resolve6(result2);
           } catch (e) {
             reject2(e);
           }
@@ -21115,7 +21115,7 @@ var require_load = __commonJS({
     var Crc32Probe = require_Crc32Probe();
     var nodejsUtils = require_nodejsUtils();
     function checkEntryCRC32(zipEntry) {
-      return new external.Promise(function(resolve7, reject2) {
+      return new external.Promise(function(resolve6, reject2) {
         var worker = zipEntry.decompressed.getContentWorker().pipe(new Crc32Probe());
         worker.on("error", function(e) {
           reject2(e);
@@ -21123,7 +21123,7 @@ var require_load = __commonJS({
           if (worker.streamInfo.crc32 !== zipEntry.decompressed.crc32) {
             reject2(new Error("Corrupted zip : CRC32 mismatch"));
           } else {
-            resolve7();
+            resolve6();
           }
         }).resume();
       });
@@ -30891,7 +30891,7 @@ var require_files = __commonJS({
     var fs = __require("fs");
     var url = __require("url");
     var os = __require("os");
-    var dirname2 = __require("path").dirname;
+    var dirname = __require("path").dirname;
     var resolvePath = __require("path").resolve;
     var isAbsolutePath = require_path_is_absolute();
     var promises = require_promises();
@@ -30906,10 +30906,10 @@ var require_files = __commonJS({
           }
         };
       }
-      var base = options.relativeToFile ? dirname2(options.relativeToFile) : null;
+      var base = options.relativeToFile ? dirname(options.relativeToFile) : null;
       function read(uri, encoding) {
         return resolveUri(uri).then(function(path) {
-          return readFile7(path, encoding).caught(function(error) {
+          return readFile6(path, encoding).caught(function(error) {
             var message = "could not open external image: '" + uri + "' (document directory: '" + base + "')\n" + error.message;
             return promises.reject(new Error(message));
           });
@@ -30929,7 +30929,7 @@ var require_files = __commonJS({
         read
       };
     }
-    var readFile7 = promises.promisify(fs.readFile.bind(fs));
+    var readFile6 = promises.promisify(fs.readFile.bind(fs));
     function uriToPath(uriString, platform) {
       if (!platform) {
         platform = os.platform();
@@ -33675,10 +33675,10 @@ var require_unzip = __commonJS({
     var promises = require_promises();
     var zipfile = require_zipfile();
     exports2.openZip = openZip;
-    var readFile7 = promises.promisify(fs.readFile);
+    var readFile6 = promises.promisify(fs.readFile);
     function openZip(options) {
       if (options.path) {
-        return readFile7(options.path).then(zipfile.openArrayBuffer);
+        return readFile6(options.path).then(zipfile.openArrayBuffer);
       } else if (options.buffer) {
         return promises.resolve(zipfile.openArrayBuffer(options.buffer));
       } else if (options.file) {
@@ -33799,8 +33799,8 @@ var require_lib6 = __commonJS({
 });
 
 // src/server.ts
-import { mkdir as mkdir5 } from "fs/promises";
-import { resolve as resolve6 } from "path";
+import { mkdir as mkdir4 } from "fs/promises";
+import { isAbsolute, resolve as resolve5 } from "path";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 
@@ -36472,7 +36472,7 @@ async function extractBatch(batch, llm, existingEntityNames) {
     } catch (error) {
       lastError = error;
       if (attempt < 2) {
-        await new Promise((resolve7) => setTimeout(resolve7, 500 * (attempt + 1)));
+        await new Promise((resolve6) => setTimeout(resolve6, 500 * (attempt + 1)));
       }
     }
   }
@@ -47454,353 +47454,11 @@ function registerKnowledgeTools(server2, runtime) {
   );
 }
 
-// src/tools/spec.ts
-import { mkdir as mkdir2, readFile as readFile4, writeFile as writeFile2 } from "fs/promises";
-import { basename as basename3, dirname, resolve as resolve2 } from "path";
-import yaml3 from "js-yaml";
-import { z as z9 } from "zod";
-var GameSpecSchema = z9.object({
-  meta: z9.object({
-    title: z9.string().min(1),
-    version: z9.number().int().nonnegative(),
-    genre: z9.string().min(1),
-    subGenre: z9.string().optional(),
-    platform: z9.enum(["mobile", "web", "pc", "console", "cross-platform"]),
-    createdAt: z9.string().min(1),
-    updatedAt: z9.string().min(1)
-  }),
-  concept: z9.object({
-    elevatorPitch: z9.string(),
-    expandedDescription: z9.string(),
-    designPillars: z9.array(z9.string()).min(1),
-    targetAudience: z9.string(),
-    essentialExperience: z9.string(),
-    uniqueHook: z9.string()
-  }),
-  coreLoop: z9.object({
-    summary: z9.string(),
-    actions: z9.array(z9.string()),
-    sessionFlow: z9.string(),
-    progressionLoop: z9.string(),
-    difficultyApproach: z9.string()
-  }),
-  mechanics: z9.array(
-    z9.object({
-      id: z9.string(),
-      name: z9.string(),
-      category: z9.string(),
-      description: z9.string(),
-      rules: z9.array(z9.string()),
-      controls: z9.string(),
-      feedbackSystems: z9.array(z9.string()),
-      interactsWith: z9.array(z9.string())
-    })
-  ),
-  economy: z9.object({
-    currencies: z9.array(z9.string()),
-    monetization: z9.string()
-  }).optional(),
-  screens: z9.array(
-    z9.object({
-      id: z9.string(),
-      name: z9.string(),
-      purpose: z9.string(),
-      elements: z9.array(z9.string()),
-      transitions: z9.array(z9.string())
-    })
-  ),
-  visualDirection: z9.object({
-    style: z9.string(),
-    colorPalette: z9.array(z9.string()),
-    mood: z9.string(),
-    references: z9.array(z9.string())
-  }),
-  prototypeScope: z9.object({
-    renderer: z9.enum(["2d", "3d"]).default("2d"),
-    includedMechanics: z9.array(z9.string()),
-    excludedMechanics: z9.array(z9.string()),
-    placeholderAssets: z9.boolean(),
-    targetFidelity: z9.enum(["wireframe", "low", "medium"])
-  }),
-  history: z9.array(
-    z9.object({
-      version: z9.number().int().nonnegative(),
-      date: z9.string(),
-      changes: z9.array(z9.string()),
-      feedbackSource: z9.string()
-    })
-  )
-});
-async function readGameSpec(specPath) {
-  const raw = await readFile4(specPath, "utf-8");
-  const parsed = yaml3.load(raw);
-  return GameSpecSchema.parse(parsed);
-}
-async function writeGameSpec(specPath, spec) {
-  const content = yaml3.dump(spec, {
-    noRefs: true,
-    sortKeys: false,
-    lineWidth: 120
-  });
-  await writeFile2(specPath, content, "utf-8");
-}
-function createDefaultGameSpec(title) {
-  const now = (/* @__PURE__ */ new Date()).toISOString();
-  return {
-    meta: {
-      title,
-      version: 1,
-      genre: "unknown",
-      platform: "web",
-      createdAt: now,
-      updatedAt: now
-    },
-    concept: {
-      elevatorPitch: "A game concept waiting to be refined.",
-      expandedDescription: "Draft spec created by MCP project scaffolder.",
-      designPillars: ["Core fun first", "Readable feedback", "Fast iteration"],
-      targetAudience: "TBD",
-      essentialExperience: "TBD",
-      uniqueHook: "TBD"
-    },
-    coreLoop: {
-      summary: "Do action, get reward, progress.",
-      actions: ["action", "reward", "progress"],
-      sessionFlow: "Short loop",
-      progressionLoop: "Unlock and improve",
-      difficultyApproach: "Gradual ramp"
-    },
-    mechanics: [],
-    screens: [],
-    visualDirection: {
-      style: "Prototype",
-      colorPalette: ["#222222", "#e5e5e5", "#4f46e5"],
-      mood: "Neutral",
-      references: []
-    },
-    prototypeScope: {
-      renderer: "2d",
-      includedMechanics: [],
-      excludedMechanics: [],
-      placeholderAssets: true,
-      targetFidelity: "wireframe"
-    },
-    history: [
-      {
-        version: 1,
-        date: now,
-        changes: ["Initial project scaffold"],
-        feedbackSource: "initial"
-      }
-    ]
-  };
-}
-function findConsistencyWarnings(spec) {
-  const warnings = [];
-  const mechanicIds = new Set(spec.mechanics.map((mechanic) => mechanic.id));
-  for (const includedId of spec.prototypeScope.includedMechanics) {
-    if (!mechanicIds.has(includedId)) {
-      warnings.push({
-        path: "prototypeScope.includedMechanics",
-        message: `Included mechanic '${includedId}' is not defined in mechanics[].`
-      });
-    }
-  }
-  for (const excludedId of spec.prototypeScope.excludedMechanics) {
-    if (!mechanicIds.has(excludedId)) {
-      warnings.push({
-        path: "prototypeScope.excludedMechanics",
-        message: `Excluded mechanic '${excludedId}' is not defined in mechanics[].`
-      });
-    }
-  }
-  return warnings;
-}
-function flattenDiff(before2, after2, path = "") {
-  if (Object.is(before2, after2)) {
-    return [];
-  }
-  if (Array.isArray(before2) || Array.isArray(after2)) {
-    const beforeArray = Array.isArray(before2) ? before2 : [];
-    const afterArray = Array.isArray(after2) ? after2 : [];
-    const maxLength = Math.max(beforeArray.length, afterArray.length);
-    const out = [];
-    for (let index = 0; index < maxLength; index += 1) {
-      const nextPath = `${path}[${index}]`;
-      out.push(...flattenDiff(beforeArray[index], afterArray[index], nextPath));
-    }
-    return out;
-  }
-  const isObject3 = (value) => typeof value === "object" && value !== null && !Array.isArray(value);
-  if (isObject3(before2) && isObject3(after2)) {
-    const keys2 = /* @__PURE__ */ new Set([...Object.keys(before2), ...Object.keys(after2)]);
-    const out = [];
-    for (const key of keys2) {
-      const nextPath = path ? `${path}.${key}` : key;
-      out.push(...flattenDiff(before2[key], after2[key], nextPath));
-    }
-    return out;
-  }
-  return [
-    {
-      path,
-      before: before2,
-      after: after2
-    }
-  ];
-}
-function registerSpecTools(server2) {
-  server2.registerTool(
-    "spec_validate",
-    {
-      title: "Validate game spec",
-      description: "Validate a YAML game design spec and run consistency checks.",
-      inputSchema: z9.object({
-        specPath: z9.string()
-      })
-    },
-    async ({ specPath }) => {
-      try {
-        const resolved = resolve2(specPath);
-        const spec = await readGameSpec(resolved);
-        const warnings = findConsistencyWarnings(spec);
-        return {
-          content: [
-            {
-              type: "text",
-              text: JSON.stringify({ valid: true, errors: [], warnings }, null, 2)
-            }
-          ]
-        };
-      } catch (error) {
-        if (error instanceof z9.ZodError) {
-          const errors2 = error.issues.map((issue) => ({
-            path: issue.path.join("."),
-            message: issue.message
-          }));
-          return {
-            content: [
-              {
-                type: "text",
-                text: JSON.stringify({ valid: false, errors: errors2, warnings: [] }, null, 2)
-              }
-            ],
-            isError: true
-          };
-        }
-        return {
-          content: [
-            {
-              type: "text",
-              text: JSON.stringify(
-                {
-                  valid: false,
-                  errors: [
-                    {
-                      path: "specPath",
-                      message: error instanceof Error ? error.message : "Unknown error"
-                    }
-                  ],
-                  warnings: []
-                },
-                null,
-                2
-              )
-            }
-          ],
-          isError: true
-        };
-      }
-    }
-  );
-  server2.registerTool(
-    "spec_diff",
-    {
-      title: "Diff game specs",
-      description: "Compare two spec YAML files and return structural changes.",
-      inputSchema: z9.object({
-        specPath1: z9.string(),
-        specPath2: z9.string()
-      })
-    },
-    async ({ specPath1, specPath2 }) => {
-      const left = await readGameSpec(resolve2(specPath1));
-      const right = await readGameSpec(resolve2(specPath2));
-      const changes = flattenDiff(left, right).filter((item) => item.path !== "");
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify({ changes }, null, 2)
-          }
-        ]
-      };
-    }
-  );
-  server2.registerTool(
-    "spec_bump_version",
-    {
-      title: "Bump spec version",
-      description: "Increment version, append history entry, and archive old spec.",
-      inputSchema: z9.object({
-        specPath: z9.string(),
-        changes: z9.array(z9.string()).min(1),
-        source: z9.string()
-      })
-    },
-    async ({ specPath, changes, source }) => {
-      const resolvedSpecPath = resolve2(specPath);
-      const previous = await readGameSpec(resolvedSpecPath);
-      const archivedVersion = previous.meta.version;
-      const archivedDir = resolve2(dirname(resolvedSpecPath), "spec-history");
-      await mkdir2(archivedDir, { recursive: true });
-      const archivedPath = resolve2(archivedDir, `spec_v${archivedVersion}.yaml`);
-      const previousRaw = await readFile4(resolvedSpecPath, "utf-8");
-      await writeFile2(archivedPath, previousRaw, "utf-8");
-      const now = (/* @__PURE__ */ new Date()).toISOString();
-      const next = {
-        ...previous,
-        meta: {
-          ...previous.meta,
-          version: previous.meta.version + 1,
-          updatedAt: now
-        },
-        history: [
-          ...previous.history,
-          {
-            version: previous.meta.version + 1,
-            date: now,
-            changes,
-            feedbackSource: source
-          }
-        ]
-      };
-      await writeGameSpec(resolvedSpecPath, next);
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(
-              {
-                newVersion: next.meta.version,
-                archivedTo: archivedPath,
-                spec: basename3(resolvedSpecPath)
-              },
-              null,
-              2
-            )
-          }
-        ]
-      };
-    }
-  );
-}
-
 // src/tools/prototype.ts
 import { createServer } from "http";
-import { extname as extname2, resolve as resolve3 } from "path";
-import { access as access2, readFile as readFile5, stat } from "fs/promises";
-import { z as z10 } from "zod";
+import { extname as extname2, resolve as resolve2 } from "path";
+import { access as access2, readFile as readFile4, stat } from "fs/promises";
+import { z as z9 } from "zod";
 var mimeByExt = {
   ".html": "text/html; charset=utf-8",
   ".js": "application/javascript; charset=utf-8",
@@ -47827,13 +47485,13 @@ function registerPrototypeTools(server2, runtime) {
     {
       title: "Serve prototype",
       description: "Serve a prototype directory over a static HTTP server.",
-      inputSchema: z10.object({
-        dir: z10.string(),
-        port: z10.number().int().min(0).max(65535).default(0)
+      inputSchema: z9.object({
+        dir: z9.string(),
+        port: z9.number().int().min(0).max(65535).default(0)
       })
     },
     async ({ dir, port }) => {
-      const baseDir = resolve3(dir);
+      const baseDir = resolve2(dir);
       const directoryInfo = await stat(baseDir);
       if (!directoryInfo.isDirectory()) {
         throw new Error(`Prototype directory is not a directory: ${baseDir}`);
@@ -47845,7 +47503,7 @@ function registerPrototypeTools(server2, runtime) {
       const nodeServer = createServer(async (req, res) => {
         const requestUrl = new URL(req.url ?? "/", `http://localhost`);
         const relative = normalizedPath(requestUrl.pathname);
-        const absolute = resolve3(baseDir, relative);
+        const absolute = resolve2(baseDir, relative);
         if (!absolute.startsWith(baseDir)) {
           res.writeHead(403);
           res.end("Forbidden");
@@ -47858,11 +47516,11 @@ function registerPrototypeTools(server2, runtime) {
           res.end("Not Found");
           return;
         }
-        const body = await readFile5(absolute);
+        const body = await readFile4(absolute);
         res.writeHead(200, { "content-type": contentType(absolute) });
         res.end(body);
       });
-      await new Promise((resolve7) => nodeServer.listen(port, resolve7));
+      await new Promise((resolve6) => nodeServer.listen(port, resolve6));
       const addr = nodeServer.address();
       const actualPort = typeof addr === "object" && addr ? addr.port : port;
       runtime.setPrototypeServer(nodeServer);
@@ -47881,7 +47539,7 @@ function registerPrototypeTools(server2, runtime) {
     {
       title: "Stop prototype server",
       description: "Stop currently running prototype HTTP server.",
-      inputSchema: z10.object({})
+      inputSchema: z9.object({})
     },
     async () => {
       const existing = runtime.getPrototypeServer();
@@ -47902,17 +47560,17 @@ function registerPrototypeTools(server2, runtime) {
     {
       title: "Validate prototype",
       description: "Check prototype HTML against design document for screen and mechanic references.",
-      inputSchema: z10.object({
-        htmlPath: z10.string(),
-        designDocPath: z10.string().describe("Path to GCD or concept-pitch.md")
+      inputSchema: z9.object({
+        htmlPath: z9.string(),
+        designDocPath: z9.string().describe("Path to GCD or concept-pitch.md")
       })
     },
     async ({ htmlPath, designDocPath }) => {
-      const resolvedHtml = resolve3(htmlPath);
-      const resolvedDesignDoc = resolve3(designDocPath);
+      const resolvedHtml = resolve2(htmlPath);
+      const resolvedDesignDoc = resolve2(designDocPath);
       const [designDoc, html] = await Promise.all([
-        readFile5(resolvedDesignDoc, "utf-8"),
-        readFile5(resolvedHtml, "utf-8")
+        readFile4(resolvedDesignDoc, "utf-8"),
+        readFile4(resolvedHtml, "utf-8")
       ]);
       const lowerHtml = html.toLowerCase();
       const issues = [];
@@ -47944,25 +47602,25 @@ function registerPrototypeTools(server2, runtime) {
 }
 
 // src/tools/project.ts
-import { mkdir as mkdir3, readdir, stat as stat2 } from "fs/promises";
-import { resolve as resolve4 } from "path";
-import { z as z11 } from "zod";
+import { mkdir as mkdir2, readdir, stat as stat2 } from "fs/promises";
+import { resolve as resolve3 } from "path";
+import { z as z10 } from "zod";
 function registerProjectTools(server2, runtime) {
   server2.registerTool(
     "project_create",
     {
       title: "Create project",
       description: "Create game design project folder structure.",
-      inputSchema: z11.object({
-        name: z11.string().min(1)
+      inputSchema: z10.object({
+        name: z10.string().min(1)
       })
     },
     async ({ name }) => {
-      const projectDir = resolve4(runtime.projectsDir, name);
-      const prototypeDir = resolve4(projectDir, "prototype");
-      const documentsDir = resolve4(projectDir, "documents");
-      await mkdir3(prototypeDir, { recursive: true });
-      await mkdir3(documentsDir, { recursive: true });
+      const projectDir = resolve3(runtime.projectsDir, name);
+      const prototypeDir = resolve3(projectDir, "prototype");
+      const documentsDir = resolve3(projectDir, "documents");
+      await mkdir2(prototypeDir, { recursive: true });
+      await mkdir2(documentsDir, { recursive: true });
       return {
         content: [
           {
@@ -47978,20 +47636,20 @@ function registerProjectTools(server2, runtime) {
     {
       title: "List projects",
       description: "List project directories and summarize their current pipeline status.",
-      inputSchema: z11.object({})
+      inputSchema: z10.object({})
     },
     async () => {
-      await mkdir3(runtime.projectsDir, { recursive: true });
+      await mkdir2(runtime.projectsDir, { recursive: true });
       const entries = await readdir(runtime.projectsDir, { withFileTypes: true });
       const projects = [];
       for (const entry of entries) {
         if (!entry.isDirectory()) {
           continue;
         }
-        const projectDir = resolve4(runtime.projectsDir, entry.name);
-        const conceptPitchPath = resolve4(projectDir, "concept-pitch.md");
-        const gcdPath = resolve4(projectDir, "gcd.md");
-        const prototypePath = resolve4(projectDir, "index.html");
+        const projectDir = resolve3(runtime.projectsDir, entry.name);
+        const conceptPitchPath = resolve3(projectDir, "concept-pitch.md");
+        const gcdPath = resolve3(projectDir, "gcd.md");
+        const prototypePath = resolve3(projectDir, "index.html");
         try {
           const [conceptPitch, gcd, prototype] = await Promise.all([
             stat2(conceptPitchPath).catch(() => null),
@@ -48043,8 +47701,8 @@ function registerProjectTools(server2, runtime) {
 }
 
 // src/resources/templates.ts
-import { access as access3, mkdir as mkdir4, readdir as readdir2, readFile as readFile6 } from "fs/promises";
-import { resolve as resolve5 } from "path";
+import { access as access3, mkdir as mkdir3, readdir as readdir2, readFile as readFile5 } from "fs/promises";
+import { resolve as resolve4 } from "path";
 var templateEntries = [
   { name: "template_base", uri: "template://base", fileName: "base.html", title: "Base template", mimeType: "text/html" },
   { name: "template_grid_puzzle", uri: "template://grid-puzzle", fileName: "grid-puzzle.js", title: "Grid puzzle template", mimeType: "application/javascript" },
@@ -48062,7 +47720,7 @@ function registerTemplateResources(server2, runtime) {
       mimeType: "application/json"
     },
     async () => {
-      await mkdir4(runtime.templatesDir, { recursive: true });
+      await mkdir3(runtime.templatesDir, { recursive: true });
       const files = await readdir2(runtime.templatesDir);
       return {
         contents: [
@@ -48083,11 +47741,11 @@ function registerTemplateResources(server2, runtime) {
         mimeType: entry.mimeType
       },
       async () => {
-        const path = resolve5(runtime.templatesDir, entry.fileName);
+        const path = resolve4(runtime.templatesDir, entry.fileName);
         let text;
         try {
           await access3(path);
-          text = await readFile6(path, "utf-8");
+          text = await readFile5(path, "utf-8");
         } catch {
           text = `Template '${entry.fileName}' is not available yet. Add it in templates/ during Phase 3.`;
         }
@@ -48104,61 +47762,18 @@ function registerTemplateResources(server2, runtime) {
   }
 }
 
-// src/resources/schemas.ts
-import yaml4 from "js-yaml";
-function registerSchemaResources(server2) {
-  server2.registerResource(
-    "schema_game_spec",
-    "schema://game-spec",
-    {
-      title: "Game spec schema",
-      mimeType: "application/json"
-    },
-    async () => ({
-      contents: [
-        {
-          uri: "schema://game-spec",
-          text: JSON.stringify(
-            {
-              schema: "GameSpecSchema",
-              shape: GameSpecSchema.shape
-            },
-            null,
-            2
-          )
-        }
-      ]
-    })
-  );
-  server2.registerResource(
-    "schema_game_spec_example",
-    "schema://game-spec-example",
-    {
-      title: "Game spec example",
-      mimeType: "application/yaml"
-    },
-    async () => ({
-      contents: [
-        {
-          uri: "schema://game-spec-example",
-          text: yaml4.dump(createDefaultGameSpec("Example Game"), {
-            noRefs: true,
-            sortKeys: false,
-            lineWidth: 120
-          })
-        }
-      ]
-    })
-  );
-}
-
 // src/server.ts
-var pluginRoot = process.env.CLAUDE_PLUGIN_ROOT;
-var rootDir = pluginRoot ?? process.cwd();
-var knowledgeDir = resolve6(rootDir, process.env.KNOWLEDGE_DIR ?? "knowledge");
-var projectsDir = resolve6(rootDir, process.env.PROJECTS_DIR ?? "projects");
-var templatesDir = resolve6(rootDir, process.env.TEMPLATES_DIR ?? "templates");
-var cacheDir = resolve6(process.env.CACHE_DIR ?? resolve6(rootDir, ".knowledge-cache"));
+function resolveConfigPath(rootDir2, envValue, defaultRelative) {
+  const raw = envValue ?? defaultRelative;
+  if (isAbsolute(raw)) return raw;
+  return resolve5(process.cwd(), raw);
+}
+var pluginRoot = process.env.CLAUDE_PLUGIN_ROOT ?? process.cwd();
+var rootDir = pluginRoot;
+var knowledgeDir = resolve5(rootDir, process.env.KNOWLEDGE_DIR ?? "knowledge");
+var projectsDir = resolveConfigPath(rootDir, process.env.PROJECTS_DIR, "projects");
+var templatesDir = resolve5(rootDir, process.env.TEMPLATES_DIR ?? "templates");
+var cacheDir = resolve5(process.env.CACHE_DIR ?? resolve5(rootDir, ".knowledge-cache"));
 var knowledgeTool = null;
 var knowledgeReady = null;
 var sources = /* @__PURE__ */ new Map();
@@ -48172,7 +47787,7 @@ async function getKnowledge() {
   }
   knowledgeReady = (async () => {
     const instance = new KnowledgeTool();
-    await mkdir5(knowledgeDir, { recursive: true });
+    await mkdir4(knowledgeDir, { recursive: true });
     await loadKnowledgeCache(cacheDir, instance, (record) => {
       sources.set(record.filePath, record);
     });
@@ -48197,7 +47812,6 @@ registerKnowledgeTools(server, {
   saveKnowledgeCache: persistKnowledgeCache,
   addSourceRecord
 });
-registerSpecTools(server);
 registerPrototypeTools(server, {
   getPrototypeServer: () => prototypeServer,
   setPrototypeServer: (nextServer) => {
@@ -48210,7 +47824,6 @@ registerProjectTools(server, {
 registerTemplateResources(server, {
   templatesDir
 });
-registerSchemaResources(server);
 var transport = new StdioServerTransport();
 await server.connect(transport);
 /*! Bundled license information:
