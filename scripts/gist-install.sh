@@ -31,6 +31,9 @@ CLAUDE_DIR="$(detect_claude_dir)"
 PLUGINS_DIR="$CLAUDE_DIR/plugins"
 INSTALLED_JSON="$PLUGINS_DIR/installed_plugins.json"
 SETTINGS_JSON="$CLAUDE_DIR/settings.json"
+MARKETPLACES_DIR="$PLUGINS_DIR/marketplaces"
+MARKETPLACE_DIR="$MARKETPLACES_DIR/$MARKETPLACE_NAME"
+KNOWN_MARKETPLACES_JSON="$PLUGINS_DIR/known_marketplaces.json"
 
 # ─── Helpers ─────────────────────────────────────────────────────────────────
 info()  { printf "\033[1;34m→\033[0m %s\n" "$1"; }
@@ -134,6 +137,55 @@ else
   done
 fi
 
+# ─── Install marketplace (enables plugin resolution) ────────────────────────
+info "Installing marketplace ${MARKETPLACE_NAME}..."
+mkdir -p "$MARKETPLACE_DIR"
+
+if command -v rsync &>/dev/null; then
+  rsync -a --delete \
+    --exclude='.git' \
+    --exclude='.github' \
+    --exclude='.sisyphus' \
+    --exclude='.opencode' \
+    --exclude='.omc' \
+    --exclude='projects' \
+    --exclude='docs/archive' \
+    --exclude='art-skill' \
+    --exclude='*.zip' \
+    --exclude='*.tar.gz' \
+    --exclude='.env' \
+    "$TMP_DIR/repo/" "$MARKETPLACE_DIR/"
+else
+  mkdir -p "$MARKETPLACE_DIR/.claude-plugin"
+  cp -r "$TMP_DIR/repo/.claude-plugin/"* "$MARKETPLACE_DIR/.claude-plugin/"
+fi
+
+NOW="$(date -u +%Y-%m-%dT%H:%M:%S.000Z)"
+MARKETPLACE_ENTRY="{\"source\":{\"source\":\"git\",\"url\":\"${REPO_URL}\"},\"installLocation\":\"${MARKETPLACE_DIR}\",\"lastUpdated\":\"${NOW}\"}"
+
+mkdir -p "$PLUGINS_DIR"
+if [ -f "$KNOWN_MARKETPLACES_JSON" ]; then
+  if command -v jq &>/dev/null; then
+    jq --arg key "$MARKETPLACE_NAME" --argjson entry "$MARKETPLACE_ENTRY" \
+      '.[$key] = $entry' "$KNOWN_MARKETPLACES_JSON" > "${KNOWN_MARKETPLACES_JSON}.tmp" \
+      && mv "${KNOWN_MARKETPLACES_JSON}.tmp" "$KNOWN_MARKETPLACES_JSON"
+  else
+    NODE_KM="$(_node_path "$KNOWN_MARKETPLACES_JSON")"
+    node -e "
+      const fs = require('fs');
+      const data = JSON.parse(fs.readFileSync('$NODE_KM', 'utf8'));
+      data['$MARKETPLACE_NAME'] = $MARKETPLACE_ENTRY;
+      fs.writeFileSync('$NODE_KM', JSON.stringify(data, null, 2));
+    "
+  fi
+else
+  cat > "$KNOWN_MARKETPLACES_JSON" <<EOJSON
+{
+  "${MARKETPLACE_NAME}": ${MARKETPLACE_ENTRY}
+}
+EOJSON
+fi
+
 # ─── Configure Hindsight API key ─────────────────────────────────────────────
 info "Configuring Hindsight knowledge base..."
 
@@ -147,7 +199,7 @@ if _hindsight_ready; then
   info "Hindsight already configured and connected."
   HINDSIGHT_CONFIGURED=true
 else
-  DEFAULT_HINDSIGHT_URL="https://hindsight.zingplay.dev/mcp/game-knowledge/"
+  DEFAULT_HINDSIGHT_URL="https://hindsight-api.zingplay.dev/mcp/game-knowledge/"
   echo ""
   echo "  Hindsight is a game design knowledge base used by AI agents."
   echo ""
@@ -190,7 +242,6 @@ fi
 info "Registering plugin..."
 mkdir -p "$PLUGINS_DIR"
 
-NOW="$(date -u +%Y-%m-%dT%H:%M:%S.000Z)"
 INSTALL_ENTRY="{\"scope\":\"user\",\"installPath\":\"${CACHE_DIR}\",\"version\":\"${PLUGIN_VERSION}\",\"installedAt\":\"${NOW}\",\"lastUpdated\":\"${NOW}\"}"
 
 if [ -f "$INSTALLED_JSON" ]; then
@@ -265,7 +316,7 @@ echo "    /design-kit:create casual puzzle game with gardening theme"
 echo ""
 if [ "$HINDSIGHT_CONFIGURED" != "true" ]; then
   warn "Hindsight not configured. Add later:"
-  echo "    claude mcp add hindsight https://hindsight.zingplay.dev/mcp/game-knowledge/ --transport http --scope user --header \"Authorization: Bearer YOUR_KEY\""
+  echo "    claude mcp add hindsight https://hindsight-api.zingplay.dev/mcp/game-knowledge/ --transport http --scope user --header \"Authorization: Bearer YOUR_KEY\""
   echo ""
 fi
 echo "  To uninstall:"

@@ -1,7 +1,8 @@
 {
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "game-design-kit",
-  "version": "2.2.0",
-  "description": "AI game design pipeline for mobile games: /create (idea → GCD → prototype → wireframe + detail docs) with approval gates at every step. Powered by 5 game design books and UI/UX knowledge base.",
+  "version": "2.3.0",
+  "description": "AI game design pipeline for mobile games: /create (idea → GCD → prototype → wireframe + detail docs) with approval gates at every step. Powered by Hindsight MCP knowledge base.",
   "author": {
     "name": "Game Design Kit"
   },
@@ -18,7 +19,7 @@
   "mcpServers": {
     "hindsight": {
       "type": "http",
-      "url": "${HINDSIGHT_MCP_URL:-https://hindsight.zingplay.dev/mcp/game-knowledge/}",
+      "url": "${HINDSIGHT_MCP_URL:-https://hindsight-api.zingplay.dev/mcp/game-knowledge/}",
       "headers": {
         "Authorization": "Bearer ${HINDSIGHT_API_KEY}"
       }

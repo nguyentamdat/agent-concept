@@ -34,6 +34,9 @@ $CLAUDE_DIR = Get-ClaudeDir
 $PLUGINS_DIR = Join-Path $CLAUDE_DIR "plugins"
 $INSTALLED_JSON = Join-Path $PLUGINS_DIR "installed_plugins.json"
 $SETTINGS_JSON = Join-Path $CLAUDE_DIR "settings.json"
+$MARKETPLACES_DIR = Join-Path $PLUGINS_DIR "marketplaces"
+$MARKETPLACE_DIR = Join-Path $MARKETPLACES_DIR $MARKETPLACE_NAME
+$KNOWN_MARKETPLACES_JSON = Join-Path $PLUGINS_DIR "known_marketplaces.json"
 
 # ─── Preflight checks ───────────────────────────────────────────────────────
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
@@ -112,6 +115,60 @@ try {
         }
     }
 
+    # ─── Install marketplace (enables plugin resolution) ────────────────
+    Write-Info "Installing marketplace $MARKETPLACE_NAME..."
+    if (Test-Path $MARKETPLACE_DIR) { Remove-Item -Recurse -Force $MARKETPLACE_DIR }
+    New-Item -ItemType Directory -Path $MARKETPLACE_DIR -Force | Out-Null
+
+    Get-ChildItem -Path $repoDir -Recurse -Force | ForEach-Object {
+        $rel = $_.FullName.Substring($repoDir.Length + 1)
+        $skip = $false
+        foreach ($d in $excludeDirs) {
+            if ($rel -like "$d\*" -or $rel -eq $d) { $skip = $true; break }
+        }
+        foreach ($e in $excludeExts) {
+            if ($rel -like "*$e") { $skip = $true; break }
+        }
+        if ($rel -eq '.env') { $skip = $true }
+
+        if (-not $skip) {
+            $dest = Join-Path $MARKETPLACE_DIR $rel
+            if ($_.PSIsContainer) {
+                New-Item -ItemType Directory -Path $dest -Force | Out-Null
+            } else {
+                $destDir = Split-Path $dest -Parent
+                if (-not (Test-Path $destDir)) { New-Item -ItemType Directory -Path $destDir -Force | Out-Null }
+                Copy-Item $_.FullName $dest -Force
+            }
+        }
+    }
+
+    # Register marketplace in known_marketplaces.json
+    $NOW_MKT = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.000Z")
+    $marketplaceEntry = [PSCustomObject]@{
+        source = [PSCustomObject]@{
+            source = "git"
+            url    = $REPO_URL
+        }
+        installLocation = $MARKETPLACE_DIR
+        lastUpdated     = $NOW_MKT
+    }
+
+    New-Item -ItemType Directory -Path $PLUGINS_DIR -Force | Out-Null
+    if (Test-Path $KNOWN_MARKETPLACES_JSON) {
+        $kmData = Get-Content $KNOWN_MARKETPLACES_JSON -Raw | ConvertFrom-Json
+        if ($kmData.PSObject.Properties[$MARKETPLACE_NAME]) {
+            $kmData.$MARKETPLACE_NAME = $marketplaceEntry
+        } else {
+            $kmData | Add-Member -NotePropertyName $MARKETPLACE_NAME -NotePropertyValue $marketplaceEntry -Force
+        }
+        $kmData | ConvertTo-Json -Depth 10 | Set-Content $KNOWN_MARKETPLACES_JSON -Encoding UTF8
+    } else {
+        $km = [PSCustomObject]@{}
+        $km | Add-Member -NotePropertyName $MARKETPLACE_NAME -NotePropertyValue $marketplaceEntry -Force
+        $km | ConvertTo-Json -Depth 10 | Set-Content $KNOWN_MARKETPLACES_JSON -Encoding UTF8
+    }
+
     # ─── Configure Hindsight API key ─────────────────────────────────────
     Write-Info "Configuring Hindsight knowledge base..."
 
@@ -127,7 +184,7 @@ try {
         Write-Info "Hindsight already configured and connected."
         $HINDSIGHT_CONFIGURED = $true
     } else {
-        $DEFAULT_HINDSIGHT_URL = "https://hindsight.zingplay.dev/mcp/game-knowledge/"
+        $DEFAULT_HINDSIGHT_URL = "https://hindsight-api.zingplay.dev/mcp/game-knowledge/"
         Write-Host ""
         Write-Host "  Hindsight is a game design knowledge base used by AI agents."
         Write-Host ""
@@ -228,7 +285,7 @@ try {
     Write-Host ""
     if (-not $HINDSIGHT_CONFIGURED) {
         Write-Warn "Hindsight not configured. Add later:"
-        Write-Host "    claude mcp add hindsight https://hindsight.zingplay.dev/mcp/game-knowledge/ --transport http --scope user --header `"Authorization: Bearer YOUR_KEY`""
+        Write-Host "    claude mcp add hindsight https://hindsight-api.zingplay.dev/mcp/game-knowledge/ --transport http --scope user --header `"Authorization: Bearer YOUR_KEY`""
         Write-Host ""
     }
 

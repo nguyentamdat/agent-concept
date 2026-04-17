@@ -48,7 +48,7 @@ if [ -f "$ENV_FILE" ] && grep -q 'HINDSIGHT_API_KEY=' "$ENV_FILE" 2>/dev/null; t
 else
   echo ""
   echo "  The knowledge base requires a Hindsight API key."
-  echo "  Server: https://hindsight.zingplay.dev/"
+  echo "  Server: https://hindsight-api.zingplay.dev/"
   echo ""
   if [ -t 0 ]; then
     read -rp "  Enter your Hindsight API key (or press Enter to skip): " api_key

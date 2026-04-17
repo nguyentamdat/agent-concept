@@ -24,3 +24,7 @@ projects/*/
 
 # Local dev settings (not part of plugin distribution)
 .claude/settings.local.json
+
+# WIP / staging folders at repo root (not part of plugin distribution)
+art-skill/
+game-concept-design-v3/

@@ -74,7 +74,7 @@ Claude Code plugin: AI game design pipeline (Concept > Prototype > Feedback > Do
 
 - Commands and agents defined as **markdown files**, not code.
 - Plugin uses `${CLAUDE_PLUGIN_ROOT}` env var for path resolution.
-- Knowledge served via **Hindsight MCP** at `https://hindsight.zingplay.dev/mcp/game-knowledge/`. Agents use `recall`/`reflect`/`retain`.
+- Knowledge served via **Hindsight MCP** at `https://hindsight-api.zingplay.dev/mcp/game-knowledge/`. Agents use `recall`/`reflect`/`retain`.
 
 ## NOTES
 

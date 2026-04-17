@@ -2,7 +2,7 @@
   "mcpServers": {
     "hindsight": {
       "type": "http",
-      "url": "https://hindsight.zingplay.dev/mcp/game-knowledge/",
+      "url": "https://hindsight-api.zingplay.dev/mcp/game-knowledge/",
       "headers": {
         "Authorization": "Bearer ${HINDSIGHT_API_KEY}"
       }

@@ -9,7 +9,7 @@
     {
       "name": "game-design-kit",
       "description": "AI game design pipeline: /create → GCD → prototype → wireframe + detail docs",
-      "version": "2.2.0",
+      "version": "2.3.0",
       "source": "./",
       "category": "development",
       "homepage": "https://github.com/nguyentamdat/agent-concept"

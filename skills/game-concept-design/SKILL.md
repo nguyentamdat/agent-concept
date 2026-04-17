@@ -66,13 +66,17 @@ Does NOT handle: poker/casino games (→ poker-game-design), implementation code
    - Mỗi vòng: hỏi → nhận câu trả lời → ghi nhận → tiếp vòng sau. Hỏi **từng vòng một**, không hỏi dồn cùng lúc
    - **DỪNG LẠI** — chờ user xác nhận concept tổng hợp trước khi tiếp tục
 
-6. **Pitching Concept** — sau khi user xác nhận concept, generate bài pitch gồm:
-   - **Target Aesthetics:** xác định 2-3 aesthetics chính từ 8 Kinds of Fun mà game nhắm tới
-   - **Core Pillars:** 3-4 trụ cột thiết kế cốt lõi định hình mọi quyết định design (vd: "Strategic Depth", "Quick Sessions", "Social Competition")
-   - **Tóm tắt cơ chế hoạt động:** mô tả ngắn gọn core loop, các hành động chính của người chơi, và cách game vận hành từ đầu đến cuối 1 session
-   - **Phân tích sự thú vị trong lựa chọn:** dựa trên 12 theories, chỉ ra đâu là các quyết định thú vị (meaningful decisions) mà người chơi sẽ đối mặt, vì sao chúng tạo ra tension và engagement
-   - Trình Pitching Concept cho user duyệt
-8. **DỪNG LẠI** — chờ user approve trước khi sang Phase B
+6. **Guided Pitching Concept** — AI dẫn dắt user qua 5 vòng câu hỏi để cùng xây dựng Pitching Concept từng bước. Đọc `references/guided-pitching.md` để lấy câu hỏi và cách tổng hợp cho từng vòng:
+
+   - **Vòng 1 — Target Aesthetics (MDA + 8 Kinds of Fun):** Xác nhận và tinh chỉnh 2-3 aesthetics chính + mối quan hệ giữa chúng
+   - **Vòng 2 — Core Pillars (Problem Statements):** Xác định 3-4 trụ cột thiết kế cốt lõi định hình mọi quyết định design
+   - **Vòng 3 — Core Loop (Game Flow + Interest Curves):** Mô tả cơ chế hoạt động — player làm gì từ đầu đến cuối 1 session
+   - **Vòng 4 — Decision Analysis (Meaningful Decisions + Anatomy of a Choice):** Phân tích vì sao các quyết định trong game thú vị
+   - **Vòng 5 — Pitch Synthesis:** AI tổng hợp thành Pitching Concept hoàn chỉnh, trình cho user xác nhận
+   - Mỗi vòng: hỏi → nhận câu trả lời → ghi nhận → tiếp vòng sau. Hỏi **từng vòng một**, không hỏi dồn cùng lúc
+   - Áp dụng format 3 gợi ý + 1 tự điền (trừ Vòng 5 synthesis)
+
+7. **DỪNG LẠI** — chờ user approve Pitching Concept trước khi sang Phase B
 
 ### Phase B: Generate GCD-Gameplay (Sau Khi Approve)
 
