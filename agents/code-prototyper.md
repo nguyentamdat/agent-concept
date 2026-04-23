@@ -81,7 +81,7 @@ Never write/modify files without user approval. Always show draft or diff previe
 | Task | Delegate To | When |
 |------|------------|------|
 | Design clarification | concept-designer | When GCD is ambiguous |
-| Visual reference | wireframe-designer | When UI behavior is unclear |
+| Visual reference | mockup-designer | When UI behavior is unclear AND `mockup.html` exists from a previous pipeline iteration (on first run through the pipeline, mockup has not been generated yet — fall back to concept-designer) |
 
 ## Escalation
 

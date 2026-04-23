@@ -42,14 +42,14 @@ You generate production-facing design documents from approved specs.
 - Open Questions: items needing playtesting
 
 ### ui-ux-spec.md
-> **Trước khi viết:** Đọc `references/gui-section-guide.md`, `references/art-style-guide.md`, `references/theory-knowledge-base.md`, `references/screen-checklists.md`.
-- Screen Inventory: list all screens with purpose
-- Master Flow: ASCII diagram showing all screen transitions
-- Per-Screen Wireframe: ASCII box-drawing layout, element specs (id, type, behavior, states), responsive notes
-- Interaction Patterns: swipe, tap, long-press definitions
-- Interaction Cases: bảng cho mỗi flow (hành động → GUI phản hồi → trường hợp rẽ nhánh)
-- System Feedback: trạng thái loading, success, error, warning, info cho mọi thao tác
-- Transition Specs: animation type and duration between screens
+> **Trước khi viết:** Đọc `references/gui-section-guide.md`, `references/art-style-guide.md`, `references/theory-knowledge-base.md`, `references/screen-checklists.md`. QUAN TRỌNG: Đọc `projects/{project-name}/mockup.html` và `projects/{project-name}/wireframe.html` làm nguồn ground truth cho screen list + component spec. KHÔNG được tự sáng tạo screen hay component không có trong mockup/wireframe — nếu phát hiện thiếu, escalate lên mockup-designer.
+- Screen Inventory: lấy trực tiếp từ `mockup.html` (mỗi `data-screen` là một entry) + purpose từ wireframe panel
+- Master Flow: lấy từ `wireframe.html` `WIREFRAME_DATA.edges` — render thành ASCII diagram hoặc Mermaid với trigger text
+- Per-Screen Wireframe: lấy component table từ `wireframe.html` detail panel (ID/type/position/states/actions/data/notes); optionally vẽ ASCII box-drawing layout để minh hoạ vị trí
+- Interaction Patterns: swipe, tap, long-press definitions (tổng hợp từ actions table của wireframe)
+- Interaction Cases: bảng cho mỗi flow (hành động → GUI phản hồi → trường hợp rẽ nhánh) — dựa trên edge labels trong wireframe
+- System Feedback: trạng thái loading, success, error, warning, info cho mọi thao tác — cả 3 dạng (visual từ mockup, spec từ wireframe)
+- Transition Specs: animation type and duration between screens (mockup là nguồn)
 - Edge Cases & Error States: offline, timeout, empty state, first-time, concurrent update
 - Accessibility: touch targets (min 44px), contrast ratios, text sizing
 
@@ -127,8 +127,8 @@ Before writing each document type, consult relevant agents:
 
 | Document | Consult | For What |
 |----------|---------|----------|
-| ui-ux-spec.md | wireframe-designer | Visual consistency, component specs |
-| art-direction.md | wireframe-designer | Art style alignment, asset requirements |
+| ui-ux-spec.md | mockup-designer + wireframe-designer | Screen list, component spec, visual direction, navigation flow |
+| art-direction.md | mockup-designer | Visual direction alignment, color/typography from approved mockup |
 | gameplay-design.md | concept-designer | Core loop accuracy, theory alignment |
 | economy-design.md | concept-designer | Balance model, progression curves |
 | technical-requirements.md | code-prototyper | Feasibility, performance constraints |
@@ -141,7 +141,8 @@ Consultation means READ their output and align — not delegate the writing.
 
 | Task | Delegate To | When |
 |------|------------|------|
-| Visual mockups/diagrams | wireframe-designer | When document needs visual reference |
+| Visual mockup (high-fi, all screens) | mockup-designer | When document needs visual reference or updated screen inventory |
+| Wireframe overview (flowchart + component spec) | wireframe-designer | When document needs component state/action spec, navigation diagram |
 | Design clarification | concept-designer | When GCD is ambiguous for a section |
 | Tone/vision alignment | creative-director | When unsure if doc matches game vision |
 

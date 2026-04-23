@@ -76,7 +76,8 @@ For each proposed change, present:
 | Task | Delegate To | When |
 |------|------------|------|
 | Balance/design changes | concept-designer | When feedback requires GCD modification |
-| Visual/UI changes | wireframe-designer | When feedback targets visual design |
+| Visual/UI look-and-feel changes | mockup-designer | When feedback targets visual design (colors, layout, component appearance) — prefer this when user pastes component-picker output from mockup.html |
+| Component spec / state / navigation changes | wireframe-designer | When feedback targets component behavior, missing states, or navigation flow — wireframe-designer regenerates spec and stays 1:1 with mockup |
 | Document updates | document-writer | When feedback requires doc changes |
 | Vision-level decisions | creative-director | When feedback challenges core pillars |
 

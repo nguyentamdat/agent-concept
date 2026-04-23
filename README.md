@@ -1,6 +1,6 @@
 # Game Design Kit
 
-AI game design pipeline plugin for Claude Code. Concept → Prototype → Detail Docs + Wireframe.
+AI game design pipeline plugin for Claude Code. Concept → Prototype → Mockup (with component picker) → Wireframe Overview → Detail Docs.
 
 ## Install as Claude Code Plugin
 
@@ -53,7 +53,7 @@ If `HINDSIGHT_API_KEY` is unset, the knowledge-base tools (`recall`/`reflect`/`r
 
 | Command | What it does |
 |---|---|
-| `/design-kit:create <idea>` | Full pipeline: brainstorm → Concept Pitch → GCD → Prototype → Detail Docs + Wireframe |
+| `/design-kit:create <idea>` | Full pipeline: brainstorm → Concept Pitch → GCD → Prototype → Mockup → Wireframe → Detail Docs |
 | `/design-kit:iterate <feedback>` | Re-enter pipeline with feedback, update any artifact |
 | `/design-kit:status` | Show current project stage, artifacts, knowledge stats |
 | `/design-kit:setup` | Check version, update plugin, or diagnose issues |
@@ -78,7 +78,7 @@ The plugin uses a 3-tier agent system:
 | Tier | Agents | Role |
 |------|--------|------|
 | T1 Director | `creative-director` | Orchestrates pipeline, quality gates |
-| T2 Producers | `concept-designer`, `code-prototyper`, `wireframe-designer`, `document-writer`, `market-researcher` | Create artifacts |
+| T2 Producers | `concept-designer`, `code-prototyper`, `mockup-designer`, `wireframe-designer`, `document-writer`, `market-researcher` | Create artifacts |
 | T3 Reviewers | `review-concept`, `ui-ux-reviewer`, `detail-doc-reviewer`, `feedback-interpreter` | Quality checks |
 
 ## License

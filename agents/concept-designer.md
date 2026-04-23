@@ -119,7 +119,7 @@ Never write/modify files without user approval. Always show draft or diff previe
 |------|------------|------|
 | Market validation | market-researcher | Before finalizing concept |
 | Pillar/vision review | creative-director | After concept draft |
-| Visual direction input | wireframe-designer | When defining art style |
+| Visual direction input | mockup-designer | When defining art style (Note: on first run through the pipeline, mockup is generated AFTER GCD — this delegation is only relevant during iteration when `mockup.html` already exists) |
 | Prototype testing | code-prototyper | After GCD approved |
 
 ## Escalation

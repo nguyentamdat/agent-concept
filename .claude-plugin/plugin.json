@@ -1,8 +1,8 @@
 {
   "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "game-design-kit",
-  "version": "2.3.0",
-  "description": "AI game design pipeline for mobile games: /create (idea → GCD → prototype → wireframe + detail docs) with approval gates at every step. Powered by Hindsight MCP knowledge base.",
+  "version": "2.4.0",
+  "description": "AI game design pipeline for mobile games: /create (idea → GCD → prototype → mockup → wireframe → detail docs) with approval gates at every step. Mockup ships with an embedded dom-grab component picker for click-to-copy feedback. Powered by Hindsight MCP knowledge base.",
   "author": {
     "name": "Game Design Kit"
   },
@@ -12,9 +12,11 @@
     "game-design",
     "game-development",
     "prototype",
+    "mockup",
+    "wireframe",
+    "component-picker",
     "mda-framework",
-    "knowledge-base",
-    "wireframe"
+    "knowledge-base"
   ],
   "mcpServers": {
     "hindsight": {

@@ -21,8 +21,9 @@ Read the project directory. For each artifact below, note whether it exists:
 | `market-research.md` | Market Research |
 | `concept-pitch.md` | Concept Pitch |
 | `gcd.md` | GCD |
-| `index.html` | Prototype |
-| `wireframe.html` | Wireframe |
+| `prototype/index.html` OR `index.html` | Prototype |
+| `mockup.html` | Mockup (with component picker) |
+| `wireframe.html` | Wireframe Overview |
 | `ui-ux-spec.md` | UI/UX Spec |
 | `art-direction.md` | Art Direction |
 | `gameplay-design.md` | Gameplay Design |
@@ -31,7 +32,7 @@ Read the project directory. For each artifact below, note whether it exists:
 | `technical-requirements.md` | Technical Requirements |
 | `sound-design.md` | Sound Design |
 
-Count how many of the 7 detail docs exist (the docs below `index.html` in the list above, starting from `ui-ux-spec.md`).
+Count how many of the 7 detail docs exist (the docs below `wireframe.html` in the list above, starting from `ui-ux-spec.md`).
 
 
 **Step 3: Get knowledge base stats**
@@ -46,9 +47,11 @@ Use this logic to determine the current stage:
 2. `market-research.md` only → `research`
 3. `concept-pitch.md` exists → `concept`
 4. `gcd.md` exists → `design`
-5. `index.html` OR `wireframe.html` exists → `prototype`
-6. Any detail doc exists → `documentation`
-7. All 7 detail docs exist → `complete`
+5. `index.html` (prototype) exists → `prototype`
+6. `mockup.html` exists → `mockup`
+7. `wireframe.html` exists → `wireframe`
+8. Any detail doc exists → `documentation`
+9. All 7 detail docs exist → `complete`
 
 Pick the highest stage that applies.
 
@@ -65,7 +68,8 @@ Artifacts:
 {✅/⬜} Concept Pitch
 {✅/⬜} GCD
 {✅/⬜} Prototype
-{✅/⬜} Wireframe
+{✅/⬜} Mockup (with component picker)
+{✅/⬜} Wireframe Overview
 {✅/⬜} Detail Documents ({count}/7)
 
 | Knowledge Base:

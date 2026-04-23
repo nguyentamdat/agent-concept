@@ -1,5 +1,5 @@
 ---
-description: Re-enter the game design pipeline with feedback — update any artifact (concept, prototype, wireframe, docs)
+description: Re-enter the game design pipeline with feedback — update any artifact (concept, prototype, mockup, wireframe, docs)
 argument-hint: <feedback text>
 ---
 
@@ -19,8 +19,9 @@ Receive the feedback text from the user argument (or ask for it if not provided)
 Read the current project directory. Identify which artifacts exist:
 - `concept-pitch.md` — concept pitch document
 - `gcd.md` — game concept document
-- `index.html` — prototype
-- `wireframe.html` — wireframe
+- `prototype/index.html` — playable prototype
+- `mockup.html` — high-fidelity interactive mockup with component picker (dom-grab)
+- `wireframe.html` — single-page overview flowchart with component spec panels
 - `ui-ux-spec.md`, `art-direction.md`, and other design artifacts
 - `gameplay-design.md`, `technical-requirements.md`, and other detail docs
 
@@ -48,9 +49,13 @@ After changes are applied, reason about what downstream artifacts may now be out
 
 | Changed artifact | Possible downstream effects |
 |---|---|
-| `concept-pitch.md` | `gcd.md`, prototype, wireframe, detail docs may need updating |
-| `gcd.md` | Prototype, wireframe, detail docs may need regenerating |
-| `ui-ux-spec.md` | `wireframe.html`, `art-direction.md` may need updating |
+| `concept-pitch.md` | `gcd.md`, prototype, mockup, wireframe, detail docs may need updating |
+| `gcd.md` | Prototype, mockup, wireframe, detail docs may need regenerating |
+| `prototype/index.html` | Mockup may need to reflect the new mechanic presentation; wireframe likely unchanged unless new screens |
+| `mockup.html` | **Wireframe MUST be regenerated** (wireframe is 1:1 synced with mockup); `ui-ux-spec.md` likely needs update |
+| `wireframe.html` | `ui-ux-spec.md` component tables may need update |
+| `ui-ux-spec.md` | `mockup.html`, `wireframe.html`, `art-direction.md` may need updating |
+| `art-direction.md` | `mockup.html` color/typography may need update |
 
 List the downstream artifacts that could be affected. Ask the user which ones to regenerate — do not assume.
 
@@ -60,8 +65,9 @@ For each artifact the user selects, invoke the appropriate agent:
 
 - Concept Pitch (`concept-pitch.md`) → invoke `concept-designer`
 - GCD (`gcd.md`) → invoke `concept-designer`
-- Prototype (`index.html`) → invoke `code-prototyper`
-- Wireframe (`wireframe.html`) → invoke `wireframe-designer`
+- Prototype (`prototype/index.html`) → invoke `code-prototyper`
+- Mockup (`mockup.html`) → invoke `mockup-designer`
+- Wireframe overview (`wireframe.html`) → invoke `wireframe-designer` (MUST re-read latest `mockup.html` first so wireframe stays 1:1 synced)
 - Detail docs (`gameplay-design.md`, `technical-requirements.md`, etc.) → invoke `document-writer`
 
 For each agent invocation:

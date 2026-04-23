@@ -171,23 +171,69 @@ Wait for it to complete. Present the result to the user via AskUserQuestion.
 - If "Approve" or "Skip": continue to Step 7.
 ---
 
-## Step 7: Feedback Gate
+## Step 7: Mockup (all screens, with component picker)
 
-Ask the user via AskUserQuestion:
+Invoke the **mockup-designer** agent to generate `projects/{project-name}/mockup.html` — a high-fidelity interactive mockup covering all screens. The mockup embeds the **dom-grab** component picker (via CDN) so the user can click any component in the browser, copy its context to clipboard, and paste it into feedback when requesting changes.
 
-> "Do you have any feedback to improve the concept or prototype before we move to detailed documents?"
-> Options: "Yes, I have feedback" / "No, everything looks good"
+The mockup-designer will:
+1. Read `concept-pitch.md`, `gcd.md`, `prototype/index.html`, and `art-direction.md` (if present) as input.
+2. Run the brainstorm protocol to confirm the full screen list with the user before building.
+3. Produce `mockup.html` with sidebar navigation, mobile viewport (390×844), screen transitions, brand colors, and `data-component` attributes on every meaningful UI element.
+4. Include a help banner at the top of the page explaining how to activate the component picker (hold Cmd+C or Ctrl+C for 200ms, then click any component).
 
-- If "Yes, I have feedback":
-  1. Collect the feedback.
-  2. Invoke the **feedback-interpreter** agent to interpret and structure the feedback.
-  3. Apply the changes.
-  4. **Loop back to Step 2** and re-run from choosing brainstorm direction with the updated context.
-- If "No, everything looks good": continue to Step 8.
+Wait for the mockup-designer to complete. Invoke the **ui-ux-reviewer** agent automatically to quality-check the mockup against `references/mockup-review-criteria.md`.
+
+Present the mockup (with review notes) to the user via AskUserQuestion. Tell the user how to open `mockup.html` in a browser and use the component picker for feedback.
+
+**STOP. Wait for approval.**
+
+> Options: "Approve" / "Request changes" / "Skip"
+
+- If "Request changes": collect feedback (ideally with component picker clipboard output pasted in), apply revisions, and re-present.
+- If "Approve" or "Skip": continue to Step 8.
 
 ---
 
-## Step 8: Select Detail Documents
+## Step 8: Wireframe Overview (single-page flowchart + component spec)
+
+Invoke the **wireframe-designer** agent to generate `projects/{project-name}/wireframe.html` — a single-page interactive flowchart showing all screens as connected boxes with a detail panel per screen listing every component, its states, actions, and data bindings.
+
+The wireframe-designer will:
+1. Read `concept-pitch.md`, `gcd.md`, and most importantly `mockup.html` (the approved ground truth) as input.
+2. Extract every screen and every `data-component` from `mockup.html` — wireframe must be 1:1 synced with mockup.
+3. Present the proposed flowchart layout strategy (linear / hub-and-spoke / tree) for user confirmation.
+4. Build `wireframe.html` with: SVG flowchart canvas (pan + zoom), screen boxes connected by labeled wires with arrowheads, and a slide-in detail panel per screen showing component tables (ID / type / position / states / actions / data / notes) per `references/wireframe-overview-guide.md`.
+
+Wait for the wireframe-designer to complete. Invoke the **ui-ux-reviewer** agent automatically to quality-check the wireframe overview.
+
+Present the wireframe (with review notes) to the user via AskUserQuestion.
+
+**STOP. Wait for approval.**
+
+> Options: "Approve" / "Request changes" / "Skip"
+
+- If "Request changes": apply revisions and re-present.
+- If "Approve" or "Skip": continue to Step 9.
+
+---
+
+## Step 9: Feedback Gate
+
+Ask the user via AskUserQuestion:
+
+> "Do you have any feedback on the concept, prototype, mockup, or wireframe before we move to detailed documents?"
+> Options: "Yes, I have feedback" / "No, everything looks good"
+
+- If "Yes, I have feedback":
+  1. Collect the feedback. Encourage the user to paste any component-picker clipboard output from the mockup.
+  2. Invoke the **feedback-interpreter** agent to interpret and structure the feedback — including identifying which upstream artifact (concept / gcd / prototype / mockup / wireframe) needs updating.
+  3. Apply the changes to the smallest scope possible (don't regenerate upstream artifacts unless necessary).
+  4. **Loop back** to the earliest affected step (Step 2 if concept changes, Step 5 if GCD changes, Step 6 if prototype changes, Step 7 if only mockup, Step 8 if only wireframe) and re-run from there with the updated context.
+- If "No, everything looks good": continue to Step 10.
+
+---
+
+## Step 10: Select Detail Documents
 
 Ask the user via AskUserQuestion which detail documents to generate. Allow multiple selections:
 
@@ -199,19 +245,21 @@ Ask the user via AskUserQuestion which detail documents to generate. Allow multi
 - technical-requirements.md
 - sound-design.md
 
-Record the user's selections. Proceed to Step 9.
+Record the user's selections. Proceed to Step 11.
 
 ---
 
-## Step 9: Generate Detail Documents + Wireframe (Parallel per document)
+## Step 11: Generate Detail Documents
 
 For each document the user selected, in order:
 
-1. Invoke the **document-writer** agent to generate the document. At the same time, if the document is `ui-ux-spec.md`, invoke the **wireframe-designer** agent in parallel to generate `wireframe.html`.
-2. Immediately after document generation:
-   - If the document is `ui-ux-spec.md`: invoke the **ui-ux-reviewer** agent automatically (wireframe-designer runs in parallel during generation).
-   - For all other documents: invoke the **detail-doc-reviewer** agent automatically.
-3. Present the document (with review notes, and wireframe result if applicable) to the user via AskUserQuestion.
+1. Invoke the **document-writer** agent to generate the document.
+   - When generating `ui-ux-spec.md`, document-writer MUST read `mockup.html` and `wireframe.html` as authoritative source for screen list, component list, and component specs. The goal is to extract / reference existing spec, not re-invent it.
+   - When generating `art-direction.md`, document-writer consults the approved mockup for visual direction consistency.
+2. Immediately after document generation, invoke the appropriate reviewer automatically:
+   - For `ui-ux-spec.md` and `art-direction.md`: invoke **ui-ux-reviewer**.
+   - For all other documents: invoke **detail-doc-reviewer**.
+3. Present the document (with review notes) to the user via AskUserQuestion.
 
 **STOP. Wait for approval before generating the next document.**
 
@@ -232,9 +280,10 @@ Once all selected documents are approved or skipped:
    - Project name and ID
    - Concept Pitch
    - GCD (Vietnamese)
-   - HTML5 prototype
-   - Wireframe (`wireframe.html`, if generated)
+   - HTML5 prototype (`prototype/index.html`)
+   - Mockup with component picker (`mockup.html`)
+   - Wireframe overview (`wireframe.html`)
    - Market research (if requested)
    - Each detail document generated
 2. Show the current project status by listing the artifacts in the project directory.
-3. Let the user know the pipeline is complete and they can invoke individual commands to regenerate or revise any artifact.
+3. Remind the user they can run `/design-kit:iterate <feedback>` to update any single artifact, or re-open `mockup.html` in a browser to grab component contexts for targeted feedback.
