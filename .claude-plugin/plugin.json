@@ -1,0 +1,30 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "game-design-kit",
+  "version": "2.4.1",
+  "description": "AI game design pipeline for mobile games: /create (idea → GCD → prototype → mockup → wireframe → detail docs) with approval gates at every step. Mockup ships with an embedded dom-grab component picker for click-to-copy feedback. Powered by Hindsight MCP knowledge base.",
+  "author": {
+    "name": "Game Design Kit"
+  },
+  "repository": "https://github.com/nguyentamdat/agent-concept",
+  "license": "MIT",
+  "keywords": [
+    "game-design",
+    "game-development",
+    "prototype",
+    "mockup",
+    "wireframe",
+    "component-picker",
+    "mda-framework",
+    "knowledge-base"
+  ],
+  "mcpServers": {
+    "hindsight": {
+      "type": "http",
+      "url": "${HINDSIGHT_MCP_URL:-https://hindsight-api.zingplay.dev/mcp/game-knowledge/}",
+      "headers": {
+        "Authorization": "Bearer ${HINDSIGHT_API_KEY}"
+      }
+    }
+  }
+}
