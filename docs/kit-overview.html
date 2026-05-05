@@ -1,0 +1,1712 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐡 Game Design Kit · Công nghệ & Kiến trúc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   pufferfish_report_theme v2.9
+   Light default · Dark via body.dark
+   ═══════════════════════════════════════════ */
+
+/* ── LIGHT DEFAULT ── */
+:root {
+  --bg:       #f0f7f4;
+  --bg2:      #e4f0ea;
+  --bg-body:  #e6f4ec;
+  --surface:  #ffffff;
+  --surface2: #f0f9f5;
+  --card:     #ffffff;
+  --border:   rgba(0,140,85,0.18);
+  --border2:  rgba(0,140,85,0.08);
+  --bdr:      rgba(0,140,85,0.18);
+  --bdr2:     rgba(0,140,85,0.08);
+  --accent:   #006b45;
+  --accent2:  #8a5a00;
+  --blue:     #005f80;
+  --red:      #c0202e;
+  --orange:   #7a3c00;
+  --purple:   #5c3a80;
+  --warn:     #7a4e00;
+  --text:     #0d2b1e;
+  --txt:      #0d2b1e;
+  --sub:      #2d5c44;
+  --muted:    #4a8c6a;
+  --up:       #1a6b3a;
+  --down:     #c0202e;
+  --warn-col: #7a4e00;
+  --new:      #5c3a80;
+  --old:      #006b45;
+  --ret:      #7a4e00;
+  --total:    #005f80;
+  --up-bg:    rgba(0,140,85,0.12);   --up-c:    #006b45;
+  --up-bg2:   rgba(0,140,85,0.20);   --up-c2:   #004d30;
+  --dn-bg:    rgba(192,32,46,0.10);  --dn-c:    #c0202e;
+  --dot:      rgba(0,140,85,0.07);
+  --shadow:   rgba(0,0,0,0.08);
+  --mono:     'JetBrains Mono', monospace;
+}
+
+/* ── DARK via body.dark ── */
+body.dark {
+  --bg:       #040d0a;
+  --bg2:      #071510;
+  --bg-body:  #020a07;
+  --surface:  #0a1e18;
+  --surface2: #0e2820;
+  --card:     #0a1e18;
+  --border:   rgba(0,229,160,0.12);
+  --border2:  rgba(0,229,160,0.06);
+  --bdr:      rgba(0,229,160,0.12);
+  --bdr2:     rgba(0,229,160,0.06);
+  --accent:   #00e5a0;
+  --accent2:  #ffcc02;
+  --blue:     #00bcd4;
+  --red:      #ff4757;
+  --orange:   #ff9800;
+  --purple:   #c792ea;
+  --warn:     #ffcc02;
+  --text:     #e8faf4;
+  --txt:      #e8faf4;
+  --sub:      #9abfb0;
+  --muted:    #6aada0;
+  --up:       #00e5a0;
+  --down:     #ff4757;
+  --warn-col: #ffcc02;
+  --new:      #c792ea;
+  --old:      #00e5a0;
+  --ret:      #ffcc02;
+  --total:    #00bcd4;
+  --up-bg:    rgba(0,229,160,0.12);  --up-c:    #00e5a0;
+  --up-bg2:   rgba(0,229,160,0.18);  --up-c2:   #00e5a0;
+  --dn-bg:    rgba(255,71,87,0.12);  --dn-c:    #ff4757;
+  --dot:      rgba(0,229,160,0.10);
+  --shadow:   rgba(0,0,0,0.3);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  background: var(--bg-body);
+  color: var(--text);
+  line-height: 1.6;
+  font-size: 14px;
+  transition: background 0.3s, color 0.3s;
+  background-image:
+    radial-gradient(circle at 25% 0%, rgba(0,140,85,0.06), transparent 50%),
+    radial-gradient(circle at 75% 100%, rgba(0,95,128,0.05), transparent 50%);
+  background-attachment: fixed;
+}
+
+body.dark {
+  background-image:
+    radial-gradient(circle at 25% 0%, rgba(0,229,160,0.05), transparent 50%),
+    radial-gradient(circle at 75% 100%, rgba(0,188,212,0.04), transparent 50%);
+}
+
+/* ── Container & layout ── */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 60px;
+}
+
+body.has-sidebar-toc .container {
+  display: flex;
+  align-items: flex-start;
+  gap: 48px;
+  max-width: 1280px;
+}
+
+.toc-content-wrap {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.section {
+  max-width: 880px;
+  margin: 0 auto 48px;
+  padding-top: 12px;
+}
+
+.section--wide {
+  max-width: 1200px;
+}
+
+/* ── Theme toggle ── */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  z-index: 100;
+  user-select: none;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.toggle-track {
+  width: 28px; height: 14px;
+  background: var(--border);
+  border-radius: 100px;
+  position: relative;
+  transition: background 0.2s;
+}
+.toggle-thumb {
+  width: 10px; height: 10px;
+  background: var(--accent);
+  border-radius: 50%;
+  position: absolute;
+  top: 2px; left: 2px;
+  transition: left 0.2s;
+}
+body.dark .toggle-thumb { left: 16px; }
+
+/* ── Header ── */
+.header {
+  border-left: 3px solid var(--accent);
+  padding-left: 20px;
+  margin-bottom: 36px;
+  position: relative;
+}
+.header-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.header h1 {
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+.header h1 .grad {
+  background: linear-gradient(120deg, var(--accent) 0%, var(--blue) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.header-sub {
+  font-size: 14px;
+  color: var(--muted);
+  font-family: var(--mono);
+  margin-bottom: 12px;
+}
+.compare-badge {
+  display: inline-block;
+  margin-top: 12px;
+  background: rgba(0,140,85,0.1);
+  border: 1px solid rgba(0,140,85,0.3);
+  color: var(--accent);
+  font-size: 12px;
+  font-family: var(--mono);
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+body.dark .compare-badge {
+  background: rgba(0,229,160,0.1);
+  border-color: rgba(0,229,160,0.3);
+}
+
+/* ── Section title ── */
+.section-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.section h2 {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.section .lead {
+  color: var(--sub);
+  font-size: 15px;
+  margin-bottom: 24px;
+  line-height: 1.7;
+}
+
+/* ── Sidebar TOC ── */
+.toc-sidebar {
+  flex: 0 0 240px;
+  position: sticky;
+  top: 24px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  padding: 18px 0;
+}
+.toc-sidebar-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 14px;
+  padding-left: 14px;
+}
+.toc-sidebar a {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 6px 14px;
+  color: var(--sub);
+  text-decoration: none !important;
+  font-size: 13px;
+  border-left: 2px solid transparent;
+  transition: all 0.15s;
+  list-style: none !important;
+}
+.toc-sidebar a:hover { color: var(--accent); }
+.toc-sidebar a.active {
+  color: var(--accent);
+  border-left-color: var(--accent);
+  font-weight: 600;
+  background: rgba(0,140,85,0.04);
+}
+body.dark .toc-sidebar a.active { background: rgba(0,229,160,0.06); }
+.toc-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.toc-sidebar a.active .toc-num { color: var(--accent); }
+
+/* ── KPI Card Grid ── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.kpi-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.kpi-card:hover { box-shadow: 0 4px 16px var(--shadow); transform: translateY(-2px); }
+.kpi-accentbar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+}
+.kpi-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.kpi-value {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 6px;
+  font-family: var(--mono);
+  color: var(--text);
+}
+.kpi-base {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+/* ── Architecture diagram ── */
+.arch-wrapper {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 16px 0 28px;
+  overflow-x: auto;
+}
+.arch-svg { width: 100%; height: auto; min-width: 720px; display: block; }
+
+.tier-grid {
+  display: grid;
+  gap: 24px;
+  margin-top: 16px;
+}
+.tier-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left-width: 4px;
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+.tier-block.t1 { border-left-color: var(--accent); }
+.tier-block.t2 { border-left-color: var(--blue); }
+.tier-block.t3 { border-left-color: var(--purple); }
+.tier-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.tier-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.tier-block.t1 .tier-tag { background: rgba(0,140,85,0.15); color: var(--accent); }
+.tier-block.t2 .tier-tag { background: rgba(0,95,128,0.15); color: var(--blue); }
+.tier-block.t3 .tier-tag { background: rgba(92,58,128,0.15); color: var(--purple); }
+body.dark .tier-block.t1 .tier-tag { background: rgba(0,229,160,0.18); color: var(--accent); }
+body.dark .tier-block.t2 .tier-tag { background: rgba(0,188,212,0.18); color: var(--blue); }
+body.dark .tier-block.t3 .tier-tag { background: rgba(199,146,234,0.18); color: var(--purple); }
+.tier-name { font-weight: 700; font-size: 16px; }
+.tier-block .tier-desc {
+  font-size: 13px;
+  color: var(--sub);
+  margin-bottom: 14px;
+}
+.agent-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 8px;
+}
+.agent-chip {
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 12px 14px;
+  transition: all 0.18s;
+}
+.agent-chip:hover {
+  border-color: var(--accent);
+  transform: translateX(2px);
+}
+.agent-chip-name {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 12.5px;
+  color: var(--accent);
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+.tier-block.t2 .agent-chip-name { color: var(--blue); }
+.tier-block.t3 .agent-chip-name { color: var(--purple); }
+.agent-chip-role {
+  font-size: 12px;
+  color: var(--sub);
+  line-height: 1.45;
+}
+
+/* ── Pipeline ── */
+.pipeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 16px 0 28px;
+}
+.pipe-step {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 16px;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+.pipe-step:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 16px var(--shadow);
+}
+.pipe-step.color-blue   { border-left-color: var(--blue); }
+.pipe-step.color-purple { border-left-color: var(--purple); }
+.pipe-step.color-orange { border-left-color: var(--orange); }
+.pipe-step.color-warn   { border-left-color: var(--warn-col); }
+.pipe-num {
+  font-family: var(--mono);
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--accent);
+  align-self: center;
+}
+.color-blue   .pipe-num { color: var(--blue); }
+.color-purple .pipe-num { color: var(--purple); }
+.color-orange .pipe-num { color: var(--orange); }
+.color-warn   .pipe-num { color: var(--warn-col); }
+.pipe-content h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.pipe-desc {
+  font-size: 13px;
+  color: var(--sub);
+  margin-bottom: 8px;
+}
+.pipe-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: 100px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.pill.producer { color: var(--blue); border-color: rgba(0,95,128,0.25); }
+.pill.output   { color: var(--accent2); border-color: rgba(138,90,0,0.25); }
+.pill.review   { color: var(--purple); border-color: rgba(92,58,128,0.25); }
+.pill.gate     { color: var(--up); border-color: rgba(26,107,58,0.3); background: rgba(0,140,85,0.08); }
+body.dark .pill.producer { color: var(--blue); border-color: rgba(0,188,212,0.3); }
+body.dark .pill.output   { color: var(--accent2); border-color: rgba(255,204,2,0.3); }
+body.dark .pill.review   { color: var(--purple); border-color: rgba(199,146,234,0.3); }
+body.dark .pill.gate     { color: var(--up); border-color: rgba(0,229,160,0.3); background: rgba(0,229,160,0.08); }
+
+.gate-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 0;
+  gap: 8px;
+  color: var(--up);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+.gate-divider::before,
+.gate-divider::after {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--up);
+  opacity: 0.5;
+}
+
+/* ── Tech grid ── */
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+  margin: 16px 0 28px;
+}
+.tech-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.tech-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--shadow);
+}
+.tech-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  color: var(--accent);
+}
+.tech-card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.tech-card p {
+  font-size: 12.5px;
+  color: var(--sub);
+  line-height: 1.55;
+}
+.tech-meta {
+  margin-top: 10px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--muted);
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.tech-meta span {
+  padding: 2px 8px;
+  background: var(--bg);
+  border-radius: 4px;
+}
+
+/* ── File tree ── */
+.tree {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 16px 0 28px;
+}
+.tree-header {
+  padding: 10px 16px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+.tree-dots {
+  display: flex;
+  gap: 5px;
+}
+.tree-dots span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--border);
+}
+.tree-dots span:nth-child(1) { background: var(--down); }
+.tree-dots span:nth-child(2) { background: var(--accent2); }
+.tree-dots span:nth-child(3) { background: var(--accent); }
+.tree-body {
+  padding: 18px 22px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.85;
+  overflow-x: auto;
+}
+.tree-line { display: block; white-space: pre; }
+.tree-glyph { color: var(--muted); opacity: 0.55; }
+.tree-folder { color: var(--blue); font-weight: 600; }
+.tree-folder-key { color: var(--accent); font-weight: 700; }
+.tree-file { color: var(--sub); }
+.tree-comment { color: var(--muted); opacity: 0.85; font-style: italic; }
+
+/* ── Knowledge flow ── */
+.kn-flow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 16px 0 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  overflow-x: auto;
+}
+.kn-flow-svg { width: 100%; min-width: 660px; height: auto; display: block; }
+
+.kn-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+.meta-card {
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.meta-card h4 {
+  font-size: 11px;
+  font-family: var(--mono);
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 10px;
+}
+.meta-card .val {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+.meta-card code {
+  display: inline-block;
+  padding: 2px 7px;
+  background: var(--bg);
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--accent);
+  border: 1px solid var(--border2);
+}
+.meta-card .desc {
+  font-size: 12px;
+  color: var(--sub);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+/* ── Quickstart ── */
+.qs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 16px 0 28px;
+}
+.qs-step {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px 18px 18px;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.qs-step:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px var(--shadow);
+}
+.qs-num {
+  position: absolute;
+  top: -10px;
+  left: 16px;
+  background: var(--accent);
+  color: white;
+  font-family: var(--mono);
+  font-weight: 800;
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  letter-spacing: 0.05em;
+}
+body.dark .qs-num { color: var(--bg); }
+.qs-step:nth-child(2) .qs-num { background: var(--blue); }
+.qs-step:nth-child(3) .qs-num { background: var(--purple); }
+.qs-step:nth-child(4) .qs-num { background: var(--accent2); }
+.qs-step h4 {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 4px 0 6px;
+}
+.qs-step p {
+  font-size: 12.5px;
+  color: var(--sub);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+.qs-step code {
+  display: block;
+  padding: 8px 10px;
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--accent);
+  font-weight: 600;
+  word-break: break-all;
+}
+
+/* ── Slash commands ── */
+.cmd-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+  margin: 16px 0 28px;
+}
+.cmd-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+  transition: all 0.2s;
+}
+.cmd-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+.cmd-name {
+  font-family: var(--mono);
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 13px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cmd-name::before {
+  content: '▸';
+  color: var(--accent);
+  opacity: 0.6;
+}
+.cmd-arg {
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 11.5px;
+}
+.cmd-desc {
+  font-size: 12.5px;
+  color: var(--sub);
+  line-height: 1.5;
+}
+
+/* ── Insight cards ── */
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 10px;
+  margin: 12px 0 28px;
+}
+.principle {
+  background: var(--surface);
+  border-radius: 10px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.principle.allow {
+  border-left: 3px solid var(--up);
+  background: rgba(0,140,85,0.04);
+}
+.principle.deny {
+  border-left: 3px solid var(--down);
+  background: rgba(192,32,46,0.04);
+}
+body.dark .principle.allow { background: rgba(0,229,160,0.05); }
+body.dark .principle.deny  { background: rgba(255,71,87,0.05); }
+.principle-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.principle strong {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+.principle.allow strong { color: var(--up); }
+.principle.deny  strong { color: var(--down); }
+.principle span {
+  font-size: 12px;
+  color: var(--sub);
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+footer {
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+  font-family: var(--mono);
+  padding: 32px 0 0;
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1099px) {
+  body.has-sidebar-toc .container { display: block; }
+  .toc-sidebar { display: none; }
+}
+
+@media (max-width: 720px) {
+  .container { padding: 20px 16px 40px; }
+  .header h1 { font-size: 28px; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .pipe-step { grid-template-columns: 40px 1fr; gap: 10px; padding: 14px; }
+  .pipe-num { font-size: 22px; }
+  .section h2 { font-size: 20px; }
+  .theme-toggle { top: 12px; right: 12px; }
+}
+
+/* ── SVG Diagram styles ── */
+.diagram-svg .node-bg { fill: var(--surface); stroke: var(--border); stroke-width: 1.5; }
+.diagram-svg .node-bg-accent { fill: rgba(0,140,85,0.08); stroke: var(--accent); stroke-width: 2; }
+.diagram-svg .node-bg-blue { fill: rgba(0,95,128,0.06); stroke: var(--blue); stroke-width: 1.5; }
+.diagram-svg .node-bg-purple { fill: rgba(92,58,128,0.06); stroke: var(--purple); stroke-width: 1.5; }
+body.dark .diagram-svg .node-bg-accent { fill: rgba(0,229,160,0.08); stroke: var(--accent); }
+body.dark .diagram-svg .node-bg-blue { fill: rgba(0,188,212,0.08); stroke: var(--blue); }
+body.dark .diagram-svg .node-bg-purple { fill: rgba(199,146,234,0.08); stroke: var(--purple); }
+.diagram-svg .t-mid { text-anchor: middle; }
+.diagram-svg .t-start { text-anchor: start; }
+.diagram-svg .t-end { text-anchor: end; }
+.diagram-svg .node-title {
+  fill: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+}
+.diagram-svg .node-sub {
+  fill: var(--sub);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  font-weight: 500;
+}
+.diagram-svg .node-mono {
+  fill: var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+.diagram-svg .flow-line {
+  stroke: var(--accent);
+  stroke-width: 1.6;
+  fill: none;
+}
+.diagram-svg .flow-line-alt {
+  stroke: var(--purple);
+  stroke-width: 1.6;
+  fill: none;
+  stroke-dasharray: 5 4;
+}
+.diagram-svg .lbl {
+  fill: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* Reveal animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body class="has-sidebar-toc">
+
+<!-- Theme toggle -->
+<div class="theme-toggle" id="themeToggle" role="button" aria-label="Chuyển đổi giao diện sáng/tối" tabindex="0">
+  <span id="themeIcon">☀️</span>
+  <div class="toggle-track"><div class="toggle-thumb"></div></div>
+  <span id="themeLabel">Light</span>
+</div>
+
+<div class="container">
+
+  <!-- Sidebar TOC -->
+  <aside class="toc-sidebar" aria-label="Mục lục">
+    <div class="toc-sidebar-title">📑 Mục lục</div>
+    <a href="#sec-overview" data-toc-link><span class="toc-num">01</span><span>Tổng quan</span></a>
+    <a href="#sec-arch" data-toc-link><span class="toc-num">02</span><span>Kiến trúc 3 tầng</span></a>
+    <a href="#sec-pipeline" data-toc-link><span class="toc-num">03</span><span>Pipeline thiết kế</span></a>
+    <a href="#sec-tech" data-toc-link><span class="toc-num">04</span><span>Công nghệ</span></a>
+    <a href="#sec-tree" data-toc-link><span class="toc-num">05</span><span>Cấu trúc thư mục</span></a>
+    <a href="#sec-knowledge" data-toc-link><span class="toc-num">06</span><span>Hệ thống tri thức</span></a>
+    <a href="#sec-quickstart" data-toc-link><span class="toc-num">07</span><span>Cách hoạt động</span></a>
+    <a href="#sec-commands" data-toc-link><span class="toc-num">08</span><span>Slash Commands</span></a>
+    <a href="#sec-principles" data-toc-link><span class="toc-num">09</span><span>Nguyên tắc pipeline</span></a>
+  </aside>
+
+  <!-- Content -->
+  <div class="toc-content-wrap">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-label">🐡 · Claude Code Plugin · Game Design Pipeline</div>
+      <h1>Game Design <span class="grad">Kit</span></h1>
+      <div class="header-sub">Công nghệ &amp; Kiến trúc · Pipeline thiết kế game được điều phối bởi AI agents</div>
+      <div class="compare-badge">⚡ 11 agents · 3 tầng phân cấp · 4 slash commands · Hindsight MCP knowledge</div>
+    </header>
+
+    <!-- 01. OVERVIEW -->
+    <section class="section section--wide" id="sec-overview">
+      <div class="section-title">📋 01 · Tổng quan</div>
+      <h2>Một bộ kit, cả pipeline thiết kế game</h2>
+      <p class="lead">
+        <strong>Game Design Kit</strong> là Claude Code plugin orchestrate một pipeline AI hoàn chỉnh — từ ý tưởng thô đến tài liệu thiết kế chi tiết. 11 agents được tổ chức 3 tầng (Director → Producers → Reviewers), mỗi tầng có vai trò rõ ràng, tự động review chéo, và bắt buộc người dùng approve trước khi sang bước kế tiếp.
+        Toàn bộ kit là <em>file markdown</em> được Claude Code đọc runtime — không cần build, không Docker, không CI/CD.
+      </p>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-tag">Agents</div>
+          <div class="kpi-value">11</div>
+          <div class="kpi-base">3 tầng phân cấp Director / Producer / Reviewer</div>
+          <div class="kpi-accentbar" style="background:var(--accent)"></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-tag">Slash Commands</div>
+          <div class="kpi-value">4</div>
+          <div class="kpi-base">create · iterate · status · setup</div>
+          <div class="kpi-accentbar" style="background:var(--blue)"></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-tag">Skill Packages</div>
+          <div class="kpi-value">3</div>
+          <div class="kpi-base">game-concept-design · game-knowledge · game-ui-ux-guide</div>
+          <div class="kpi-accentbar" style="background:var(--purple)"></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-tag">Build Step</div>
+          <div class="kpi-value">0</div>
+          <div class="kpi-base">Markdown files = runtime artifacts. Zero compile.</div>
+          <div class="kpi-accentbar" style="background:var(--accent2)"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02. ARCHITECTURE -->
+    <section class="section section--wide" id="sec-arch">
+      <div class="section-title">🏛 02 · Kiến trúc 3 tầng</div>
+      <h2>Director điều phối · Producer sản xuất · Reviewer kiểm chất lượng</h2>
+      <p class="lead">
+        Mỗi tầng có một mission tách biệt. <code>creative-director</code> (T1) giữ vision và quyết định gate; T2 producers tạo artifacts; T3 reviewers tự động được trigger ngay sau khi T2 hoàn thành.
+      </p>
+
+      <div class="arch-wrapper">
+        <svg class="arch-svg diagram-svg" viewBox="0 0 1140 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sơ đồ kiến trúc 3 tầng agent">
+          <title>Kiến trúc 3 tầng: Director, Producers, Reviewers</title>
+          <!-- Tier labels -->
+          <text class="lbl t-start" x="20" y="50">T1 · DIRECTOR</text>
+          <text class="lbl t-start" x="20" y="190">T2 · PRODUCERS</text>
+          <text class="lbl t-start" x="20" y="340">T3 · REVIEWERS</text>
+
+          <!-- T1: creative-director (centered) -->
+          <g transform="translate(450, 60)">
+            <rect class="node-bg-accent" width="240" height="64" rx="10"/>
+            <text class="node-title t-mid" x="120" y="28">creative-director</text>
+            <text class="node-sub t-mid" x="120" y="48">Orchestrator · Vision · Quality Gate</text>
+          </g>
+
+          <!-- T2: 6 producers in 2 rows of 3 -->
+          <g transform="translate(40, 200)">
+            <rect class="node-bg-blue" width="160" height="56" rx="8"/>
+            <text class="node-mono t-mid" x="80" y="24" style="fill:var(--blue)">concept-designer</text>
+            <text class="node-sub t-mid" x="80" y="42">Concept Pitch · GCD</text>
+          </g>
+          <g transform="translate(220, 200)">
+            <rect class="node-bg-blue" width="160" height="56" rx="8"/>
+            <text class="node-mono t-mid" x="80" y="24" style="fill:var(--blue)">code-prototyper</text>
+            <text class="node-sub t-mid" x="80" y="42">prototype/index.html</text>
+          </g>
+          <g transform="translate(400, 200)">
+            <rect class="node-bg-blue" width="160" height="56" rx="8"/>
+            <text class="node-mono t-mid" x="80" y="24" style="fill:var(--blue)">mockup-designer</text>
+            <text class="node-sub t-mid" x="80" y="42">mockup.html + dom-grab</text>
+          </g>
+          <g transform="translate(580, 200)">
+            <rect class="node-bg-blue" width="160" height="56" rx="8"/>
+            <text class="node-mono t-mid" x="80" y="24" style="fill:var(--blue)">wireframe-designer</text>
+            <text class="node-sub t-mid" x="80" y="42">wireframe.html (1:1 sync)</text>
+          </g>
+          <g transform="translate(760, 200)">
+            <rect class="node-bg-blue" width="160" height="56" rx="8"/>
+            <text class="node-mono t-mid" x="80" y="24" style="fill:var(--blue)">document-writer</text>
+            <text class="node-sub t-mid" x="80" y="42">Detail design docs</text>
+          </g>
+          <g transform="translate(940, 200)">
+            <rect class="node-bg-blue" width="160" height="56" rx="8"/>
+            <text class="node-mono t-mid" x="80" y="24" style="fill:var(--blue)">market-researcher</text>
+            <text class="node-sub t-mid" x="80" y="42">Market research report</text>
+          </g>
+
+          <!-- T3: 4 reviewers -->
+          <g transform="translate(110, 350)">
+            <rect class="node-bg-purple" width="180" height="56" rx="8"/>
+            <text class="node-mono t-mid" x="90" y="24" style="fill:var(--purple)">review-concept</text>
+            <text class="node-sub t-mid" x="90" y="42">Concept Pitch · GCD</text>
+          </g>
+          <g transform="translate(330, 350)">
+            <rect class="node-bg-purple" width="180" height="56" rx="8"/>
+            <text class="node-mono t-mid" x="90" y="24" style="fill:var(--purple)">ui-ux-reviewer</text>
+            <text class="node-sub t-mid" x="90" y="42">mockup · wireframe · UI/UX docs</text>
+          </g>
+          <g transform="translate(550, 350)">
+            <rect class="node-bg-purple" width="180" height="56" rx="8"/>
+            <text class="node-mono t-mid" x="90" y="24" style="fill:var(--purple)">detail-doc-reviewer</text>
+            <text class="node-sub t-mid" x="90" y="42">Detail design docs</text>
+          </g>
+          <g transform="translate(770, 350)">
+            <rect class="node-bg-purple" width="180" height="56" rx="8"/>
+            <text class="node-mono t-mid" x="90" y="24" style="fill:var(--purple)">feedback-interpreter</text>
+            <text class="node-sub t-mid" x="90" y="42">User feedback → diff plan</text>
+          </g>
+
+          <!-- Connector arrows: T1 → T2 (fan out) -->
+          <g>
+            <path class="flow-line" d="M 570 124 Q 570 160 120 200" />
+            <path class="flow-line" d="M 570 124 Q 570 160 300 200" />
+            <path class="flow-line" d="M 570 124 L 480 200" />
+            <path class="flow-line" d="M 570 124 L 660 200" />
+            <path class="flow-line" d="M 570 124 Q 570 160 840 200" />
+            <path class="flow-line" d="M 570 124 Q 570 160 1020 200" />
+          </g>
+
+          <!-- T2 → T3 (auto review trigger) -->
+          <g>
+            <path class="flow-line-alt" d="M 120 256 L 200 350" />
+            <path class="flow-line-alt" d="M 480 256 L 420 350" />
+            <path class="flow-line-alt" d="M 660 256 L 420 350" />
+            <path class="flow-line-alt" d="M 840 256 L 640 350" />
+            <path class="flow-line-alt" d="M 1020 256 Q 950 300 860 350" />
+          </g>
+
+          <!-- Legend -->
+          <g transform="translate(20, 430)">
+            <line x1="0" y1="0" x2="24" y2="0" class="flow-line"/>
+            <text class="lbl t-start" x="32" y="4">delegate</text>
+            <line x1="100" y1="0" x2="124" y2="0" class="flow-line-alt"/>
+            <text class="lbl t-start" x="132" y="4">auto review</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="tier-grid">
+        <div class="tier-block t1">
+          <div class="tier-head">
+            <span class="tier-tag">T1 Director</span>
+            <span class="tier-name">creative-director</span>
+          </div>
+          <div class="tier-desc">Điều phối toàn bộ pipeline · Holds vision &amp; pillars · Quyết định approval gate · Delegate cho Producers, ủy thác Reviewers.</div>
+        </div>
+
+        <div class="tier-block t2">
+          <div class="tier-head">
+            <span class="tier-tag">T2 Producers</span>
+            <span class="tier-name">6 agents tạo artifacts</span>
+          </div>
+          <div class="tier-desc">Mỗi agent sở hữu duy nhất một loại artifact. Output có convention nghiêm ngặt (file path, format, ngôn ngữ).</div>
+          <div class="agent-list">
+            <div class="agent-chip"><div class="agent-chip-name">concept-designer</div><div class="agent-chip-role">Concept Pitch + GCD (tiếng Việt)</div></div>
+            <div class="agent-chip"><div class="agent-chip-name">code-prototyper</div><div class="agent-chip-role">prototype/index.html · Vanilla JS · playable</div></div>
+            <div class="agent-chip"><div class="agent-chip-name">mockup-designer</div><div class="agent-chip-role">mockup.html · dom-grab picker · 390×844</div></div>
+            <div class="agent-chip"><div class="agent-chip-name">wireframe-designer</div><div class="agent-chip-role">wireframe.html · flowchart · 1:1 sync mockup</div></div>
+            <div class="agent-chip"><div class="agent-chip-name">document-writer</div><div class="agent-chip-role">UI/UX spec · art direction · detail docs</div></div>
+            <div class="agent-chip"><div class="agent-chip-name">market-researcher</div><div class="agent-chip-role">Market research report</div></div>
+          </div>
+        </div>
+
+        <div class="tier-block t3">
+          <div class="tier-head">
+            <span class="tier-tag">T3 Reviewers</span>
+            <span class="tier-name">4 agents auto-review</span>
+          </div>
+          <div class="tier-desc">Tự động trigger ngay sau Producer hoàn thành. Review theo criteria có sẵn trong <code>references/</code>, cho điểm và yêu cầu fix nếu fail.</div>
+          <div class="agent-list">
+            <div class="agent-chip"><div class="agent-chip-name">review-concept</div><div class="agent-chip-role">Quality-check Concept Pitch + GCD</div></div>
+            <div class="agent-chip"><div class="agent-chip-name">ui-ux-reviewer</div><div class="agent-chip-role">mockup.html · wireframe.html · UI/UX docs</div></div>
+            <div class="agent-chip"><div class="agent-chip-name">detail-doc-reviewer</div><div class="agent-chip-role">Tất cả detail design docs khác</div></div>
+            <div class="agent-chip"><div class="agent-chip-name">feedback-interpreter</div><div class="agent-chip-role">Diễn giải feedback → diff actionable</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03. PIPELINE -->
+    <section class="section" id="sec-pipeline">
+      <div class="section-title">🛠 03 · Pipeline thiết kế</div>
+      <h2>11 bước · 5 approval gates · zero auto-advance</h2>
+      <p class="lead">
+        Lệnh <code>/design-kit:create &lt;ý tưởng&gt;</code> kích hoạt toàn bộ pipeline. Mỗi artifact được approve thủ công trước khi sang bước kế. Không có bước nào auto-advance.
+      </p>
+
+      <div class="pipeline">
+        <div class="pipe-step">
+          <div class="pipe-num">01</div>
+          <div class="pipe-content">
+            <h4>Khởi tạo project</h4>
+            <div class="pipe-desc">Tạo thư mục <code>projects/{project-name}/</code> để chứa toàn bộ artifacts.</div>
+            <div class="pipe-meta">
+              <span class="pill output">projects/{name}/</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipe-step color-blue">
+          <div class="pipe-num">02</div>
+          <div class="pipe-content">
+            <h4>Thu thập ý tưởng &amp; chọn brainstorm direction</h4>
+            <div class="pipe-desc">User cung cấp idea ban đầu, AI đề xuất các hướng phát triển, user chọn 1.</div>
+            <div class="pipe-meta">
+              <span class="pill">User input</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipe-step color-blue">
+          <div class="pipe-num">03</div>
+          <div class="pipe-content">
+            <h4>Concept Pitch</h4>
+            <div class="pipe-desc">Sản phẩm: <em>concept document</em> structured. Auto-review bởi <code>review-concept</code>.</div>
+            <div class="pipe-meta">
+              <span class="pill producer">concept-designer</span>
+              <span class="pill output">concept-pitch.md</span>
+              <span class="pill review">review-concept</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gate-divider">⬇ Approval Gate</div>
+
+        <div class="pipe-step color-purple">
+          <div class="pipe-num">04</div>
+          <div class="pipe-content">
+            <h4>Game Concept Document (GCD)</h4>
+            <div class="pipe-desc">Tài liệu thiết kế game đầy đủ. Bắt buộc viết bằng <strong>tiếng Việt</strong> theo project convention.</div>
+            <div class="pipe-meta">
+              <span class="pill producer">concept-designer</span>
+              <span class="pill output">gcd.md (vi)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gate-divider">⬇ Approval Gate</div>
+
+        <div class="pipe-step color-purple">
+          <div class="pipe-num">05</div>
+          <div class="pipe-content">
+            <h4>Playable Prototype</h4>
+            <div class="pipe-desc">HTML5 prototype playable, vanilla JS + Canvas (hoặc Three.js CDN nếu 3D), geometric placeholders. Test mechanic core.</div>
+            <div class="pipe-meta">
+              <span class="pill producer">code-prototyper</span>
+              <span class="pill output">prototype/index.html</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gate-divider">⬇ Approval Gate</div>
+
+        <div class="pipe-step color-orange">
+          <div class="pipe-num">06</div>
+          <div class="pipe-content">
+            <h4>High-fi Mockup</h4>
+            <div class="pipe-desc">Mockup tất cả screens · mobile viewport 390×844 · sidebar nav · embedded <code>dom-grab</code> component picker (CDN). Mỗi component có <code>data-component</code> attribute.</div>
+            <div class="pipe-meta">
+              <span class="pill producer">mockup-designer</span>
+              <span class="pill output">mockup.html</span>
+              <span class="pill review">ui-ux-reviewer</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gate-divider">⬇ Approval Gate</div>
+
+        <div class="pipe-step color-warn">
+          <div class="pipe-num">07</div>
+          <div class="pipe-content">
+            <h4>Wireframe Overview</h4>
+            <div class="pipe-desc">Single-page flowchart mọi screens · SVG wires navigation · click-to-expand component spec panel. <strong>Bắt buộc 1:1 sync với mockup</strong>.</div>
+            <div class="pipe-meta">
+              <span class="pill producer">wireframe-designer</span>
+              <span class="pill output">wireframe.html</span>
+              <span class="pill review">ui-ux-reviewer</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gate-divider">⬇ Approval Gate · Feedback Window</div>
+
+        <div class="pipe-step">
+          <div class="pipe-num">08</div>
+          <div class="pipe-content">
+            <h4>Feedback Gate</h4>
+            <div class="pipe-desc"><code>feedback-interpreter</code> nhận feedback từ user, structure thành change plan với diff preview. KHÔNG auto-apply.</div>
+            <div class="pipe-meta">
+              <span class="pill review">feedback-interpreter</span>
+              <span class="pill gate">diff preview</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipe-step color-blue">
+          <div class="pipe-num">09</div>
+          <div class="pipe-content">
+            <h4>Detail Design Documents</h4>
+            <div class="pipe-desc">User chọn loại tài liệu cần generate (UI/UX spec, art direction, gameplay spec, market research...). Mỗi doc auto-review bởi reviewer phù hợp.</div>
+            <div class="pipe-meta">
+              <span class="pill producer">document-writer</span>
+              <span class="pill producer">market-researcher</span>
+              <span class="pill review">detail-doc-reviewer</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04. TECH STACK -->
+    <section class="section section--wide" id="sec-tech">
+      <div class="section-title">⚙️ 04 · Công nghệ</div>
+      <h2>Markdown-first · Zero build · MCP-powered</h2>
+      <p class="lead">
+        Toàn bộ kit là files markdown được Claude Code interpret runtime. Tri thức game design chảy qua Hindsight MCP. Artifacts sinh ra dùng vanilla JS, không framework.
+      </p>
+
+      <div class="tech-grid">
+        <article class="tech-card">
+          <div class="tech-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+          </div>
+          <h3>Markdown-defined agents</h3>
+          <p>Mỗi agent là file <code>.md</code> với YAML frontmatter (<code>name</code>, <code>description</code>, <code>model</code>, <code>color</code>, <code>tools</code>) + behavioral instructions. Claude Code đọc &amp; thi hành runtime.</p>
+          <div class="tech-meta"><span>no compile</span><span>plugin runtime</span></div>
+        </article>
+
+        <article class="tech-card">
+          <div class="tech-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          </div>
+          <h3>Claude Code Plugin Framework</h3>
+          <p>Plugin identity ở <code>.claude-plugin/plugin.json</code>. Permissions trong <code>settings.json</code>. SessionStart hook ở <code>hooks/hooks.json</code>. Tích hợp commands + agents + skills.</p>
+          <div class="tech-meta"><span>plugin.json</span><span>marketplace</span></div>
+        </article>
+
+        <article class="tech-card">
+          <div class="tech-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3>Hindsight MCP</h3>
+          <p>HTTP MCP server tại <code>hindsight-api.zingplay.dev</code>. Cung cấp tri thức game design qua tools <code>recall</code>, <code>reflect</code>, <code>retain</code>, <code>list_banks</code>.</p>
+          <div class="tech-meta"><span>game-knowledge bank</span><span>Bearer auth</span></div>
+        </article>
+
+        <article class="tech-card">
+          <div class="tech-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/><path d="M12 2L2 7l10 5 10-5-10-5z"/></svg>
+          </div>
+          <h3>dom-grab</h3>
+          <p>Component picker library load qua CDN trong mockup. Đọc attribute <code>data-component</code> trên từng component để cho user click chỉ thẳng vào element và feedback context-rich.</p>
+          <div class="tech-meta"><span>CDN</span><span>mockup-only</span></div>
+        </article>
+
+        <article class="tech-card">
+          <div class="tech-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <h3>Vanilla JS + Canvas + SVG</h3>
+          <p>Prototype, mockup, wireframe đều dùng vanilla JS — không framework. Canvas API cho 2D, Three.js qua CDN nếu cần 3D. Wireframe dùng inline SVG cho flowchart.</p>
+          <div class="tech-meta"><span>no React/Vue</span><span>no build</span></div>
+        </article>
+
+        <article class="tech-card">
+          <div class="tech-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <h3>Zero build step</h3>
+          <p>Không Docker, không CI/CD, không bundler. <em>Plugin files = runtime artifacts</em>. Đường dẫn resolve qua biến <code>${CLAUDE_PLUGIN_ROOT}</code>.</p>
+          <div class="tech-meta"><span>plugin = file</span><span>$CLAUDE_PLUGIN_ROOT</span></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 05. DIRECTORY STRUCTURE -->
+    <section class="section" id="sec-tree">
+      <div class="section-title">📁 05 · Cấu trúc thư mục</div>
+      <h2>Mỗi thư mục một concern</h2>
+      <p class="lead">
+        Cấu trúc tách rõ <strong>agents/</strong>, <strong>commands/</strong>, <strong>skills/</strong>, <strong>references/</strong>. Output sinh ra ở <code>projects/</code> (gitignored).
+      </p>
+
+      <div class="tree" role="img" aria-label="Cấu trúc thư mục game-design-kit">
+        <div class="tree-header">
+          <div class="tree-dots"><span></span><span></span><span></span></div>
+          <span>game-design-kit/</span>
+        </div>
+        <div class="tree-body">
+<span class="tree-line"><span class="tree-folder-key">game-design-kit/</span></span>
+<span class="tree-line"><span class="tree-glyph">├── </span><span class="tree-folder">.claude-plugin/</span>         <span class="tree-comment"># Plugin manifest + marketplace metadata</span></span>
+<span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-file">plugin.json</span>          <span class="tree-comment"># Plugin identity + Hindsight MCP config</span></span>
+<span class="tree-line"><span class="tree-glyph">│   └── </span><span class="tree-file">marketplace.json</span>     <span class="tree-comment"># Plugin store listing</span></span>
+<span class="tree-line"><span class="tree-glyph">├── </span><span class="tree-folder-key">agents/</span>                  <span class="tree-comment"># 11 agent personas (T1 + T2 + T3)</span></span>
+<span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-file">creative-director.md</span>  <span class="tree-comment"># T1 Director</span></span>
+<span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-file">concept-designer.md</span>   <span class="tree-comment"># T2 Producer</span></span>
+<span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-file">code-prototyper.md</span>    <span class="tree-comment"># T2 Producer</span></span>
+<span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-file">mockup-designer.md</span>    <span class="tree-comment"># T2 Producer</span></span>
+<span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-file">wireframe-designer.md</span> <span class="tree-comment"># T2 Producer</span></span>
+<span class="tree-line"><span class="tree-glyph">│   └── </span><span class="tree-file">... +6 agents</span>         <span class="tree-comment"># T2 + T3 còn lại</span></span>
+<span class="tree-line"><span class="tree-glyph">├── </span><span class="tree-folder-key">commands/</span>                <span class="tree-comment"># 4 slash commands (markdown pipeline)</span></span>
+<span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-file">create.md</span>            <span class="tree-comment"># Full 11-step pipeline</span></span>
+<span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-file">iterate.md</span>           <span class="tree-comment"># Feedback iteration với diff preview</span></span>
+<span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-file">status.md</span>            <span class="tree-comment"># Pipeline stage + artifact checklist</span></span>
+<span class="tree-line"><span class="tree-glyph">│   └── </span><span class="tree-file">setup.md</span>             <span class="tree-comment"># Plugin update + diagnostics</span></span>
+<span class="tree-line"><span class="tree-glyph">├── </span><span class="tree-folder-key">skills/</span>                  <span class="tree-comment"># 3 skill packages (behavioral)</span></span>
+<span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-folder">game-concept-design/</span> <span class="tree-comment"># GCD methodology Phase A→B</span></span>
+<span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-folder">game-knowledge/</span>      <span class="tree-comment"># Auto-search Hindsight MCP</span></span>
+<span class="tree-line"><span class="tree-glyph">│   └── </span><span class="tree-folder">game-ui-ux-guide/</span>    <span class="tree-comment"># Mobile UI/UX knowledge</span></span>
+<span class="tree-line"><span class="tree-glyph">├── </span><span class="tree-folder-key">references/</span>              <span class="tree-comment"># Templates + theory + review guides</span></span>
+<span class="tree-line"><span class="tree-glyph">├── </span><span class="tree-folder">hooks/</span>                   <span class="tree-comment"># SessionStart hook config</span></span>
+<span class="tree-line"><span class="tree-glyph">├── </span><span class="tree-folder">scripts/</span>                 <span class="tree-comment"># Install + setup scripts</span></span>
+<span class="tree-line"><span class="tree-glyph">├── </span><span class="tree-folder">projects/</span>                <span class="tree-comment"># Generated game projects (gitignored)</span></span>
+<span class="tree-line"><span class="tree-glyph">└── </span><span class="tree-file">settings.json</span>            <span class="tree-comment"># MCP tool allow-list</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06. KNOWLEDGE -->
+    <section class="section section--wide" id="sec-knowledge">
+      <div class="section-title">🧠 06 · Hệ thống tri thức</div>
+      <h2>Tri thức game design qua Hindsight MCP</h2>
+      <p class="lead">
+        Agents không chứa tri thức cứng — mọi thứ chảy qua <strong>Hindsight MCP</strong>, một remote HTTP server. Khi agent cần ground recommendation theo theory, nó gọi <code>recall</code>/<code>reflect</code>; khi học được điều mới, gọi <code>retain</code>.
+      </p>
+
+      <div class="kn-flow">
+        <svg class="kn-flow-svg diagram-svg" viewBox="0 0 880 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sơ đồ luồng tri thức Hindsight MCP">
+          <title>Knowledge flow: Agent → MCP tool → Hindsight API → Response</title>
+          <!-- Node 1: Agent -->
+          <g transform="translate(20, 80)">
+            <rect class="node-bg-blue" width="140" height="60" rx="8"/>
+            <text class="node-title t-mid" x="70" y="30">AI Agent</text>
+            <text class="node-sub t-mid" x="70" y="48">producer / reviewer</text>
+          </g>
+          <!-- Node 2: MCP tool -->
+          <g transform="translate(220, 80)">
+            <rect class="node-bg" width="160" height="60" rx="8"/>
+            <text class="node-mono t-mid" x="80" y="26">recall / reflect</text>
+            <text class="node-sub t-mid" x="80" y="44">MCP tool call</text>
+          </g>
+          <!-- Node 3: Hindsight -->
+          <g transform="translate(440, 80)">
+            <rect class="node-bg-accent" width="180" height="60" rx="8"/>
+            <text class="node-title t-mid" x="90" y="28">Hindsight MCP</text>
+            <text class="node-sub t-mid" x="90" y="46">hindsight-api.zingplay.dev</text>
+          </g>
+          <!-- Node 4: Response -->
+          <g transform="translate(680, 80)">
+            <rect class="node-bg-purple" width="180" height="60" rx="8"/>
+            <text class="node-title t-mid" x="90" y="28">Grounded design</text>
+            <text class="node-sub t-mid" x="90" y="46">theory-anchored output</text>
+          </g>
+          <!-- Arrows -->
+          <defs>
+            <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/>
+            </marker>
+          </defs>
+          <line x1="160" y1="110" x2="216" y2="110" class="flow-line" marker-end="url(#arr)"/>
+          <line x1="380" y1="110" x2="436" y2="110" class="flow-line" marker-end="url(#arr)"/>
+          <line x1="620" y1="110" x2="676" y2="110" class="flow-line" marker-end="url(#arr)"/>
+          <!-- Labels -->
+          <text class="lbl t-mid" x="188" y="98">request</text>
+          <text class="lbl t-mid" x="408" y="98">HTTP</text>
+          <text class="lbl t-mid" x="648" y="98">data</text>
+          <!-- Bottom: retain feedback loop -->
+          <path class="flow-line-alt" d="M 770 140 Q 770 190 90 190 Q 90 165 90 140" marker-end="url(#arr)"/>
+          <text class="lbl t-mid" x="430" y="184" style="fill:var(--purple)">retain · learn back</text>
+        </svg>
+      </div>
+
+      <div class="kn-meta-grid">
+        <div class="meta-card">
+          <h4>🪪 Auth</h4>
+          <div class="val">Bearer token</div>
+          <div class="desc">Yêu cầu env var <code>HINDSIGHT_API_KEY</code>. SessionStart hook cảnh báo nếu thiếu.</div>
+        </div>
+        <div class="meta-card">
+          <h4>🏦 Bank</h4>
+          <div class="val">game-knowledge</div>
+          <div class="desc">Bank tri thức chuyên về game design theory, mechanics, patterns.</div>
+        </div>
+        <div class="meta-card">
+          <h4>🛠 Tools</h4>
+          <div class="val">recall · reflect · retain · list_banks</div>
+          <div class="desc">Set tool MCP đầy đủ trong settings.json allow-list.</div>
+        </div>
+        <div class="meta-card">
+          <h4>🌐 Endpoint</h4>
+          <div class="val">hindsight-api.zingplay.dev</div>
+          <div class="desc"><code>/mcp/game-knowledge/</code> · HTTP transport · centralized.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07. QUICKSTART -->
+    <section class="section" id="sec-quickstart">
+      <div class="section-title">🚀 07 · Cách hoạt động</div>
+      <h2>4 bước để chạy đầy đủ pipeline</h2>
+      <p class="lead">
+        Cài plugin → set API key → chạy command → approve từng artifact. Toàn bộ pipeline được điều phối tự động.
+      </p>
+
+      <div class="qs-grid">
+        <div class="qs-step">
+          <span class="qs-num">01</span>
+          <h4>Cài plugin</h4>
+          <p>Cài Game Design Kit qua Claude Code marketplace hoặc git clone vào <code>~/.claude/plugins/</code>.</p>
+          <code>install.sh</code>
+        </div>
+        <div class="qs-step">
+          <span class="qs-num">02</span>
+          <h4>Set API key</h4>
+          <p>Export biến môi trường để Hindsight MCP có thể auth thành công.</p>
+          <code>export HINDSIGHT_API_KEY=...</code>
+        </div>
+        <div class="qs-step">
+          <span class="qs-num">03</span>
+          <h4>Chạy create</h4>
+          <p>Khởi động pipeline với 1 idea bất kỳ — kit sẽ guide đến tất cả các bước.</p>
+          <code>/design-kit:create &lt;ý tưởng&gt;</code>
+        </div>
+        <div class="qs-step">
+          <span class="qs-num">04</span>
+          <h4>Approve theo gate</h4>
+          <p>Mỗi bước producer xong sẽ chờ approve. Có thể dùng <code>/design-kit:iterate</code> để feedback.</p>
+          <code>Approve · Request changes · Skip</code>
+        </div>
+      </div>
+    </section>
+
+    <!-- 08. SLASH COMMANDS -->
+    <section class="section section--wide" id="sec-commands">
+      <div class="section-title">⌨️ 08 · Slash Commands</div>
+      <h2>4 lệnh điều khiển toàn bộ kit</h2>
+      <p class="lead">
+        Mỗi command là file markdown trong <code>commands/</code> với YAML frontmatter (<code>description</code>, <code>argument-hint</code>) + numbered steps. User-facing entry points của kit.
+      </p>
+
+      <div class="cmd-grid">
+        <article class="cmd-card">
+          <div class="cmd-name">/design-kit:create <span class="cmd-arg">&lt;idea&gt;</span></div>
+          <div class="cmd-desc">Pipeline đầy đủ 11 bước từ idea đến detail docs. Có approval gate sau mỗi producer step.</div>
+        </article>
+        <article class="cmd-card">
+          <div class="cmd-name">/design-kit:iterate <span class="cmd-arg">&lt;feedback&gt;</span></div>
+          <div class="cmd-desc">Cập nhật artifact theo feedback. <code>feedback-interpreter</code> propose change set, hiện diff preview, chỉ apply khi user approve.</div>
+        </article>
+        <article class="cmd-card">
+          <div class="cmd-name">/design-kit:status</div>
+          <div class="cmd-desc">Báo trạng thái pipeline hiện tại: artifacts đã có / thiếu, stage đang ở đâu, Hindsight MCP stats.</div>
+        </article>
+        <article class="cmd-card">
+          <div class="cmd-name">/design-kit:setup <span class="cmd-arg">[update|doctor]</span></div>
+          <div class="cmd-desc">Kiểm tra version plugin, update từ GitHub releases, chạy diagnostic. Subcommands: <code>update</code>, <code>doctor</code>.</div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 09. PRINCIPLES -->
+    <section class="section" id="sec-principles">
+      <div class="section-title">🛡 09 · Nguyên tắc pipeline</div>
+      <h2>Nguyên tắc bất di bất dịch</h2>
+      <p class="lead">
+        Pipeline được thiết kế để <em>fail informatively</em>. Approval gate ngăn downstream damage; auto-reject các pattern sai từ early stage.
+      </p>
+
+      <div class="principles-grid">
+        <div class="principle allow">
+          <span class="principle-icon">✅</span>
+          <div>
+            <strong>Approval gate sau mọi producer step</strong>
+            <span>Không bước nào auto-advance. User phải explicit approve hoặc request changes.</span>
+          </div>
+        </div>
+        <div class="principle allow">
+          <span class="principle-icon">✅</span>
+          <div>
+            <strong>Diff preview trước khi apply feedback</strong>
+            <span>Mọi thay đổi từ <code>iterate</code> đều show diff trước. User approve mới apply.</span>
+          </div>
+        </div>
+        <div class="principle allow">
+          <span class="principle-icon">✅</span>
+          <div>
+            <strong>Mockup BẮT BUỘC có dom-grab picker</strong>
+            <span>Mỗi component có <code>data-component</code> attribute để user click feedback chính xác.</span>
+          </div>
+        </div>
+        <div class="principle allow">
+          <span class="principle-icon">✅</span>
+          <div>
+            <strong>Wireframe BẮT BUỘC 1:1 với mockup</strong>
+            <span>Không invent screens / components không có trong <code>mockup.html</code>.</span>
+          </div>
+        </div>
+        <div class="principle deny">
+          <span class="principle-icon">🚫</span>
+          <div>
+            <strong>Không framework deps trong prototype/mockup/wireframe</strong>
+            <span>Chỉ vanilla JS + Canvas + inline SVG. <code>dom-grab</code> via CDN OK trong mockup.</span>
+          </div>
+        </div>
+        <div class="principle deny">
+          <span class="principle-icon">🚫</span>
+          <div>
+            <strong>Không tự ý xóa mechanics</strong>
+            <span>Concept Pitch / GCD chỉ thêm/sửa/xóa mechanic khi user explicit yêu cầu.</span>
+          </div>
+        </div>
+        <div class="principle deny">
+          <span class="principle-icon">🚫</span>
+          <div>
+            <strong>Không auto-apply feedback changes</strong>
+            <span>Luôn show diff preview trước. Mockup không picker → auto-REJECT.</span>
+          </div>
+        </div>
+        <div class="principle deny">
+          <span class="principle-icon">🚫</span>
+          <div>
+            <strong>Không hard-code paths</strong>
+            <span>Mọi đường dẫn dùng env var <code>${CLAUDE_PLUGIN_ROOT}</code>.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      🐡 · Game Design Kit · Claude Code Plugin · MIT License · <span id="footer-date"></span>
+    </footer>
+
+  </div><!-- /.toc-content-wrap -->
+
+</div><!-- /.container -->
+
+<script>
+/* ── Theme toggle (puffer-theme convention v2.8) ── */
+function applyTheme(light) {
+  if (light) document.body.classList.remove('dark');
+  else document.body.classList.add('dark');
+  document.getElementById('themeIcon').textContent = light ? '☀️' : '🌙';
+  document.getElementById('themeLabel').textContent = light ? 'Light' : 'Dark';
+  try { localStorage.setItem('pufferfish_theme', light ? 'light' : 'dark'); } catch (e) {}
+}
+
+(function initTheme() {
+  let theme = 'light';
+  try {
+    const stored = localStorage.getItem('pufferfish_theme');
+    if (stored === 'dark') theme = 'dark';
+  } catch (e) {}
+  applyTheme(theme === 'light');
+})();
+
+const toggle = document.getElementById('themeToggle');
+toggle.addEventListener('click', () => {
+  applyTheme(document.body.classList.contains('dark'));
+});
+toggle.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    applyTheme(document.body.classList.contains('dark'));
+  }
+});
+
+/* ── Sidebar TOC scroll-spy ── */
+(function initScrollSpy() {
+  if (!document.body.classList.contains('has-sidebar-toc')) return;
+  const links = document.querySelectorAll('.toc-sidebar a[data-toc-link]');
+  if (!links.length) return;
+
+  const map = new Map();
+  links.forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    const target = document.getElementById(id);
+    if (target) map.set(target, a);
+  });
+
+  const setActive = (el) => {
+    links.forEach(l => l.classList.remove('active'));
+    const link = map.get(el);
+    if (link) link.classList.add('active');
+  };
+
+  const obs = new IntersectionObserver((entries) => {
+    const visible = entries
+      .filter(e => e.isIntersecting)
+      .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+    if (visible.length) setActive(visible[0].target);
+  }, {
+    rootMargin: '-15% 0px -65% 0px',
+    threshold: [0, 0.5, 1]
+  });
+
+  map.forEach((_, target) => obs.observe(target));
+
+  // Initial active from hash or first
+  if (location.hash) {
+    const initial = document.getElementById(location.hash.slice(1));
+    if (initial && map.has(initial)) setActive(initial);
+  } else {
+    const first = links[0];
+    if (first) first.classList.add('active');
+  }
+})();
+
+/* ── Reveal on scroll ── */
+(function initReveal() {
+  const items = document.querySelectorAll('.section');
+  items.forEach(el => el.classList.add('reveal'));
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  items.forEach(el => obs.observe(el));
+})();
+
+/* ── Footer date ── */
+(function setFooterDate() {
+  const el = document.getElementById('footer-date');
+  if (el) el.textContent = new Date().toLocaleDateString('vi-VN', { year: 'numeric', month: 'long' });
+})();
+</script>
+
+</body>
+</html>
