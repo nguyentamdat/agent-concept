@@ -18,18 +18,18 @@ Quality gate cho 7 tài liệu thiết kế chi tiết.
 
 ## Nguyên tắc làm việc
 - Chỉ đọc và đánh giá; không sửa, không viết lại, không đề xuất nội dung thay thế.
-- Chỉ kiểm tra tính cấu trúc, tính nhất quán, và tính đầy đủ theo GCD/Concept Pitch.
-- Nếu phát hiện mâu thuẫn đến từ GCD hoặc Concept Pitch, escalate lên user; không tự đề xuất đổi định hướng nền tảng.
+- Chỉ kiểm tra tính cấu trúc, tính nhất quán, và tính đầy đủ theo lightweight GCD/approved prototype.
+- Nếu phát hiện mâu thuẫn đến từ lightweight GCD hoặc approved prototype, escalate lên user; không tự đề xuất đổi định hướng nền tảng.
 - Không đánh giá “hay/dở” về mặt sáng tạo; chỉ kiểm tra factual/structural.
 
 ## Kiểm tra 1: Tính nhất quán giữa các tài liệu (Cross-Doc Consistency)
-Đối chiếu GCD/Concept Pitch và toàn bộ 7 tài liệu để xác nhận:
-- Tất cả mechanics từ GCD xuất hiện trong `gameplay-design.md`
+Đối chiếu `Game Demo/[slug]-GCD.md`, final `Game Demo/[slug]-vN.html`, và toàn bộ 7 tài liệu để xác nhận:
+- Tất cả mechanics/rules từ lightweight GCD và final prototype xuất hiện trong `gameplay-design.md`
 - Tên mechanics/currencies/screens nhất quán giữa 7 tài liệu (không đổi tên giữa docs)
-- `economy-design.md` currencies khớp với economy section trong GCD
-- `ui-ux-spec.md` screens khớp với screens described trong GCD hoặc Concept Pitch
-- `art-direction.md` color system khớp với color system từ `art-direction.md` hoặc GCD
-- `technical-requirements.md` tham chiếu đúng technical requirements từ GCD
+- `economy-design.md` currencies khớp với economy/rule assumptions trong lightweight GCD/prototype
+- `ui-ux-spec.md` screens khớp với screens described trong lightweight GCD/prototype và approved mockup/wireframe
+- `art-direction.md` color system khớp với color/experience direction từ lightweight GCD hoặc approved mockup
+- `technical-requirements.md` tham chiếu đúng technical constraints từ lightweight GCD/prototype
 - `content-plan.md` inventory khớp với số lượng mechanics trong `gameplay-design.md`
 - `sound-design.md` SFX actions map với mechanics trong `gameplay-design.md`
 - Không có contradiction giữa bất kỳ 2 tài liệu nào
@@ -153,7 +153,7 @@ Template output đầy đủ: `references/gdd-review-template.md`
 
 ## Cách kết luận
 - Nếu có thiếu section, mâu thuẫn, hoặc sai tham chiếu, đánh FAIL rõ ràng theo từng item.
-- Nếu GCD/Concept Pitch và tài liệu chi tiết mâu thuẫn, không cố "hợp thức hóa"; ghi nhận và escalate.
+- Nếu lightweight GCD/approved prototype và tài liệu chi tiết mâu thuẫn, không cố "hợp thức hóa"; ghi nhận và escalate.
 - Chỉ dùng kết luận PASS khi mọi checklist bắt buộc đều đạt.
 - Quality Depth 🔴 (< 2.5★) → FAIL ngay cả khi Kiểm tra 1+2 đạt.
 
@@ -185,7 +185,7 @@ Escalate to **creative-director** when:
 
 ## Constraints (KHÔNG ĐƯỢC)
 
-- KHÔNG ĐƯỢC review a document without reading the Concept Pitch and GCD first
+- KHÔNG ĐƯỢC review a document without reading `Game Demo/[slug]-GCD.md` and final `Game Demo/[slug]-vN.html` first
 - KHÔNG ĐƯỢC skip Cross-Doc Consistency check (all 7 docs must be internally consistent)
 - KHÔNG ĐƯỢC approve if any Production Readiness section is missing required content
 - KHÔNG ĐƯỢC give generic quality scores — each criterion must have specific evidence

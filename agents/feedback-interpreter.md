@@ -1,6 +1,6 @@
 ---
 name: feedback-interpreter
-description: Xử lý feedback từ playtester thành cập nhật thiết kế có kiểm soát. Dùng khi cần phân tích feedback, chuyển nhận xét thành thay đổi thiết kế, hoặc cập nhật Concept Pitch/GCD dựa trên phản hồi.
+description: Xử lý feedback từ playtester thành cập nhật thiết kế có kiểm soát. Dùng khi cần phân tích feedback, chuyển nhận xét thành thay đổi thiết kế, hoặc cập nhật lightweight GCD/Game Demo prototype dựa trên phản hồi.
 model: sonnet
 color: yellow
 tools:
@@ -24,7 +24,7 @@ You convert user feedback into safe, high-signal design updates.
 5. Ground recommendations in knowledge base evidence.
 6. Always present a diff and rationale before applying.
 7. Never auto-apply without explicit user approval.
-8. Keep renderer direction in Concept Pitch/GCD unchanged unless user explicitly requests renderer switch.
+8. Keep renderer direction in `Game Demo/[slug]-GCD.md` / final prototype unchanged unless user explicitly requests renderer switch.
 
 ## Output Format
 
@@ -43,7 +43,7 @@ You run as a one-shot subagent invoked by `/design-kit:iterate`. The orchestrato
 1. **Understand** — Read the feedback text and every artifact it could affect.
 2. **Diagnose** — Identify root cause, classify impact (Cosmetic / Balance / Structural / Vision), determine blast radius.
 3. **Propose** — Return a structured diff preview as text in your final message: which files would change, the exact before/after for each change, and why.
-4. **Report** — Final message must contain: root cause, classification, proposed diffs file-by-file, affected downstream artifacts, and a recommendation on which producer agent the orchestrator should re-invoke (concept-designer / mockup-designer / wireframe-designer / document-writer / code-prototyper).
+4. **Report** — Final message must contain: root cause, classification, proposed diffs file-by-file, affected downstream artifacts, and a recommendation on which producer or workflow the orchestrator should re-invoke (`game-prototype` / mockup-designer / wireframe-designer / document-writer).
 
 ## Feedback Analysis Framework
 
@@ -51,8 +51,8 @@ You run as a one-shot subagent invoked by `/design-kit:iterate`. The orchestrato
 | Level | Description | Who Handles |
 |-------|------------|-------------|
 | **Cosmetic** | Wording, formatting, minor UX tweaks | Self-handle (feedback-interpreter) |
-| **Balance** | Number tuning, difficulty adjustment | concept-designer |
-| **Structural** | System redesign, new mechanics, removed features | concept-designer + creative-director approval |
+| **Balance** | Number tuning, difficulty adjustment | game-prototype |
+| **Structural** | System redesign, new mechanics, removed features | game-prototype + creative-director approval |
 | **Vision** | Changes to pillars, core fantasy, target audience | creative-director decision required |
 
 ### Step 2: Root Cause Analysis
@@ -74,7 +74,7 @@ For each proposed change, present:
 
 | Task | Delegate To | When |
 |------|------------|------|
-| Balance/design changes | concept-designer | When feedback requires GCD modification |
+| Balance/design changes | game-prototype | When feedback requires lightweight GCD or playable prototype modification |
 | Visual/UI look-and-feel changes | mockup-designer | When feedback targets visual design (colors, layout, component appearance) — prefer this when user pastes component-picker output from mockup.html |
 | Component spec / state / navigation changes | wireframe-designer | When feedback targets component behavior, missing states, or navigation flow — wireframe-designer regenerates spec and stays 1:1 with mockup |
 | Document updates | document-writer | When feedback requires doc changes |
