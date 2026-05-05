@@ -998,7 +998,7 @@ body.dark .diagram-svg .node-bg-purple { fill: rgba(199,146,234,0.08); stroke: v
         <div class="kpi-card">
           <div class="kpi-tag">Skill Packages</div>
           <div class="kpi-value">3</div>
-          <div class="kpi-base">game-concept-design · game-knowledge · game-ui-ux-guide</div>
+          <div class="kpi-base">game-prototype · game-knowledge · game-ui-ux-guide <span style="opacity:.5">(+ archived)</span></div>
           <div class="kpi-accentbar" style="background:var(--purple)"></div>
         </div>
         <div class="kpi-card">
@@ -1036,13 +1036,13 @@ body.dark .diagram-svg .node-bg-purple { fill: rgba(199,146,234,0.08); stroke: v
           <!-- T2: 6 producers in 2 rows of 3 -->
           <g transform="translate(40, 200)">
             <rect class="node-bg-blue" width="160" height="56" rx="8"/>
-            <text class="node-mono t-mid" x="80" y="24" style="fill:var(--blue)">concept-designer</text>
-            <text class="node-sub t-mid" x="80" y="42">Concept Pitch · GCD</text>
+            <text class="node-mono t-mid" x="80" y="24" style="fill:var(--blue)">game-prototype</text>
+            <text class="node-sub t-mid" x="80" y="42">Phase 1 · brainstorm + audit</text>
           </g>
           <g transform="translate(220, 200)">
             <rect class="node-bg-blue" width="160" height="56" rx="8"/>
-            <text class="node-mono t-mid" x="80" y="24" style="fill:var(--blue)">code-prototyper</text>
-            <text class="node-sub t-mid" x="80" y="42">prototype/index.html</text>
+            <text class="node-mono t-mid" x="80" y="24" style="fill:var(--blue)">game-prototype</text>
+            <text class="node-sub t-mid" x="80" y="42">Phase 2+3 · [slug]-vN.html + GCD</text>
           </g>
           <g transform="translate(400, 200)">
             <rect class="node-bg-blue" width="160" height="56" rx="8"/>
@@ -1068,8 +1068,8 @@ body.dark .diagram-svg .node-bg-purple { fill: rgba(199,146,234,0.08); stroke: v
           <!-- T3: 4 reviewers -->
           <g transform="translate(110, 350)">
             <rect class="node-bg-purple" width="180" height="56" rx="8"/>
-            <text class="node-mono t-mid" x="90" y="24" style="fill:var(--purple)">review-concept</text>
-            <text class="node-sub t-mid" x="90" y="42">Concept Pitch · GCD</text>
+            <text class="node-mono t-mid" x="90" y="24" style="fill:var(--purple); opacity:.55">review-concept (legacy)</text>
+            <text class="node-sub t-mid" x="90" y="42" style="opacity:.55">manual / archived flow</text>
           </g>
           <g transform="translate(330, 350)">
             <rect class="node-bg-purple" width="180" height="56" rx="8"/>
@@ -1128,12 +1128,11 @@ body.dark .diagram-svg .node-bg-purple { fill: rgba(199,146,234,0.08); stroke: v
         <div class="tier-block t2">
           <div class="tier-head">
             <span class="tier-tag">T2 Producers</span>
-            <span class="tier-name">6 agents tạo artifacts</span>
+            <span class="tier-name">1 skill + 4 agents tạo artifacts</span>
           </div>
-          <div class="tier-desc">Mỗi agent sở hữu duy nhất một loại artifact. Output có convention nghiêm ngặt (file path, format, ngôn ngữ).</div>
+          <div class="tier-desc">Skill <code>game-prototype</code> sở hữu toàn bộ early pipeline (concept brainstorm → playable HTML5 → lightweight Vietnamese GCD). 4 producer agents tiêu thụ output đã approve để sinh mockup, wireframe, detail docs. Output co convention nghiêm ngặt (file path, format, ngôn ngữ).</div>
           <div class="agent-list">
-            <div class="agent-chip"><div class="agent-chip-name">concept-designer</div><div class="agent-chip-role">Concept Pitch + GCD (tiếng Việt)</div></div>
-            <div class="agent-chip"><div class="agent-chip-name">code-prototyper</div><div class="agent-chip-role">prototype/index.html · Vanilla JS · playable</div></div>
+            <div class="agent-chip"><div class="agent-chip-name">game-prototype <em style="opacity:.7">(skill)</em></div><div class="agent-chip-role">Phase 1 brainstorm + audit · Phase 2 [slug]-vN.html · Phase 3 lightweight GCD (vi)</div></div>
             <div class="agent-chip"><div class="agent-chip-name">mockup-designer</div><div class="agent-chip-role">mockup.html · dom-grab picker · 390×844</div></div>
             <div class="agent-chip"><div class="agent-chip-name">wireframe-designer</div><div class="agent-chip-role">wireframe.html · flowchart · 1:1 sync mockup</div></div>
             <div class="agent-chip"><div class="agent-chip-name">document-writer</div><div class="agent-chip-role">UI/UX spec · art direction · detail docs</div></div>
@@ -1144,11 +1143,11 @@ body.dark .diagram-svg .node-bg-purple { fill: rgba(199,146,234,0.08); stroke: v
         <div class="tier-block t3">
           <div class="tier-head">
             <span class="tier-tag">T3 Reviewers</span>
-            <span class="tier-name">4 agents auto-review</span>
+            <span class="tier-name">3 agents auto-review (+ 1 legacy)</span>
           </div>
           <div class="tier-desc">Tự động trigger ngay sau Producer hoàn thành. Review theo criteria có sẵn trong <code>references/</code>, cho điểm và yêu cầu fix nếu fail.</div>
           <div class="agent-list">
-            <div class="agent-chip"><div class="agent-chip-name">review-concept</div><div class="agent-chip-role">Quality-check Concept Pitch + GCD</div></div>
+            <div class="agent-chip" style="opacity:.55"><div class="agent-chip-name">review-concept <em style="opacity:.7">(legacy)</em></div><div class="agent-chip-role">Manual review of legacy Concept Pitch + theory GCD (not on active route)</div></div>
             <div class="agent-chip"><div class="agent-chip-name">ui-ux-reviewer</div><div class="agent-chip-role">mockup.html · wireframe.html · UI/UX docs</div></div>
             <div class="agent-chip"><div class="agent-chip-name">detail-doc-reviewer</div><div class="agent-chip-role">Tất cả detail design docs khác</div></div>
             <div class="agent-chip"><div class="agent-chip-name">feedback-interpreter</div><div class="agent-chip-role">Diễn giải feedback → diff actionable</div></div>
@@ -1160,71 +1159,61 @@ body.dark .diagram-svg .node-bg-purple { fill: rgba(199,146,234,0.08); stroke: v
     <!-- 03. PIPELINE -->
     <section class="section" id="sec-pipeline">
       <div class="section-title">🛠 03 · Pipeline thiết kế</div>
-      <h2>11 bước · 5 approval gates · zero auto-advance</h2>
+      <h2>7 bước · 4 approval gates · zero auto-advance</h2>
       <p class="lead">
-        Lệnh <code>/design-kit:create &lt;ý tưởng&gt;</code> kích hoạt toàn bộ pipeline. Mỗi artifact được approve thủ công trước khi sang bước kế. Không có bước nào auto-advance.
+        Lệnh <code>/design-kit:create &lt;ý tưởng&gt;</code> kích hoạt toàn bộ pipeline. Skill <code>game-prototype</code> chạy end-to-end Phase 1+2+3 để chốt playable prototype + lightweight GCD; sau đó mockup → wireframe → detail docs tiêu thụ output đã approve. Mỗi artifact được approve thủ công trước khi sang bước kế. Không có bước nào auto-advance.
       </p>
 
       <div class="pipeline">
         <div class="pipe-step">
+          <div class="pipe-num">00</div>
+          <div class="pipe-content">
+            <h4>Setup project + (optional) market research</h4>
+            <div class="pipe-desc">Tạo thư mục <code>projects/{project-name}/Game Demo/</code>. Nếu user muốn, khởi <code>market-researcher</code> chạy background để feed insights vào Phase 1 của skill.</div>
+            <div class="pipe-meta">
+              <span class="pill output">projects/{name}/Game Demo/</span>
+              <span class="pill producer">market-researcher (optional)</span>
+          </div>
+        </div>
+
+        <div class="pipe-step color-blue">
           <div class="pipe-num">01</div>
           <div class="pipe-content">
-            <h4>Khởi tạo project</h4>
-            <div class="pipe-desc">Tạo thư mục <code>projects/{project-name}/</code> để chứa toàn bộ artifacts.</div>
+            <h4>game-prototype skill · Phase 1 · Brainstorm + Audit (Gate 1)</h4>
+            <div class="pipe-desc">Skill thu thập Target Audience + Problem Statement + 8 Kinds of Fun, suggest 3 gameplay options, sinh 3 mini concept prototypes <code>Game Demo/[slug]-concept-{A|B|C}.html</code> (~300-500 dòng), chạy Pre-Prototype Audit (5 layers) và Anti-pattern Audit, user chốt 1 option ± remix.</div>
             <div class="pipe-meta">
-              <span class="pill output">projects/{name}/</span>
+              <span class="pill producer">game-prototype (skill)</span>
+              <span class="pill output">Game Demo/[slug]-concept-{A|B|C}.html</span>
+              <span class="pill gate">Gate 1</span>
             </div>
           </div>
         </div>
 
-        <div class="pipe-step color-blue">
+        <div class="gate-divider">⬇ Approval Gate · Gate 1</div>
+
+        <div class="pipe-step color-purple">
           <div class="pipe-num">02</div>
           <div class="pipe-content">
-            <h4>Thu thập ý tưởng &amp; chọn brainstorm direction</h4>
-            <div class="pipe-desc">User cung cấp idea ban đầu, AI đề xuất các hướng phát triển, user chọn 1.</div>
+            <h4>game-prototype skill · Phase 2 · Versioned Playable Prototype (Gate 2)</h4>
+            <div class="pipe-desc">Skill expand option đã chốt thành full playable HTML5 <code>Game Demo/[slug]-v1.html</code> (vanilla JS + Canvas, hoặc Three.js CDN nếu 3D), self-test theo template, iterate với user. Mỗi revision sinh <code>-v2.html</code>, <code>-v3.html</code>, ... <strong>không overwrite</strong> bản cũ.</div>
             <div class="pipe-meta">
-              <span class="pill">User input</span>
+              <span class="pill producer">game-prototype (skill)</span>
+              <span class="pill output">Game Demo/[slug]-vN.html</span>
+              <span class="pill gate">Gate 2</span>
             </div>
           </div>
         </div>
 
-        <div class="pipe-step color-blue">
+        <div class="gate-divider">⬇ Approval Gate · Gate 2</div>
+
+        <div class="pipe-step color-purple">
           <div class="pipe-num">03</div>
           <div class="pipe-content">
-            <h4>Concept Pitch</h4>
-            <div class="pipe-desc">Sản phẩm: <em>concept document</em> structured. Auto-review bởi <code>review-concept</code>.</div>
+            <h4>game-prototype skill · Phase 3 · Lightweight GCD (tiếng Việt)</h4>
+            <div class="pipe-desc">Skill xuất <code>Game Demo/[slug]-GCD.md</code> bằng <strong>tiếng Việt</strong>, derive 1:1 từ <code>[slug]-vN.html</code> final ± Phase 1 context. KHÔNG tự tạo cơ chế mới không có trong prototype.</div>
             <div class="pipe-meta">
-              <span class="pill producer">concept-designer</span>
-              <span class="pill output">concept-pitch.md</span>
-              <span class="pill review">review-concept</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="gate-divider">⬇ Approval Gate</div>
-
-        <div class="pipe-step color-purple">
-          <div class="pipe-num">04</div>
-          <div class="pipe-content">
-            <h4>Game Concept Document (GCD)</h4>
-            <div class="pipe-desc">Tài liệu thiết kế game đầy đủ. Bắt buộc viết bằng <strong>tiếng Việt</strong> theo project convention.</div>
-            <div class="pipe-meta">
-              <span class="pill producer">concept-designer</span>
-              <span class="pill output">gcd.md (vi)</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="gate-divider">⬇ Approval Gate</div>
-
-        <div class="pipe-step color-purple">
-          <div class="pipe-num">05</div>
-          <div class="pipe-content">
-            <h4>Playable Prototype</h4>
-            <div class="pipe-desc">HTML5 prototype playable, vanilla JS + Canvas (hoặc Three.js CDN nếu 3D), geometric placeholders. Test mechanic core.</div>
-            <div class="pipe-meta">
-              <span class="pill producer">code-prototyper</span>
-              <span class="pill output">prototype/index.html</span>
+              <span class="pill producer">game-prototype (skill)</span>
+              <span class="pill output">Game Demo/[slug]-GCD.md (vi)</span>
             </div>
           </div>
         </div>
@@ -1232,7 +1221,7 @@ body.dark .diagram-svg .node-bg-purple { fill: rgba(199,146,234,0.08); stroke: v
         <div class="gate-divider">⬇ Approval Gate</div>
 
         <div class="pipe-step color-orange">
-          <div class="pipe-num">06</div>
+          <div class="pipe-num">04</div>
           <div class="pipe-content">
             <h4>High-fi Mockup</h4>
             <div class="pipe-desc">Mockup tất cả screens · mobile viewport 390×844 · sidebar nav · embedded <code>dom-grab</code> component picker (CDN). Mỗi component có <code>data-component</code> attribute.</div>
@@ -1247,7 +1236,7 @@ body.dark .diagram-svg .node-bg-purple { fill: rgba(199,146,234,0.08); stroke: v
         <div class="gate-divider">⬇ Approval Gate</div>
 
         <div class="pipe-step color-warn">
-          <div class="pipe-num">07</div>
+          <div class="pipe-num">05</div>
           <div class="pipe-content">
             <h4>Wireframe Overview</h4>
             <div class="pipe-desc">Single-page flowchart mọi screens · SVG wires navigation · click-to-expand component spec panel. <strong>Bắt buộc 1:1 sync với mockup</strong>.</div>
@@ -1262,7 +1251,7 @@ body.dark .diagram-svg .node-bg-purple { fill: rgba(199,146,234,0.08); stroke: v
         <div class="gate-divider">⬇ Approval Gate · Feedback Window</div>
 
         <div class="pipe-step">
-          <div class="pipe-num">08</div>
+          <div class="pipe-num">06</div>
           <div class="pipe-content">
             <h4>Feedback Gate</h4>
             <div class="pipe-desc"><code>feedback-interpreter</code> nhận feedback từ user, structure thành change plan với diff preview. KHÔNG auto-apply.</div>
@@ -1274,7 +1263,7 @@ body.dark .diagram-svg .node-bg-purple { fill: rgba(199,146,234,0.08); stroke: v
         </div>
 
         <div class="pipe-step color-blue">
-          <div class="pipe-num">09</div>
+          <div class="pipe-num">07</div>
           <div class="pipe-content">
             <h4>Detail Design Documents</h4>
             <div class="pipe-desc">User chọn loại tài liệu cần generate (UI/UX spec, art direction, gameplay spec, market research...). Mỗi doc auto-review bởi reviewer phù hợp.</div>
@@ -1373,8 +1362,8 @@ body.dark .diagram-svg .node-bg-purple { fill: rgba(199,146,234,0.08); stroke: v
 <span class="tree-line"><span class="tree-glyph">│   └── </span><span class="tree-file">marketplace.json</span>     <span class="tree-comment"># Plugin store listing</span></span>
 <span class="tree-line"><span class="tree-glyph">├── </span><span class="tree-folder-key">agents/</span>                  <span class="tree-comment"># 11 agent personas (T1 + T2 + T3)</span></span>
 <span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-file">creative-director.md</span>  <span class="tree-comment"># T1 Director</span></span>
-<span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-file">concept-designer.md</span>   <span class="tree-comment"># T2 Producer</span></span>
-<span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-file">code-prototyper.md</span>    <span class="tree-comment"># T2 Producer</span></span>
+<span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-file">concept-designer.md</span>   <span class="tree-comment"># T2 Producer (legacy / manual)</span></span>
+<span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-file">code-prototyper.md</span>    <span class="tree-comment"># T2 Producer (legacy / manual)</span></span>
 <span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-file">mockup-designer.md</span>    <span class="tree-comment"># T2 Producer</span></span>
 <span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-file">wireframe-designer.md</span> <span class="tree-comment"># T2 Producer</span></span>
 <span class="tree-line"><span class="tree-glyph">│   └── </span><span class="tree-file">... +6 agents</span>         <span class="tree-comment"># T2 + T3 còn lại</span></span>
@@ -1383,10 +1372,11 @@ body.dark .diagram-svg .node-bg-purple { fill: rgba(199,146,234,0.08); stroke: v
 <span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-file">iterate.md</span>           <span class="tree-comment"># Feedback iteration với diff preview</span></span>
 <span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-file">status.md</span>            <span class="tree-comment"># Pipeline stage + artifact checklist</span></span>
 <span class="tree-line"><span class="tree-glyph">│   └── </span><span class="tree-file">setup.md</span>             <span class="tree-comment"># Plugin update + diagnostics</span></span>
-<span class="tree-line"><span class="tree-glyph">├── </span><span class="tree-folder-key">skills/</span>                  <span class="tree-comment"># 3 skill packages (behavioral)</span></span>
-<span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-folder">game-concept-design/</span> <span class="tree-comment"># GCD methodology Phase A→B</span></span>
+<span class="tree-line"><span class="tree-glyph">├── </span><span class="tree-folder-key">skills/</span>                  <span class="tree-comment"># 3 active + 1 archived skill packages</span></span>
+<span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-folder">game-prototype/</span>      <span class="tree-comment"># Active prototype-first early pipeline (Phase 1+2+3)</span></span>
 <span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-folder">game-knowledge/</span>      <span class="tree-comment"># Auto-search Hindsight MCP</span></span>
-<span class="tree-line"><span class="tree-glyph">│   └── </span><span class="tree-folder">game-ui-ux-guide/</span>    <span class="tree-comment"># Mobile UI/UX knowledge</span></span>
+<span class="tree-line"><span class="tree-glyph">│   ├── </span><span class="tree-folder">game-ui-ux-guide/</span>    <span class="tree-comment"># Mobile UI/UX knowledge</span></span>
+<span class="tree-line"><span class="tree-glyph">│   └── </span><span class="tree-folder">_deprecated/</span>         <span class="tree-comment"># game-concept-design archived here</span></span>
 <span class="tree-line"><span class="tree-glyph">├── </span><span class="tree-folder-key">references/</span>              <span class="tree-comment"># Templates + theory + review guides</span></span>
 <span class="tree-line"><span class="tree-glyph">├── </span><span class="tree-folder">hooks/</span>                   <span class="tree-comment"># SessionStart hook config</span></span>
 <span class="tree-line"><span class="tree-glyph">├── </span><span class="tree-folder">scripts/</span>                 <span class="tree-comment"># Install + setup scripts</span></span>
@@ -1585,8 +1575,8 @@ body.dark .diagram-svg .node-bg-purple { fill: rgba(199,146,234,0.08); stroke: v
         <div class="principle deny">
           <span class="principle-icon">🚫</span>
           <div>
-            <strong>Không tự ý xóa mechanics</strong>
-            <span>Concept Pitch / GCD chỉ thêm/sửa/xóa mechanic khi user explicit yêu cầu.</span>
+            <strong>Không overwrite playable prototype cũ</strong>
+            <span>Mỗi iteration phải sinh <code>Game Demo/[slug]-vN+1.html</code>, không ghi đè. Lightweight GCD phải 1:1 với prototype.</span>
           </div>
         </div>
         <div class="principle deny">

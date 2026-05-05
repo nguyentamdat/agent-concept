@@ -1,6 +1,6 @@
 # Game Design Kit
 
-AI game design pipeline plugin for Claude Code. Concept → Prototype → Mockup (with component picker) → Wireframe Overview → Detail Docs.
+AI game design pipeline plugin for Claude Code. Prototype → Lightweight GCD → Mockup (with component picker) → Wireframe Overview → Detail Docs.
 
 ## Install as Claude Code Plugin
 
@@ -53,12 +53,12 @@ If `HINDSIGHT_API_KEY` is unset, the knowledge-base tools (`recall`/`reflect`/`r
 
 | Command | What it does |
 |---|---|
-| `/design-kit:create <idea>` | Full pipeline: brainstorm → Concept Pitch → GCD → Prototype → Mockup → Wireframe → Detail Docs |
-| `/design-kit:iterate <feedback>` | Re-enter pipeline with feedback, update any artifact |
-| `/design-kit:status` | Show current project stage, artifacts, knowledge stats |
+| `/design-kit:create <idea>` | Prototype-first pipeline: brainstorm → playable HTML5 prototype + lightweight Vietnamese GCD (via the `game-prototype` skill) → mockup → wireframe → detail docs |
+| `/design-kit:iterate <feedback>` | Re-enter the pipeline with feedback. Playable / mechanic / balance feedback writes a new versioned `Game Demo/[slug]-vN+1.html`; mockup, wireframe, and doc-only feedback route to the matching producer |
+| `/design-kit:status` | Show current project stage and artifacts (Game Demo prototypes, lightweight GCD, mockup, wireframe, detail docs) |
 | `/design-kit:setup` | Check version, update plugin, or diagnose issues |
 
-Design documents (`gcd.md`) are written in Vietnamese.
+The lightweight GCD (`Game Demo/[slug]-GCD.md`) is written in Vietnamese.
 
 ## Knowledge Base
 
@@ -73,13 +73,15 @@ Sources include:
 
 ## Agent Hierarchy
 
-The plugin uses a 3-tier agent system:
+The plugin uses a 3-tier agent system. The `game-prototype` skill owns the early pipeline (Phase 1 brainstorm → Phase 2 versioned playable prototype → Phase 3 lightweight GCD); downstream T2 producers consume those approved outputs.
 
-| Tier | Agents | Role |
-|------|--------|------|
+| Tier | Agents / Skills | Role |
+|------|-----------------|------|
 | T1 Director | `creative-director` | Orchestrates pipeline, quality gates |
-| T2 Producers | `concept-designer`, `code-prototyper`, `mockup-designer`, `wireframe-designer`, `document-writer`, `market-researcher` | Create artifacts |
-| T3 Reviewers | `review-concept`, `ui-ux-reviewer`, `detail-doc-reviewer`, `feedback-interpreter` | Quality checks |
+| Early-pipeline skill | `game-prototype` (`skills/game-prototype/SKILL.md`) | Concept brainstorm + playable prototype + lightweight GCD |
+| T2 Producers | `mockup-designer`, `wireframe-designer`, `document-writer`, `market-researcher` | Create downstream artifacts from approved prototype + lightweight GCD |
+| T3 Reviewers | `ui-ux-reviewer`, `detail-doc-reviewer`, `feedback-interpreter` | Quality checks on downstream artifacts and feedback routing |
+| Legacy / manual | `concept-designer`, `code-prototyper`, `review-concept` (agents); `game-concept-design` (skill, archived under `skills/_deprecated/`) | Preserved for legacy/manual support; not part of the active `/design-kit:create` route |
 
 ## License
 
