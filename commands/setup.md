@@ -117,7 +117,7 @@ Verify these files/directories exist in the plugin root:
 | `settings.json` | Yes |
 | `agents/` (10 .md files) | Yes |
 | `commands/` (4 .md files) | Yes |
-| `skills/game-concept-design/SKILL.md` | Yes |
+| `skills/game-prototype/SKILL.md` | Yes |
 | `skills/game-knowledge/SKILL.md` | Yes |
 | `skills/game-ui-ux-guide/SKILL.md` | Yes |
 | `references/` | Yes |

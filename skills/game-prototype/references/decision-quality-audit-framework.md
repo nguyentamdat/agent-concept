@@ -1,6 +1,6 @@
 # Decision Quality Audit Framework (DQAF)
 
-Knowledge base cho skill `game-concept-automatic`. Sử dụng ở Phase 1 step 5a (pre-prototype audit) và step 6 (post-pick audit).
+Knowledge base cho skill `game-prototype`. Sử dụng ở Phase 1 step 5a (pre-prototype audit) và step 6 (post-pick audit).
 
 ## Triết lý
 

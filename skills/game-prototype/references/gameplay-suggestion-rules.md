@@ -1,6 +1,6 @@
 # Gameplay Suggestion Rules
 
-Knowledge base cho skill `game-concept-automatic`. Sử dụng ở Phase 1 bước 5 (suggest 3 gameplay options).
+Knowledge base cho skill `game-prototype`. Sử dụng ở Phase 1 bước 5 (suggest 3 gameplay options).
 
 ## Mục tiêu
 

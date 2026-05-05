@@ -1,7 +1,17 @@
 ---
-name: game-concept-design
-description: "Thiết kế Game Concept cho mobile games (casual, mid-core, hardcore). Thu thập ý tưởng → Brainstorm → Pitching Concept → Generate GCD-Gameplay dựa trên 12 lý thuyết game design. Use for game concept, game idea, GCD, core loop, MDA analysis, player motivation, thiết kế game, concept game mobile."
+name: game-concept-design-deprecated
+description: "DEPRECATED — archived skill. Active prototype-first replacement is `game-prototype` at `skills/game-prototype/`. This skill is preserved for reference and legacy support only; it is no longer auto-discovered or routed by `/design-kit:create`."
 ---
+
+> ⚠️ **DEPRECATED — ARCHIVED SKILL**
+>
+> This skill is no longer part of the active `/design-kit:create` pipeline. It has been replaced by the prototype-first workflow `game-prototype` at `skills/game-prototype/SKILL.md`.
+>
+> The full theory-driven GCD with 12 frameworks (MDA, Flow, Decision Theory, etc.) was moved out of the early pipeline because the active pipeline now derives the lightweight GCD directly from a playable HTML prototype. Detail-doc reviewers handle deeper theory analysis when relevant.
+>
+> Content here is preserved for legacy/manual support and historical reference. Do not invoke this skill from new commands; route concept work through `game-prototype` instead.
+>
+> See `.omx/plans/replace-game-concept-design-by-game-prototype.md` for the full migration plan.
 
 # Game Concept Design
 

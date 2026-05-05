@@ -1,6 +1,6 @@
 # Genre Faithfulness Audit (L0)
 
-Knowledge base cho skill `game-concept-automatic`. Layer audit đầu tiên (cheapest, runs FIRST) trong Pre-Prototype Audit ở Phase 1 step 5a.
+Knowledge base cho skill `game-prototype`. Layer audit đầu tiên (cheapest, runs FIRST) trong Pre-Prototype Audit ở Phase 1 step 5a.
 
 ## Triết lý
 

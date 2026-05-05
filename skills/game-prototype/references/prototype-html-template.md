@@ -1,6 +1,6 @@
 # Prototype HTML Template
 
-Knowledge base cho skill `game-concept-automatic`. Sử dụng ở Phase 2 (build prototype).
+Knowledge base cho skill `game-prototype`. Sử dụng ở Phase 2 (build prototype).
 
 ## Triết lý
 

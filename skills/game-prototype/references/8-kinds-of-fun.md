@@ -1,6 +1,6 @@
 # 8 Kinds of Fun (LeBlanc Taxonomy)
 
-Knowledge base cho skill `game-concept-automatic`. Sử dụng ở Phase 1 bước 4 (chọn loại fun mà game nhắm tới).
+Knowledge base cho skill `game-prototype`. Sử dụng ở Phase 1 bước 4 (chọn loại fun mà game nhắm tới).
 
 Nguồn: "MDA: A Formal Approach to Game Design" — LeBlanc, Hunin, Zubek (2004).
 

@@ -1,6 +1,6 @@
 # Experience Alignment Audit (L4 + L5)
 
-Knowledge base cho skill `game-concept-automatic`. Bridge **decision quality** (DQAF L1+L2+L3) ↔ **experience delivery** (Problem Statement + Kinds of Fun).
+Knowledge base cho skill `game-prototype`. Bridge **decision quality** (DQAF L1+L2+L3) ↔ **experience delivery** (Problem Statement + Kinds of Fun).
 
 ## Triết lý
 

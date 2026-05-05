@@ -1,13 +1,13 @@
 ---
-name: game-concept-automatic
-description: "Tạo Game Concept tự động cho mobile games. Thu thập 3 thông tin chính (Target Audience, Problem Statement, 8 Kinds of Fun) → Suggest gameplay → Build playable HTML prototype → Iterate → Xuất GCD nhẹ. Use for prototype, làm prototype, demo game, playable demo, game prototype, từ ý tưởng đến demo, build game demo, prototype game mobile."
+name: game-prototype
+description: "Active prototype-first workflow for mobile game concept design. Thu thập 3 thông tin chính (Target Audience, Problem Statement, 8 Kinds of Fun) → Suggest gameplay → Build playable HTML prototype → Iterate → Xuất GCD nhẹ. Use for prototype, làm prototype, demo game, playable demo, game prototype, từ ý tưởng đến demo, build game demo, prototype game mobile."
 ---
 
-# Game Concept Automatic
+# Game Prototype (Active Workflow)
 
 Hướng dẫn user từ ý tưởng → playable HTML prototype → Game Concept Document (GCD) nhẹ trong 1 phiên duy nhất, qua 3 phase với 2 approval gate.
 
-Khác với `game-concept-design` (output GCD lý thuyết với 12 theories), skill này tập trung vào prototype playable thực tế và GCD nhẹ chỉ chứa thông tin liên quan đến prototype.
+Đây là **active prototype-first workflow** cho `/design-kit:create`. Skill output gồm playable HTML prototype thực tế và một lightweight GCD chỉ document những gì đã được prototype hóa — không phải GCD lý thuyết đầy đủ với 12 theories (đó là phần việc của tài liệu detail-doc về sau).
 
 ## Scope
 
@@ -20,7 +20,7 @@ Khác với `game-concept-design` (output GCD lý thuyết với 12 theories), s
 - Full GDD (→ skill khác)
 - React/Vite project
 - Prototype non-game
-- 12 lý thuyết game design (đã có `game-concept-design`)
+- 12 lý thuyết game design / MDA / Flow analysis chi tiết (out of scope cho lightweight GCD)
 - Poker/casino games
 
 ## Quy Trình 3 Phase
@@ -154,7 +154,7 @@ Khác với `game-concept-design` (output GCD lý thuyết với 12 theories), s
 
 3. Generate GCD theo template, save vào `Game Demo/[slug]-GCD.md`.
 
-4. Báo user: "GCD xuất tại `Game Demo/[slug]-GCD.md`. Có thể chạy skill `game-concept-review` để đánh giá chi tiết."
+4. Báo user: "GCD xuất tại `Game Demo/[slug]-GCD.md`. Pipeline tiếp theo (mockup → wireframe → detail docs) sẽ đọc cả `[slug]-vN.html` final và `[slug]-GCD.md` này làm ground truth."
 
 5. Skill kết thúc.
 
@@ -171,5 +171,5 @@ Khác với `game-concept-design` (output GCD lý thuyết với 12 theories), s
 
 - KHÔNG suggest gameplay dạng "feature list" — phải là "experience" (player cảm thấy gì khi chơi)
 - KHÔNG bịa rule trong GCD — Section 3 (Screens) và Section 4 (Rules) phải đọc từ HTML
-- KHÔNG include 12 lý thuyết / MDA / flow analysis trong GCD (đó là việc của `game-concept-design`)
+- KHÔNG include 12 lý thuyết / MDA / flow analysis chi tiết trong lightweight GCD (out of scope cho prototype-first workflow; full theory analysis thuộc detail-doc stage)
 - KHÔNG hỏi gộp nhiều câu trong 1 message

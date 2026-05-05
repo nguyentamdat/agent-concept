@@ -2,7 +2,7 @@
 
 > Deep-dive về thiết kế quyết định trong game, dựa trên "Players Making Decisions" (Zack Hiwiller) — Part 3 (ch 9-12) + Part 4 (ch 13-18).
 
-**File này là knowledge base cho 3 skill:** `game-concept-design`, `game-concept-review`, `game-prototype`. File được duplicate sang `references/` của cả 3 skill — khi update, sync cả 3 nơi.
+**File này là knowledge base chính cho active skill:** `game-prototype`. Còn được giữ nguyên tham chiếu dưới `skills/_deprecated/game-concept-design/` cho legacy support — khi update file này, sync sang archive nếu cần duy trì consistency.
 
 **Quan hệ với `game-design-theories.md`**: file đó là quick overview broad cho 12 lý thuyết. File này đào sâu riêng về **decisions** với heuristics + anti-patterns chi tiết hơn.
 
@@ -10,11 +10,10 @@
 
 ## Khi nào load file này?
 
-| Skill | Load §1 (Concepts) | Load §2 (Heuristics) | Load §3 (Anti-patterns) | Load Appendix |
-|-------|---|---|---|---|
-| `game-concept-design` | All | §2.1 + §2.2 | §3.1 + §3.2 + §3.3 | A, C |
-| `game-concept-review` | All | §2.2 + §2.3 | All | A, B |
-| `game-prototype` | §1.1-§1.6 | §2.2 | §3.1 + §3.2 | C |
+| Skill | Status | Load §1 (Concepts) | Load §2 (Heuristics) | Load §3 (Anti-patterns) | Load Appendix |
+|-------|--------|---|---|---|---|
+| `game-prototype` | Active | §1.1-§1.6 | §2.2 | §3.1 + §3.2 | C |
+| `game-concept-design` | Deprecated (archived under `skills/_deprecated/`) | All | §2.1 + §2.2 | §3.1 + §3.2 + §3.3 | A, C |
 
 ---
 
@@ -1012,7 +1011,7 @@ Bảng tra cứu nhanh **named-concept terms** → vị trí. Sort alphabeticall
 
 ## Appendix B: Decision Quality Scorecard
 
-Template scoring 1 decision point trong GCD theo 5 dimension, mỗi dimension 0-2 điểm. Tổng /10. Dành cho `/game-concept-review` skill khi đánh giá chi tiết.
+Template scoring 1 decision point trong lightweight GCD theo 5 dimension, mỗi dimension 0-2 điểm. Tổng /10. Dùng cho deep review pass khi cần đánh giá chi tiết decision points trong prototype.
 
 ### Cách dùng
 1. Trong GCD identify danh sách decision points trong core loop

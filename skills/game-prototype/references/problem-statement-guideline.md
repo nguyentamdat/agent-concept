@@ -1,6 +1,6 @@
 # HƯỚNG DẪN CHI TIẾT: NGHỆ THUẬT VIẾT PROBLEM STATEMENT CHUYÊN NGHIỆP
 
-**Knowledge base** cho 3 skill: `game-concept-design`, `game-concept-review`, `game-prototype`. Khi update file này ở 1 chỗ, sync 2 chỗ còn lại.
+**Knowledge base** chính cho active skill `game-prototype`. Còn được giữ nguyên tham chiếu dưới `skills/_deprecated/game-concept-design/` cho legacy support — khi update file này, sync sang archive nếu cần duy trì consistency.
 
 ---
 
