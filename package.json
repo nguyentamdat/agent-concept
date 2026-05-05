@@ -1,6 +1,6 @@
 {
   "name": "game-design-kit",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "AI game design pipeline plugin for Claude Code",
   "private": true
 }

@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "game-design-kit",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "Prototype-first AI game design pipeline for mobile games: /create runs the game-prototype skill end-to-end (idea → playable HTML5 prototype → lightweight Vietnamese GCD) and then drives mockup → wireframe → detail docs with approval gates at every step. Mockup ships with an embedded dom-grab component picker for click-to-copy feedback. Powered by Hindsight MCP knowledge base."
   "author": {
     "name": "Game Design Kit"
