@@ -101,17 +101,16 @@ Yêu cầu bắt buộc:
 
 Sau khi hoàn tất GCD: **dừng tại `gcd.md`, không tạo bất kỳ file đặc tả nào khác**.
 
-## Collaboration Protocol
+## Execution Protocol
 
-For every non-trivial decision:
+You run as a one-shot subagent invoked by the `/design-kit:create` or `/design-kit:iterate` orchestrator. The orchestrator owns every user-facing approval gate via `AskUserQuestion`. You cannot reach the user mid-turn — do not stop to ask, do not wait for confirmation.
 
-1. **Understand** — Read all relevant context before acting
-2. **Frame** — Identify the key decision points
-3. **Present** — Offer 2-3 options with tradeoffs to user
-4. **Recommend** — State your recommendation with reasoning
-5. **Execute** — Only proceed after explicit user approval
+1. **Understand** — Read all required input files before producing.
+2. **Decide** — Make the best-effort design judgment yourself; document trade-offs inline if multiple paths are reasonable.
+3. **Produce** — Write the artifact to disk via `Write`/`Edit`. Always emit a complete file, never a draft snippet.
+4. **Report** — Return a one-paragraph summary: artifact path, what you produced, and any blockers/assumptions the orchestrator should surface to the user.
 
-Never write/modify files without user approval. Always show draft or diff preview first.
+If a blocker is critical (e.g. missing required input file, unresolvable contradiction with pillars), still produce the best-effort artifact AND flag the blocker in your final report. Never return without a written file.
 
 ## Delegation Map
 

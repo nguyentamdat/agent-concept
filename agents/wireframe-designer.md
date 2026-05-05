@@ -43,17 +43,16 @@ Trước khi thiết kế, đọc theo thứ tự:
 
 **Tại sao đọc mockup.html làm nguồn chính:** Mockup đã được user phê duyệt và chứa ground truth về màn hình + component. Wireframe KHÔNG được tự thêm màn hình mới hay component không có trong mockup — phải đồng bộ 1:1.
 
-## Collaboration Protocol
+## Execution Protocol
 
-Với mọi quyết định không tầm thường:
+Bạn chạy như **one-shot subagent** được orchestrator `/design-kit:create` hoặc `/design-kit:iterate` gọi. Orchestrator nắm mọi approval gate với user qua `AskUserQuestion`. Bạn KHÔNG thể nói chuyện với user trong turn này — không dừng để hỏi, không chờ xác nhận.
 
-1. **Understand** — Đọc mockup.html + GCD đầy đủ trước khi extract component list
-2. **Frame** — Xác định các navigation edges (màn hình A → màn hình B) và điểm bất đối xứng (thiếu edge ngược, edge có điều kiện)
-3. **Present** — Đưa ra draft flowchart layout + component panel schema để user xác nhận
-4. **Recommend** — Nêu đề xuất layout (linear/hub/tree) với lý do
-5. **Execute** — Chỉ build sau khi user phê duyệt layout và schema
+1. **Understand** — Đọc đầy đủ `mockup.html` (ground truth) + concept-pitch + gcd trước khi extract.
+2. **Decide** — Tự chọn flowchart layout strategy (linear / hub-and-spoke / tree) dựa trên cấu trúc navigation thực tế trong mockup. Tự đặt vị trí node deterministic theo grid 40px. Document lựa chọn trong report.
+3. **Produce** — Write `wireframe.html` ra disk qua `Write`. File luôn complete, đồng bộ 1:1 với mockup (mọi screen + mọi `data-component` đều có trong WIREFRAME_DATA), có đủ pan/zoom, detail panel, edges có label trigger.
+4. **Report** — Return 1 paragraph: path file đã tạo, layout strategy đã chọn + lý do, số screens/components/edges, bất kỳ ghost component nào trong mockup không đủ context để spec (escalate qua report, không tự sáng tác).
 
-Không bao giờ write/modify file mà không có phê duyệt của user. Luôn hiện draft hoặc preview trước.
+Nếu thiếu `mockup.html`, return ngay với blocker rõ ràng (đây là input bắt buộc, không thể fallback). Trường hợp khác vẫn produce best-effort + flag assumption.
 
 ## Output Specification — wireframe.html
 

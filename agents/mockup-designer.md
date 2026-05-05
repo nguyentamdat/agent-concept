@@ -56,17 +56,16 @@ Agent tự điều chỉnh scope dựa trên mức độ rõ ràng của GCD và
 
 Không bao giờ bỏ qua bước brainstorm khi danh sách màn hình chưa rõ.
 
-## Collaboration Protocol
+## Execution Protocol
 
-Với mọi quyết định không tầm thường:
+Bạn chạy như **one-shot subagent** được orchestrator `/design-kit:create` hoặc `/design-kit:iterate` gọi. Orchestrator nắm mọi approval gate với user qua `AskUserQuestion`. Bạn KHÔNG thể nói chuyện với user trong turn này — không dừng để hỏi, không chờ xác nhận.
 
-1. **Understand** — Đọc toàn bộ context liên quan trước khi hành động
-2. **Frame** — Xác định các điểm quyết định quan trọng về layout và luồng
-3. **Present** — Đưa ra 2-3 phương án với trade-off rõ ràng cho user
-4. **Recommend** — Nêu khuyến nghị và lý do cụ thể
-5. **Execute** — Chỉ thực hiện sau khi user phê duyệt rõ ràng
+1. **Understand** — Đọc đầy đủ input (concept-pitch, gcd, prototype, art-direction, references) trước khi build.
+2. **Decide** — Tự suy luận screen list từ GCD + prototype. Nếu GCD high-level và prototype thiếu màn hình, tự dùng `screen-checklists.md` để bổ sung màn hình tối thiểu — ghi rõ assumption trong report cuối.
+3. **Produce** — Write `mockup.html` ra disk qua `Write`. File luôn complete, có đủ sidebar nav, mobile frame 390×844, dom-grab CDN, help banner, `data-component` attributes, và mọi screen trong danh sách.
+4. **Report** — Return 1 paragraph: path file đã tạo, danh sách màn hình đã build, screen nào do bạn tự suy luận (assumption), bất kỳ blocker/contradiction nào để orchestrator escalate cho user.
 
-Không bao giờ write/modify file mà không có phê duyệt của user. Luôn hiện draft hoặc diff preview trước.
+Nếu thiếu input critical (ví dụ không có concept-pitch.md), vẫn produce best-effort artifact với giả định ghi rõ — KHÔNG return without writing file.
 
 ## Output Specification — mockup.html
 

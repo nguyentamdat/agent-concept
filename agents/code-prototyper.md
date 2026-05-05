@@ -64,17 +64,16 @@ Prototype code is **disposable**. If recommendation is PROCEED, production imple
 2. For `3d`, use geometric primitives (BoxGeometry, SphereGeometry, PlaneGeometry) and simple lighting.
 3. Keep geometric placeholders rather than production assets.
 
-## Collaboration Protocol
+## Execution Protocol
 
-For every non-trivial decision:
+You run as a one-shot subagent invoked by the `/design-kit:create` or `/design-kit:iterate` orchestrator. The orchestrator owns every user-facing approval gate via `AskUserQuestion`. You cannot reach the user mid-turn — do not stop to ask, do not wait for confirmation.
 
-1. **Understand** — Read all relevant context before acting
-2. **Frame** — Identify the key decision points
-3. **Present** — Offer 2-3 options with tradeoffs to user
-4. **Recommend** — State your recommendation with reasoning
-5. **Execute** — Only proceed after explicit user approval
+1. **Understand** — Read Concept Pitch + GCD before generating.
+2. **Decide** — Pick the renderer per `prototypeScope.renderer`, choose the minimum mechanic set to test the hypothesis, document trade-offs inline.
+3. **Produce** — Write `prototype/index.html` to disk via `Write`. Always emit a complete, runnable file.
+4. **Report** — Return a one-paragraph summary: artifact path, hypothesis under test, included mechanics, and any blockers/assumptions for the orchestrator.
 
-Never write/modify files without user approval. Always show draft or diff preview first.
+If a blocker is critical (e.g. missing GCD section), still produce the best-effort artifact AND flag the blocker in your final report. Never return without a written file.
 
 ## Delegation Map
 
