@@ -24,6 +24,7 @@ Receive the feedback text from the user argument, or ask for it if not provided.
 - Keep user approval gates for ambiguous product direction, destructive rewrites, broad scope changes, and final artifact acceptance.
 - Report every applied change with diff summary and validation evidence.
 - Do **not** route active concept/prototype/GCD work through `concept-designer`, `review-concept`, or `code-prototyper`. Those agents remain in the repo for legacy/manual support only.
+- **Every regenerated artifact passes the review loop before reaching the user.** Read `references/review-loop.md` once at the start of an iterate run. Producer → domain reviewer → creative-director, sequential, both must `APPROVE`. CONCERNS or REJECT → feedback packet to producer, restart from domain reviewer.
 
 ---
 
@@ -156,18 +157,25 @@ List the downstream artifacts that could be affected. Ask the user via AskUserQu
 
 For each selected downstream artifact, invoke the appropriate agent one at a time:
 
-- Lightweight GCD (`Game Demo/[slug]-GCD.md`) → re-enter `game-prototype` Phase 3 over the latest `[slug]-vN.html`
-- Playable prototype (`Game Demo/[slug]-vN+1.html`) → re-enter `game-prototype` Phase 2 only if a downstream decision explicitly changes playable behavior
-- Mockup (`mockup.html`) → invoke `mockup-designer` and preserve validated prototype interactions
-- Wireframe overview (`wireframe.html`) → invoke `wireframe-designer`; it MUST re-read the latest `mockup.html` first so wireframe stays 1:1 synced
-- Detail docs (`gameplay-design.md`, `economy-design.md`, `content-plan.md`, `technical-requirements.md`, `sound-design.md`, etc.) → invoke `document-writer` and reference the approved prototype + lightweight GCD plus current mockup/wireframe when relevant
+- Lightweight GCD (`Game Demo/[slug]-GCD.md`) → **re-enter `game-prototype` Phase 3** over the latest `[slug]-vN.html` (NOT `document-writer`; the GCD producer is the skill).
+- Playable prototype (`Game Demo/[slug]-vN+1.html`) → re-enter `game-prototype` Phase 2 only if a downstream decision explicitly changes playable behavior.
+- Mockup (`mockup.html`) → invoke `mockup-designer` and preserve validated prototype interactions.
+- Wireframe overview (`wireframe.html`) → invoke `wireframe-designer`; it MUST re-read the latest `mockup.html` first so wireframe stays 1:1 synced.
+- Detail docs (`gameplay-design.md`, `economy-design.md`, `content-plan.md`, `technical-requirements.md`, `sound-design.md`, etc.) → invoke `document-writer` and reference the approved prototype + lightweight GCD plus current mockup/wireframe when relevant.
+
+**Scope of the review loop in iterate**: the loop runs only on artifacts that are *actually regenerated* in this iterate run (whether selected by the user in Step 5 or pulled in as a sync side-effect of an upstream regeneration). Artifacts the user chose NOT to sync are left as-is — do NOT invoke the loop on them just because they look stale; surface them in the iteration summary at Step 7 as "intentionally stale" instead.
 
 For each agent invocation:
 
-1. Present the result or diff to the user.
-2. Wait for approval before saving or moving to the next selected artifact.
-3. Confirm the artifact was updated.
-4. Run the relevant validation from Step 4.
+1. **Run the review loop (`references/review-loop.md`) on the regenerated artifact** before showing anything to the user:
+   - Domain reviewer (per artifact type — `ui-ux-reviewer` for mockup/wireframe/`ui-ux-spec.md`/`art-direction.md`, `detail-doc-reviewer` for the lightweight GCD and the other detail docs).
+   - On non-APPROVE: feedback packet → producer in revise mode → regenerate → restart at domain reviewer.
+   - On reviewer APPROVE: **creative-director** at the matching `CD-*` gate.
+   - On non-APPROVE from director: feedback → producer revise → restart at domain reviewer.
+2. Present the result or diff to the user only after both reviewers `APPROVE`.
+3. Wait for approval before saving or moving to the next selected artifact.
+4. Confirm the artifact was updated.
+5. Run the relevant validation from Step 4.
 
 Proceed through selected artifacts one at a time. Do not batch-apply without approval.
 

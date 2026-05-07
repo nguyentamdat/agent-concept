@@ -92,6 +92,13 @@ Hướng dẫn user từ ý tưởng → playable HTML prototype → Game Concep
 
    **Lý do:** Catch design gap (genre mismatch, false choice trap, shallow decisions, experience mismatch) trên text trước khi tốn tokens build prototype. Bài học: case "card battle + puzzle" Option A pass L1+L2+L4+L5 nhưng heavy match-3 nhẹ puzzle deliberate → fail genre faithfulness; Concept D 3×3 lane (substrate gap); Concept B Fantasy gap (experience gap).
 
+5b. **Review loop trên batch 3 concept HTMLs (BẮT BUỘC, đọc `references/review-loop.md`)** — Sau khi build xong 3 file `Game Demo/[slug]-concept-{A,B,C}.html`, TRƯỚC khi user chơi thử để chốt option:
+   - Invoke **ui-ux-reviewer** Nhánh D với batch input (3 file một lượt). 1 verdict tổng cho cả batch.
+   - Nếu verdict ≠ `APPROVE` → nhận feedback packet (issue per-file), self-revise chỉ những file fail (giữ tên file, overwrite), return to ui-ux-reviewer trên batch.
+   - Khi ui-ux-reviewer trả `APPROVE` → invoke **creative-director** gate `CD-GAME-DEMO` cho batch.
+   - Nếu director verdict ≠ `APPROVE` → revise file affected, restart từ ui-ux-reviewer.
+   - Cả hai `APPROVE` → user chơi thử cả 3.
+
    User chơi thử cả 3 → chốt 1 option (hoặc remix giữa các option).
 
 6. **Anti-pattern Audit (BẮT BUỘC, SILENT)** — Sau khi user chốt 1 gameplay option, AI audit option đó qua checklist 12 anti-patterns. **Chạy ngầm** — không trình bảng chi tiết cho user.
@@ -136,12 +143,20 @@ Hướng dẫn user từ ý tưởng → playable HTML prototype → Game Concep
 
 5. **Self-test** — AI đọc lại file vừa tạo, check theo checklist trong template, self-fix bug.
 
+5a. **Review loop (BẮT BUỘC, đọc `references/review-loop.md`)** — Trước khi báo user mở prototype:
+   - Invoke **ui-ux-reviewer** Nhánh D (concept/playable prototype) trên `Game Demo/[slug]-v1.html`.
+   - Nếu verdict ≠ `APPROVE` → nhận feedback packet, self-revise file (giữ tên `-v1.html` cho các lần revise nội bộ — chỉ bump version `-v2.html`/`-v3.html` khi user request iterate ở step 7), return to ui-ux-reviewer.
+   - Khi ui-ux-reviewer trả `APPROVE` → invoke **creative-director** gate `CD-GAME-DEMO`.
+   - Nếu director verdict ≠ `APPROVE` → revise và restart từ ui-ux-reviewer.
+   - Cả hai `APPROVE` → tiếp step 6.
+
 6. **Báo user** — "Prototype full version xong, mở `Game Demo/[slug]-v1.html` trong browser để chơi."
 
 7. **Iterate loop:**
    - User feedback tự do.
    - **Nếu mơ hồ** → AI hỏi clarify 1-2 câu.
-   - **Nếu rõ** → update HTML trực tiếp, save version mới (`-v2.html`, `-v3.html`...). KHÔNG overwrite version cũ.
+   - **Nếu rõ** → update HTML, save version mới (`-v2.html`, `-v3.html`...). KHÔNG overwrite version cũ.
+   - **Trước khi báo phiên bản mới cho user**, chạy lại review loop trên `[slug]-vN.html` mới (ui-ux-reviewer → creative-director). Chỉ surface phiên bản đã `APPROVE` cả hai.
    - Lặp đến khi user chốt.
 
 8. **DỪNG** — chờ user approve final prototype trước khi sang Phase 3.
@@ -153,6 +168,13 @@ Hướng dẫn user từ ý tưởng → playable HTML prototype → Game Concep
 2. Đọc lại file HTML đã chốt + lịch sử conversation Phase 1+2.
 
 3. Generate GCD theo template, save vào `Game Demo/[slug]-GCD.md`.
+
+3a. **Review loop (BẮT BUỘC, đọc `references/review-loop.md`)** — Trước khi báo user:
+   - Invoke **detail-doc-reviewer** (lightweight GCD scope: cross-doc consistency với `[slug]-vN.html` + Production Readiness sections của lightweight GCD; bỏ qua các checklist của 7 detail docs vì chưa tồn tại).
+   - Nếu verdict ≠ `APPROVE` → nhận feedback packet, self-revise GCD (overwrite cùng file `[slug]-GCD.md`), return to detail-doc-reviewer.
+   - Khi detail-doc-reviewer trả `APPROVE` → invoke **creative-director** gate `CD-GAME-DEMO`.
+   - Nếu director verdict ≠ `APPROVE` → revise và restart từ detail-doc-reviewer.
+   - Cả hai `APPROVE` → tiếp step 4.
 
 4. Báo user: "GCD xuất tại `Game Demo/[slug]-GCD.md`. Pipeline tiếp theo (mockup → wireframe → detail docs) sẽ đọc cả `[slug]-vN.html` final và `[slug]-GCD.md` này làm ground truth."
 

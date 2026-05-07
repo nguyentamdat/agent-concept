@@ -26,6 +26,7 @@ Do this before every step, every agent invocation, and every approval gate. The 
   - `projects/{project-name}/Game Demo/[slug]-GCD.md` — Vietnamese lightweight GCD from Phase 3
 - Downstream stages (mockup, wireframe, detail docs) consume `[slug]-vN.html` (final) and `[slug]-GCD.md` as ground truth.
 - Ask for confirmation only at explicit approval gates, destructive rewrites, broad scope changes, or ambiguous product decisions.
+- **Every artifact (HTML or markdown) MUST pass the review loop before reaching a human gate.** Read `references/review-loop.md` once at the start of the run. The loop sequentially routes producer → domain reviewer → creative-director; anything short of `APPROVE` from either reviewer feeds back to the producer for revision and restarts the loop. The user only sees artifacts that both reviewers have approved.
 
 ---
 
@@ -48,6 +49,8 @@ Ask the user via AskUserQuestion:
 Invoke the `game-prototype` skill (located at `skills/game-prototype/SKILL.md`). Run it with the current project directory as its output root so all artifacts land under `projects/{project-name}/Game Demo/`.
 
 The skill drives the full early pipeline through three phases. The orchestrator's job is only to route the user's responses into the skill and to surface the skill's own approval gates.
+
+The skill itself runs the review loop (`references/review-loop.md`) on each artifact it emits — every new prototype version `[slug]-vN.html` and the lightweight GCD `[slug]-GCD.md` are reviewed by **ui-ux-reviewer** (or **detail-doc-reviewer** for the GCD) and then **creative-director** (gate `CD-GAME-DEMO`) before the user is asked to play or read them. Treat any version the skill surfaces as already reviewer-approved.
 
 ### Phase 1 — Concept brainstorm + audits + Gate 1
 
@@ -116,15 +119,21 @@ The mockup-designer will:
 4. Produce `mockup.html` with sidebar navigation, mobile viewport (390×844), screen transitions, brand colors, and `data-component` attributes on every meaningful UI element.
 5. Include a help banner at the top of the page explaining how to activate the component picker (hold Cmd+C or Ctrl+C for 200ms, then click any component).
 
-Wait for the mockup-designer to complete. Invoke the **ui-ux-reviewer** agent automatically to quality-check the mockup against `references/mockup-review-criteria.md` and the approved prototype.
+**Run the review loop on `mockup.html` before the human gate** — see `references/review-loop.md`:
 
-Present the mockup (with review notes) to the user via AskUserQuestion. Tell the user how to open `mockup.html` in a browser and use the component picker for feedback.
+1. Domain reviewer: invoke **ui-ux-reviewer** (mockup branch, criteria from `references/mockup-review-criteria.md`).
+2. If reviewer verdict ≠ `APPROVE`: hand the feedback packet to **mockup-designer** in revise mode, regenerate `mockup.html`, then return to step 1.
+3. When reviewer returns `APPROVE`, invoke **creative-director** for gate `CD-MOCKUP`.
+4. If director verdict ≠ `APPROVE`: hand the feedback packet to **mockup-designer** in revise mode, regenerate, and restart from step 1 (the previous reviewer approval is invalidated).
+5. When both reviewers return `APPROVE`, proceed to the human gate below.
+
+Present the approved mockup to the user via AskUserQuestion. Tell the user how to open `mockup.html` in a browser and use the component picker for feedback.
 
 **STOP. Wait for approval.**
 
 > Options: "Approve" / "Request changes" / "Skip"
 
-- If "Request changes": collect feedback (ideally with component picker clipboard output pasted in), apply revisions, and re-present.
+- If "Request changes": collect feedback (ideally with component picker clipboard output pasted in), apply revisions through the same review loop, and re-present.
 - If "Approve" or "Skip": continue to Step 3.
 
 ---
@@ -141,15 +150,21 @@ The wireframe-designer will:
 4. Present the proposed flowchart layout strategy (linear / hub-and-spoke / tree) for user confirmation.
 5. Build `wireframe.html` with: SVG flowchart canvas (pan + zoom), screen boxes connected by labeled wires with arrowheads, and a slide-in detail panel per screen showing component tables (ID / type / position / states / actions / data / notes) per `references/wireframe-overview-guide.md`.
 
-Wait for the wireframe-designer to complete. Invoke the **ui-ux-reviewer** agent automatically to quality-check the wireframe overview against the mockup and prototype.
+**Run the review loop on `wireframe.html` before the human gate** — see `references/review-loop.md`:
 
-Present the wireframe (with review notes) to the user via AskUserQuestion.
+1. Domain reviewer: invoke **ui-ux-reviewer** (wireframe branch, criteria from `references/wireframe-overview-guide.md`).
+2. If reviewer verdict ≠ `APPROVE`: hand feedback to **wireframe-designer** in revise mode, regenerate `wireframe.html`, return to step 1.
+3. When reviewer returns `APPROVE`, invoke **creative-director** for gate `CD-WIREFRAME`.
+4. If director verdict ≠ `APPROVE`: hand feedback to **wireframe-designer** in revise mode, regenerate, and restart from step 1.
+5. When both reviewers return `APPROVE`, proceed to the human gate.
+
+Present the approved wireframe to the user via AskUserQuestion.
 
 **STOP. Wait for approval.**
 
 > Options: "Approve" / "Request changes" / "Skip"
 
-- If "Request changes": apply revisions and re-present.
+- If "Request changes": apply revisions through the same review loop, and re-present.
 - If "Approve" or "Skip": continue to Step 4.
 
 ---
@@ -197,16 +212,21 @@ For each document the user selected, in order:
    - Every document type must read `projects/{project-name}/Game Demo/[slug]-GCD.md` (lightweight GCD) and the final `projects/{project-name}/Game Demo/[slug]-vN.html` (approved playable prototype) before writing.
    - When generating `ui-ux-spec.md`, document-writer MUST additionally read `mockup.html` and `wireframe.html` as authoritative source for screen list, component list, and component specs. The goal is to extract / reference existing spec, not re-invent it.
    - When generating `art-direction.md`, document-writer additionally consults the approved mockup for visual direction consistency.
-2. Immediately after document generation, invoke the appropriate reviewer automatically:
-   - For `ui-ux-spec.md` and `art-direction.md`: invoke **ui-ux-reviewer**.
-   - For all other documents: invoke **detail-doc-reviewer**.
-3. Present the document (with review notes) to the user via AskUserQuestion.
+2. **Run the review loop on the document before the human gate** — see `references/review-loop.md`:
+   1. Domain reviewer (pick by document type):
+      - `ui-ux-spec.md` and `art-direction.md` → **ui-ux-reviewer** (Nhánh C, 6-criteria check).
+      - All other documents → **detail-doc-reviewer**.
+   2. If reviewer verdict ≠ `APPROVE`: hand the feedback packet to **document-writer** in revise mode, regenerate the document, return to step 2.i.
+   3. When reviewer returns `APPROVE`, invoke **creative-director** for gate `CD-DOCS`.
+   4. If director verdict ≠ `APPROVE`: hand feedback to **document-writer** in revise mode, regenerate, and restart from step 2.i.
+   5. When both reviewers return `APPROVE`, proceed to the human gate.
+3. Present the approved document to the user via AskUserQuestion.
 
 **STOP. Wait for approval before generating the next document.**
 
 > Options: "Approve" / "Request changes" / "Skip"
 
-- If "Request changes": revise and re-present. Repeat until approved or skipped.
+- If "Request changes": revise through the same review loop, and re-present. Repeat until approved or skipped.
 - If "Approve" or "Skip": move to the next selected document.
 
 Repeat for every selected document.
