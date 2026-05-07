@@ -9,7 +9,7 @@
     {
       "name": "game-design-kit",
       "description": "Prototype-first AI game design pipeline: /create → playable prototype + lightweight Vietnamese GCD (game-prototype skill) → mockup → wireframe → detail docs",
-      "version": "2.5.0",
+      "version": "2.6.0",
       "source": "./",
       "category": "development",
       "homepage": "https://github.com/nguyentamdat/agent-concept"
