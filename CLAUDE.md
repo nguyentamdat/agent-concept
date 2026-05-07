@@ -45,9 +45,11 @@ Game concept design follows 12 core theories (from Players Making Decisions + A 
 | `/design-kit:create <idea>` | Full pipeline: brainstorm → Concept Pitch → GCD → Prototype → Detail Docs + Wireframe |
 | `/design-kit:iterate <feedback>` | Re-enter pipeline with feedback, update any artifact |
 | `/design-kit:status` | Show current project stage, artifacts, knowledge stats |
-| `/design-kit:setup` | Check version, update plugin, or diagnose issues |
+| `/design-kit:setup` | Check plugin version or update to latest (`setup update`) |
+| `/design-kit:doctor` | Diagnose plugin structure, MCP env vars, MCP connectivity, version consistency |
+| `/design-kit:mcp-setup` | Interactively configure MCP server env vars (writes to `~/.claude/settings.json` `env`) |
 
-`/design-kit:setup` checks plugin version, updates to latest, or runs diagnostics (`setup update`, `setup doctor`).
+`/design-kit:doctor` is the entry point when something looks broken. If it reports missing MCP env vars, run `/design-kit:mcp-setup`; if the plugin is outdated, run `/design-kit:setup update`.
 
 Design documents (`gcd.md`) must be written in Vietnamese.
 

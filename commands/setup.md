@@ -1,5 +1,5 @@
 ---
-description: Check plugin version, update to latest, or diagnose installation issues
+description: Check plugin version or update to latest
 ---
 
 Parse `{{ARGUMENTS}}` to determine the subcommand:
@@ -8,7 +8,7 @@ Parse `{{ARGUMENTS}}` to determine the subcommand:
 |-------|--------|
 | (no args) | Run **Status** |
 | `update` | Run **Update** |
-| `doctor` | Run **Doctor** |
+| `doctor` | Delegate to `/design-kit:doctor` (diagnostics moved to its own command) |
 
 ---
 
@@ -106,49 +106,4 @@ Restart Claude Code to load the new version.
 
 ## Doctor
 
-**Step 1: Check plugin structure**
-
-Verify these files/directories exist in the plugin root:
-
-| Path | Required |
-|------|----------|
-| `.claude-plugin/plugin.json` | Yes |
-| `.claude-plugin/marketplace.json` | Yes |
-| `settings.json` | Yes |
-| `agents/` (10 .md files) | Yes |
-| `commands/` (4 .md files) | Yes |
-| `skills/game-prototype/SKILL.md` | Yes |
-| `skills/game-knowledge/SKILL.md` | Yes |
-| `skills/game-ui-ux-guide/SKILL.md` | Yes |
-| `references/` | Yes |
-
-**Step 2: Check Hindsight MCP**
-
-Call `mcp__hindsight__get_bank` to verify the knowledge bank is reachable.
-
-If error → report "Hindsight MCP: FAIL" with error message.
-If success → report memory count from `mcp__hindsight__list_memories` (limit 1, use total).
-
-**Step 3: Check version consistency**
-
-Read version from:
-- `package.json` (root)
-- `.claude-plugin/plugin.json`
-- `.claude-plugin/marketplace.json`
-
-All must match. If mismatch → report which files are out of sync.
-
-**Step 4: Output diagnostic card**
-
-```
-Doctor: Game Design Kit v{version}
-
-Structure:      {OK/FAIL} ({count}/9 files)
-Hindsight MCP:  {OK/FAIL} ({memory_count} memories)
-Versions:       {OK/MISMATCH}
-
-{issues_list_if_any}
-```
-
-If all OK: "No issues found."
-If issues: list each with a fix suggestion.
+Diagnostics now live in `/design-kit:doctor`. If the user runs `setup doctor`, invoke that command and stop.
