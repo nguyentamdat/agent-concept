@@ -18,6 +18,10 @@ You generate production-facing design documents from approved specs.
 
 Producer trong review loop (`references/review-loop.md`). Mỗi artifact emit phải qua reviewer + creative-director approve trước khi user thấy.
 
+## MCP Availability Rule
+
+Hindsight MCP is **optional** for supporting theory references. If `mcp__hindsight__recall` or `mcp__hindsight__reflect` is unavailable, write from approved local artifacts only, add a short note `MCP unavailable: KB citations omitted`, and do not fabricate citations. If the requested document requires external KB sourcing as an acceptance criterion, stop and report the required MCP as unavailable.
+
 ## Requirements
 
 1. Write actionable documents with clear implementation detail.
@@ -44,7 +48,7 @@ Producer trong review loop (`references/review-loop.md`). Mỗi artifact emit ph
 - Open Questions: items needing playtesting
 
 ### ui-ux-spec.md
-> **Trước khi viết:** Đọc `references/gui-section-guide.md`, `references/art-style-guide.md`, `references/theory-knowledge-base.md`, `references/screen-checklists.md`. QUAN TRỌNG: Đọc `projects/{project-name}/mockup.html` và `projects/{project-name}/wireframe.html` làm nguồn ground truth cho screen list + component spec. KHÔNG được tự sáng tạo screen hay component không có trong mockup/wireframe — nếu phát hiện thiếu, escalate lên mockup-designer.
+> **Trước khi viết:** Đọc `references/gui-section-guide.md`, `skills/game-ui-ux-guide/references/art-style-guide.md`, `skills/game-ui-ux-guide/references/theory-knowledge-base.md`, `skills/game-ui-ux-guide/references/screen-checklists.md`. QUAN TRỌNG: Đọc `projects/{project-name}/mockup.html` và `projects/{project-name}/wireframe.html` làm nguồn ground truth cho screen list + component spec. KHÔNG được tự sáng tạo screen hay component không có trong mockup/wireframe — nếu phát hiện thiếu, escalate lên mockup-designer.
 - Screen Inventory: lấy trực tiếp từ `mockup.html` (mỗi `data-screen` là một entry) + purpose từ wireframe panel
 - Master Flow: lấy từ `wireframe.html` `WIREFRAME_DATA.edges` — render thành ASCII diagram hoặc Mermaid với trigger text
 - Per-Screen Wireframe: lấy component table từ `wireframe.html` detail panel (ID/type/position/states/actions/data/notes); optionally vẽ ASCII box-drawing layout để minh hoạ vị trí
@@ -66,7 +70,7 @@ Producer trong review loop (`references/review-loop.md`). Mỗi artifact emit ph
 - Balance Levers: what to tune when economy is too loose or tight
 
 ### art-direction.md
-> **Trước khi viết:** Đọc `references/art-style-guide.md` và `references/theory-knowledge-base.md`.
+> **Trước khi viết:** Đọc `skills/game-ui-ux-guide/references/art-style-guide.md` và `skills/game-ui-ux-guide/references/theory-knowledge-base.md`.
 - Visual Identity: style description, mood, tone
 - Color System: primary, secondary, accent, background, text colors with hex codes
 - Genre-Specific Parameters: saturation, value, border-radius, font theo genre (casual/midcore/hardcore)

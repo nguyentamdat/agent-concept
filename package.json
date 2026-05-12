@@ -2,5 +2,10 @@
   "name": "game-design-kit",
   "version": "2.6.0",
   "description": "AI game design pipeline plugin for Claude Code",
-  "private": true
+  "private": true,
+  "scripts": {
+    "verify:release-smoke": "node scripts/verify-release-smoke.js",
+    "verify:contracts": "node tests/contracts/verify-workflow-contracts.js",
+    "verify": "npm run verify:release-smoke && npm run verify:contracts"
+  }
 }

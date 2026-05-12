@@ -6,7 +6,7 @@
 
 ## OVERVIEW
 
-Claude Code plugin: AI game design pipeline. Pipeline is **prototype-first**: an idea is taken end-to-end through the `game-prototype` skill (concept brainstorm → versioned playable HTML5 prototype → Vietnamese lightweight GCD), then the approved prototype + lightweight GCD feed downstream producers (mockup with component picker → wireframe overview → feedback gate → detail docs). Knowledge via Hindsight MCP (recall/reflect/retain).
+Claude Code plugin: AI game design pipeline. Pipeline is **prototype-first**: an idea is taken end-to-end through the `game-prototype` skill (concept brainstorm → versioned playable HTML5 prototype → Vietnamese lightweight GCD), then the approved prototype + lightweight GCD feed downstream producers (mockup with component picker → wireframe overview → feedback gate → detail docs). Knowledge via Hindsight MCP (`recall`/`reflect` for grounding; external writes are staged through the KB governance gate).
 
 ## AGENT HIERARCHY
 
@@ -99,7 +99,7 @@ Claude Code plugin: AI game design pipeline. Pipeline is **prototype-first**: an
 
 - Commands and agents defined as **markdown files**, not code.
 - Plugin uses `${CLAUDE_PLUGIN_ROOT}` env var for path resolution.
-- Knowledge served via **Hindsight MCP** at `https://hindsight-api.zingplay.dev/mcp/game-knowledge/`. Agents use `recall`/`reflect`/`retain`.
+- Knowledge served via **Hindsight MCP** at `https://hindsight-api.zingplay.dev/mcp/game-knowledge/`. Agents use `recall`/`reflect`; new knowledge is staged under `.kb-contributions/pending` and only written externally after explicit governance approval.
 - Early-pipeline phases owned by a single **skill** (`game-prototype`) rather than chained agents — keeps brainstorm + playable spike + lightweight GCD coherent inside one workflow.
 
 ## NOTES

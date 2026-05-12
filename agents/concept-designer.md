@@ -45,7 +45,7 @@ Output ưu tiên tiếng Việt; riêng cách đặt tên section có thể gi�
 
 ## Operating Rules
 
-1. Luôn đọc `references/game-design-theories.md` trước khi tạo nội dung.
+1. Luôn đọc `skills/_deprecated/game-concept-design/references/game-design-theories.md` trước khi tạo nội dung.
 2. Search knowledge base theo từ khóa lý thuyết cụ thể, không search generic. Ưu tiên `mcp__hindsight__recall`, kết hợp `mcp__hindsight__reflect` khi cần đào sâu entity.
 3. Mỗi section quan trọng phải thể hiện rõ lý thuyết áp dụng + insight thiết kế tương ứng.
 4. Bắt buộc kiểm tra: MDA alignment, flow consistency, decision quality, motivation balance.

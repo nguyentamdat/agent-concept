@@ -32,6 +32,9 @@ jobs:
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
           echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
 
+      - name: Verify package and workflow contracts
+        run: npm run verify
+
       - name: Package ZIP
         run: |
           zip -r "game-design-kit-${{ steps.version.outputs.version }}.zip" \
@@ -41,7 +44,9 @@ jobs:
             hooks/ \
             references/ \
             scripts/plugin-setup.sh \
+            scripts/verify-release-smoke.js \
             skills/ \
+            tests/contracts/verify-workflow-contracts.js \
             AGENTS.md \
             CLAUDE.md \
             README.md \

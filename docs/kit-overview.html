@@ -1309,7 +1309,7 @@ body.dark .diagram-svg .node-bg-purple { fill: rgba(199,146,234,0.08); stroke: v
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           </div>
           <h3>Hindsight MCP</h3>
-          <p>HTTP MCP server tại <code>hindsight-api.zingplay.dev</code>. Cung cấp tri thức game design qua tools <code>recall</code>, <code>reflect</code>, <code>retain</code>, <code>list_banks</code>.</p>
+          <p>HTTP MCP server tại <code>hindsight-api.zingplay.dev</code>. Cung cấp tri thức game design qua tools <code>recall</code>, <code>reflect</code>, <code>list_banks</code>; external knowledge writes are staged through a governance gate before retain.</p>
           <div class="tech-meta"><span>game-knowledge bank</span><span>Bearer auth</span></div>
         </article>
 
@@ -1391,7 +1391,7 @@ body.dark .diagram-svg .node-bg-purple { fill: rgba(199,146,234,0.08); stroke: v
       <div class="section-title">🧠 06 · Hệ thống tri thức</div>
       <h2>Tri thức game design qua Hindsight MCP</h2>
       <p class="lead">
-        Agents không chứa tri thức cứng — mọi thứ chảy qua <strong>Hindsight MCP</strong>, một remote HTTP server. Khi agent cần ground recommendation theo theory, nó gọi <code>recall</code>/<code>reflect</code>; khi học được điều mới, gọi <code>retain</code>.
+        Agents không chứa tri thức cứng — mọi thứ chảy qua <strong>Hindsight MCP</strong>, một remote HTTP server. Khi agent cần ground recommendation theo theory, nó gọi <code>recall</code>/<code>reflect</code>; khi học được điều mới, nó stage pending contribution để reviewer/user approve trước khi external retain.
       </p>
 
       <div class="kn-flow">
@@ -1436,7 +1436,7 @@ body.dark .diagram-svg .node-bg-purple { fill: rgba(199,146,234,0.08); stroke: v
           <text class="lbl t-mid" x="648" y="98">data</text>
           <!-- Bottom: retain feedback loop -->
           <path class="flow-line-alt" d="M 770 140 Q 770 190 90 190 Q 90 165 90 140" marker-end="url(#arr)"/>
-          <text class="lbl t-mid" x="430" y="184" style="fill:var(--purple)">retain · learn back</text>
+          <text class="lbl t-mid" x="430" y="184" style="fill:var(--purple)">pending contribution · approved retain</text>
         </svg>
       </div>
 
@@ -1453,7 +1453,7 @@ body.dark .diagram-svg .node-bg-purple { fill: rgba(199,146,234,0.08); stroke: v
         </div>
         <div class="meta-card">
           <h4>🛠 Tools</h4>
-          <div class="val">recall · reflect · retain · list_banks</div>
+          <div class="val">recall · reflect · list_banks · gated retain</div>
           <div class="desc">Set tool MCP đầy đủ trong settings.json allow-list.</div>
         </div>
         <div class="meta-card">

@@ -20,9 +20,9 @@ game-design-kit/
 │   └── hooks.json          # SessionStart hook → plugin-setup.sh
 ├── scripts/                # Installation and setup scripts
 │   ├── plugin-setup.sh     # SessionStart env check (warns if HINDSIGHT_API_KEY missing)
-│   ├── install.sh          # Bash installer (copies plugin to ~/.claude/plugins/)
 │   ├── gist-install.sh     # Remote install from GitHub Gist (Linux/macOS)
-│   └── gist-install.ps1    # Remote install from GitHub Gist (Windows PowerShell)
+│   ├── gist-install.ps1    # Remote install from GitHub Gist (Windows PowerShell)
+│   └── verify-release-smoke.js # Release/package smoke assertions
 ├── projects/               # Generated game project output (gitignored)
 │   └── {project-name}/
 │       └── Game Demo/      # Active output root for the game-prototype skill
@@ -85,26 +85,29 @@ game-design-kit/
   - `mockup-review-criteria.md` — Mockup acceptance/rejection criteria (includes dom-grab requirement)
   - `wireframe-overview-guide.md` — Wireframe flowchart layout spec and component panel schema
   - `gui-section-guide.md`, `gameplay-section-guide.md` — Section guides for document-writer
+  - `mechanic-list.md` — Reference mechanic patterns
+- Canonical UI/UX references live under `skills/game-ui-ux-guide/references/`:
   - `art-style-guide.md` — Visual style and art direction reference
   - `review-checklist.md`, `screen-checklists.md` — UI/UX review checklists
-  - `game-design-theories.md`, `theory-knowledge-base.md` — Game design theory references (consulted by review agents)
-  - `mechanic-list.md` — Reference mechanic patterns
+  - `theory-knowledge-base.md` — Game UI/UX theory reference
 - Legacy/manual reference files (still in `references/` but no longer on the active create route):
   - `gcd-template.md`, `gcd-gameplay-template.md` — Theory-driven GCD document templates (used by archived `game-concept-design` skill)
   - `concept-evaluation-criteria.md`, `concept-review-template.md` — Concept Pitch review standards (used by archived `review-concept` agent)
   - `gdd-evaluation-criteria.md`, `gdd-expected-sections.md`, `gdd-review-template.md` — Theory GDD review standards
   - `phase-a-outline-template.md` — Concept pitch Phase A outline template
+- Canonical legacy game theory reference lives under `skills/_deprecated/game-concept-design/references/game-design-theories.md`.
 
 **`hooks/` — Session lifecycle hooks:**
 - Purpose: Declares Claude Code hooks that run at session events
 - Contains: `hooks.json` mapping `SessionStart` to `scripts/plugin-setup.sh`
 
 **`scripts/` — Installation and environment scripts:**
-- Purpose: Install/uninstall the plugin; check environment at session start
+- Purpose: Check environment at session start and run packaging smoke assertions
 - Key files:
   - `plugin-setup.sh` — SessionStart hook; warns if `HINDSIGHT_API_KEY` is unset
-  - `install.sh` / `uninstall.sh` — Copy/remove plugin files to `~/.claude/plugins/`
+  - Root `install.sh` / `uninstall.sh` — Copy/remove plugin files under `~/.claude/plugins/cache/local/game-design-kit/` and update Claude plugin registry/settings
   - `gist-install.sh` / `gist-install.ps1` — Remote install from GitHub Gist (one-liner install)
+  - `verify-release-smoke.js` — Local/CI manifest, package, and installer hygiene checks
 
 **`projects/` — Generated output (gitignored):**
 - Purpose: Stores all generated game design artifacts; one subdirectory per game project

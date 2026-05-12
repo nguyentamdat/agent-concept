@@ -273,7 +273,7 @@ Engagement
 ## Hướng Dẫn Viết GCD
 
 1. Bám sát Outline đã approve ở Phase A — không thêm features ngoài scope
-2. Đọc `references/game-design-theories.md` TRƯỚC khi viết — dùng câu hỏi kiểm tra ở mỗi lý thuyết
+2. Đọc `skills/_deprecated/game-concept-design/references/game-design-theories.md` TRƯỚC khi viết — dùng câu hỏi kiểm tra ở mỗi lý thuyết
 3. Mỗi section phải ghi rõ lý thuyết nào được áp dụng
 4. MDA Analysis phải check CẢ HAI CHIỀU: mechanics→aesthetics VÀ aesthetics→mechanics
 5. Decision Points: phân tích ít nhất 2-3 decision points chính qua Anatomy of a Choice

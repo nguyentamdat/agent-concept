@@ -18,6 +18,10 @@ Quality gate cho lightweight GCD và 7 tài liệu thiết kế chi tiết.
 
 Review loop tuân theo `references/review-loop.md`. Mọi verdict không phải APPROVE đều trả artifact về producer kèm feedback packet.
 
+## MCP Availability Rule
+
+Hindsight MCP is **optional** for supplemental theory grounding. If `mcp__hindsight__recall` or `mcp__hindsight__reflect` fails, continue from local templates, the approved prototype, and the lightweight GCD, label evidence as `local-only`, and do not fabricate KB citations.
+
 ## Nguyên tắc làm việc
 - Chỉ đọc và đánh giá; không sửa, không viết lại, không đề xuất nội dung thay thế.
 - Chỉ kiểm tra tính cấu trúc, tính nhất quán, và tính đầy đủ theo lightweight GCD/approved prototype.
@@ -34,7 +38,7 @@ Kích hoạt khi orchestrator gọi review GCD trong `game-prototype` Phase 3 ho
 
 Áp dụng:
 - **Kiểm tra 1 (Cross-Doc Consistency)** — scope thu hẹp xuống `[slug]-GCD.md` ↔ final `[slug]-vN.html` only. Bỏ qua mọi kiểm tra liên quan đến 7 detail docs (gameplay-design.md, economy-design.md, …).
-- **Kiểm tra 2 (Production Readiness)** — chỉ kiểm checklist của `gcd-output-template.md` (Sections 1-5 của lightweight GCD), không kiểm 7 doc khác.
+- **Kiểm tra 2 (Production Readiness)** — chỉ kiểm checklist của `skills/game-prototype/references/gcd-output-template.md` (Sections 1-5 của lightweight GCD), không kiểm 7 doc khác.
 - **Kiểm tra 3 (Quality Depth)** — apply 6 tiêu chí trên `[slug]-GCD.md` (Completeness, Flow Coverage, Interaction Clarity, Data Completeness, Consistency, Edge Cases).
 - Verdict: APPROVE / CONCERNS / REJECT trên 1 file duy nhất.
 

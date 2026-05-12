@@ -181,6 +181,18 @@ Proceed through selected artifacts one at a time. Do not batch-apply without app
 
 ---
 
+## Step 7: Stage Knowledge-Base Contributions (Optional Governance Gate)
+
+If the iteration produced reusable knowledge (validated playtest insight, finalized design decision, or a novel cross-project pattern), do **not** write directly to Hindsight.
+
+1. Create `projects/{project-name}/.kb-contributions/pending/{timestamp}-{slug}.json`.
+2. Include `content`, `tags`, `source_artifacts`, `rationale`, and `status: "pending"`.
+3. Ask the user/reviewer to accept or reject the pending contribution.
+4. Only after explicit approval may an operator with `mcp__hindsight__retain` permission write it to Hindsight.
+5. If Hindsight MCP is unavailable, leave the pending JSON in place and report it as "KB write deferred".
+
+---
+
 ## Iteration Complete
 
 When approved changes and selected downstream syncs are complete:

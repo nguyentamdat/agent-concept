@@ -42,6 +42,8 @@ Ask the user via AskUserQuestion:
 - If yes: invoke the **market-researcher** agent IN BACKGROUND (do not wait for it). Continue immediately to Step 1. The findings will be fed into `game-prototype` Phase 1 step 1 (idea maturity assessment) when the agent returns.
 - If no: proceed directly to Step 1.
 
+If market research, playtest notes, or user decisions during create produce reusable knowledge, stage it under `projects/{project-name}/.kb-contributions/pending/*.json` with `status: "pending"` instead of writing directly to Hindsight. External KB writes require explicit governance approval after the run.
+
 ---
 
 ## Step 1: Run the `game-prototype` Skill End-to-End
@@ -76,7 +78,7 @@ The skill then:
 
 1. Decides scope (Minimal/Standard/Full) silently from audience + complexity, announces it, and waits for user confirm or override.
 2. Reuses the slug from Phase 1 (no regeneration).
-3. Reads `references/prototype-html-template.md` to lock in skeleton + CSS/JS conventions.
+3. Reads `skills/game-prototype/references/prototype-html-template.md` to lock in skeleton + CSS/JS conventions.
 4. Single-shot expands the chosen `Game Demo/[slug]-concept-{X}.html` into a full version saved as `Game Demo/[slug]-v1.html`.
 5. Self-tests the file against the template checklist and applies fixes.
 6. Announces: "Prototype full version xong, mở `Game Demo/[slug]-v1.html` trong browser để chơi."
@@ -86,7 +88,7 @@ The skill then:
 
 ### Phase 3 — Lightweight GCD
 
-The skill then writes `projects/{project-name}/Game Demo/[slug]-GCD.md` in **Vietnamese**, following `references/gcd-output-template.md`. The lightweight GCD must contain the minimum downstream context required by mockup, wireframe, and detail-doc agents:
+The skill then writes `projects/{project-name}/Game Demo/[slug]-GCD.md` in **Vietnamese**, following `skills/game-prototype/references/gcd-output-template.md`. The lightweight GCD must contain the minimum downstream context required by mockup, wireframe, and detail-doc agents:
 
 - Section 1: Target Audience, Problem Statement, 1-3 Kinds of Fun (with the concrete prototype mechanic that delivers each).
 - Section 2: Pitching, Win/Lose conditions, player choices (read from the HTML), challenges (read from the HTML).

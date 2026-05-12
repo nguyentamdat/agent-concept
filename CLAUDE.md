@@ -1,8 +1,8 @@
 # Game Design Kit Claude Code Plugin
 
-Game Design Kit is a Claude Code plugin for an AI game design pipeline: Concept → Prototype → Detail Docs + Wireframe.
+Game Design Kit is a Claude Code plugin for a prototype-first AI game design pipeline: concept exploration → versioned playable prototype → Vietnamese lightweight GCD → mockup → wireframe → detail docs.
 
-It combines a Hindsight-powered game design knowledge base, Concept Pitch + GCD design documents, and rapid HTML prototype generation in one workflow.
+It combines a Hindsight-powered game design knowledge base, mini concept prototypes, versioned HTML5 playable prototypes, and downstream production design artifacts in one workflow.
 
 ## Install / Run
 
@@ -36,13 +36,13 @@ The knowledge base is served via **Hindsight MCP** with a dedicated `game-knowle
 
 Use Hindsight tools (`recall`, `reflect`) to ground design decisions in game design theory before proposing mechanics, economy, retention, or UX choices.
 
-Game concept design follows 12 core theories (from Players Making Decisions + A Theory of Fun), including MDA, Problem Statements, Meaningful Decisions, Flow, Interest Curves, Learning Curves, Anatomy of a Choice, decision quality checks, Randomness, Milieu, and motivation frameworks.
+Prototype-first concept design uses the `game-prototype` skill to ground the idea in player/audience context, problem statements, 8 Kinds of Fun, gameplay options, playable mini concepts, audits, and an approved versioned prototype before writing the lightweight GCD.
 
 ## Standard Pipeline
 
 | Command | Purpose |
 |---------|---------|
-| `/design-kit:create <idea>` | Full pipeline: brainstorm → Concept Pitch → GCD → Prototype → Detail Docs + Wireframe |
+| `/design-kit:create <idea>` | Full pipeline: brainstorm + mini concepts → approved playable prototype → Vietnamese lightweight GCD → mockup → wireframe → detail docs |
 | `/design-kit:iterate <feedback>` | Re-enter pipeline with feedback, update any artifact |
 | `/design-kit:status` | Show current project stage, artifacts, knowledge stats |
 | `/design-kit:setup` | Check plugin version or update to latest (`setup update`) |
@@ -51,20 +51,19 @@ Game concept design follows 12 core theories (from Players Making Decisions + A 
 
 `/design-kit:doctor` is the entry point when something looks broken. If it reports missing MCP env vars, run `/design-kit:mcp-setup`; if the plugin is outdated, run `/design-kit:setup update`.
 
-Design documents (`gcd.md`) must be written in Vietnamese.
+Lightweight GCD files (`Game Demo/[slug]-GCD.md`) must be written in Vietnamese and derived from the approved playable prototype.
 
 ## Design Document Conventions
 
-- Primary design reference is the Concept Pitch (`concept-pitch.md`) + GCD (`gcd.md`).
-- Maintain internal consistency across pillars, mechanics, progression, and scope.
+- Primary design reference is the approved `Game Demo/[slug]-vN.html` + `Game Demo/[slug]-GCD.md`.
+- Maintain internal consistency across pillars, mechanics, progression, UI/UX artifacts, and scope.
 
 ## Prototype Conventions
 
-- Prototype output is a single `index.html` per project.
-- Renderer comes from Concept Pitch / GCD:
-  - `2d`: Canvas API
-  - `3d`: Three.js via CDN
-- Use vanilla JavaScript (no framework/runtime dependency).
+- Prototype outputs live under `projects/{project-name}/Game Demo/`.
+- Mini concept prototypes use `Game Demo/[slug]-concept-{A|B|C}.html`.
+- Full playable prototypes use versioned `Game Demo/[slug]-vN.html`; never overwrite older versions.
+- Use vanilla JavaScript (Canvas API or Three.js CDN only when the mechanic needs it).
 - Use geometric placeholder shapes and simple UI treatment.
 - Keep prototype implementation concise and practical.
 

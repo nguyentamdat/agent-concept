@@ -29,9 +29,13 @@ echo "[1/4] Copying plugin files..."
 rsync -a --delete \
   --exclude='.git' \
   --exclude='.github' \
+  --exclude='.claude' \
+  --exclude='.omx' \
   --exclude='.sisyphus' \
   --exclude='.opencode' \
   --exclude='.omc' \
+  --exclude='node_modules' \
+  --exclude='tests' \
   --exclude='projects' \
   --exclude='art-skill' \
   --exclude='docs' \

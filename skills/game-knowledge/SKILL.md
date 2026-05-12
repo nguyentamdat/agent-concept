@@ -143,18 +143,26 @@ reflect(query="Compare monetization models for mid-core RPGs: battle pass vs IAP
 
 ## Storing New Knowledge
 
-When the user provides new design insights, playtest results, or design decisions, store them:
+When the user provides new design insights, playtest results, or design decisions, do **not** call Hindsight `retain` directly. Stage the candidate contribution for governance review instead:
 
-```
-retain(content="Playtest showed 60% of casual players drop off at level 3 difficulty spike", tags=["playtest", "difficulty", "retention"])
-retain(content="Core loop: Plant → Grow → Harvest → Trade. 30-sec cycle targets Competence (SDT)", tags=["core-loop", "sdt"])
+```json
+{
+  "content": "Playtest showed 60% of casual players drop off at level 3 difficulty spike",
+  "tags": ["playtest", "difficulty", "retention"],
+  "source": "user playtest note",
+  "status": "pending"
+}
 ```
 
-**When to retain:**
+Write pending contributions under `projects/{project-name}/.kb-contributions/pending/*.json`. A reviewer or explicit user approval must accept/reject the contribution before any external KB write is attempted.
+
+**When to stage a contribution:**
 - User shares playtest feedback or data
 - Design decisions are finalized
 - New insights emerge from discussion
 - Cross-referencing reveals a novel pattern
+
+**Governance rule:** Hindsight writes are optional and externally persistent. If the MCP is unavailable or approval is missing, keep the pending JSON file and continue the design workflow without writing to the KB.
 
 ---
 

@@ -9,6 +9,10 @@ Hướng dẫn user từ ý tưởng → playable HTML prototype → Game Concep
 
 Đây là **active prototype-first workflow** cho `/design-kit:create`. Skill output gồm playable HTML prototype thực tế và một lightweight GCD chỉ document những gì đã được prototype hóa — không phải GCD lý thuyết đầy đủ với 12 theories (đó là phần việc của tài liệu detail-doc về sau).
 
+## Knowledge / MCP Availability
+
+This skill is designed to run from local references first. If Hindsight MCP is unavailable during concept framing or audits, continue with the local files under `skills/game-prototype/references/`, label any theory evidence as `local-only`, and do not fabricate source/page citations. If the user explicitly requires KB-backed research before ideation, stop and route them to `/design-kit:doctor` or `/design-kit:mcp-setup`.
+
 ## Scope
 
 **In scope:**

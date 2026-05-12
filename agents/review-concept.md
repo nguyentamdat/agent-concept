@@ -55,7 +55,7 @@ Khi review GCD ở Chế độ 2, ngoài checklist trên còn đánh giá theo 4
 | **III. Pacing & Learning** | Game Flow, Interest Curves, Learning Curves, Randomness | Nhịp điệu có hợp lý? |
 | **IV. Player Motivation** | Intrinsic & Extrinsic Motivation | Động lực có bền vững? |
 
-Chấm mỗi lý thuyết 1-5 sao (hoặc N/E nếu thiếu thông tin). Chi tiết rubric: `references/concept-evaluation-criteria.md`. Chi tiết lý thuyết: `references/game-design-theories.md`.
+Chấm mỗi lý thuyết 1-5 sao (hoặc N/E nếu thiếu thông tin). Chi tiết rubric: `references/concept-evaluation-criteria.md`. Chi tiết lý thuyết: `skills/_deprecated/game-concept-design/references/game-design-theories.md`.
 
 ### GCD Section → Pillar Mapping
 
