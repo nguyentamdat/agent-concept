@@ -148,7 +148,7 @@ function createApp(overrides = {}) {
           cookie,
           accept: '*/*',
           'x-forwarded-proto': 'https',
-          'x-forwarded-host': 'hindsight-setup.zingplay.dev'
+          'x-forwarded-host': 'game-design-kit-setup.zingplay.dev'
         }
       });
     } catch {

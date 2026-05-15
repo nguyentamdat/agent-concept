@@ -18,7 +18,7 @@ Optional env:
 
 - `HINDSIGHT_MCP_URL` — default `https://hindsight.zingplay.dev/mcp/game-knowledge/`
 - `PLUGIN_REPO_URL` — default `https://github.com/nguyentamdat/agent-concept.git`
-- `PUBLIC_BASE_URL` — public URL, e.g. `https://hindsight-setup.zingplay.dev`
+- `PUBLIC_BASE_URL` — public URL, e.g. `https://game-design-kit-setup.zingplay.dev`
 - `TRUSTED_EMAIL_HEADERS` — comma list, default `x-forwarded-email,x-auth-request-email,x-user-email`
 - `AUTH_MODE=trusted-header` — enable only after the app is behind a proxy that strips client-supplied auth headers and injects the verified VNG email. Default is `disabled` so a public domain cannot spoof headers to mint install codes.
 - `ALLOWED_EMAIL_DOMAIN` — default `vng.com.vn`
