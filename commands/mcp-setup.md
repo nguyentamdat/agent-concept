@@ -45,7 +45,7 @@ Print a discovery card before prompting:
 ```
 MCP servers discovered:
 - hindsight
-    HINDSIGHT_MCP_URL  : (default) https://hindsight-api.zingplay.dev/mcp/game-knowledge/
+    HINDSIGHT_MCP_URL  : (default) https://hindsight.zingplay.dev/mcp/game-knowledge/
     HINDSIGHT_API_KEY  : NOT SET (required)
 ```
 
@@ -97,6 +97,8 @@ Claude Code only loads `env` from settings on **process start**, so freshly writ
 > Wrote {N} variables to `~/.claude/settings.json`. Restart Claude Code, then re-run `/design-kit:doctor` to verify connectivity.
 
 If the MCP server in question is already reachable in the current session (e.g. the user re-ran with values that were already exported in the shell), call its lightweight read tool to confirm — for Hindsight that is `mcp__hindsight__get_bank`. Report the result inline.
+
+Note: values written to `~/.claude/settings.json` `env` override plugin manifest defaults. If a user pins `HINDSIGHT_MCP_URL` there, future plugin default URL changes will not affect that install until they re-run `/design-kit:mcp-setup` or remove the override.
 
 ---
 

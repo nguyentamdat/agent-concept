@@ -99,7 +99,7 @@ Claude Code plugin: AI game design pipeline. Pipeline is **prototype-first**: an
 
 - Commands and agents defined as **markdown files**, not code.
 - Plugin uses `${CLAUDE_PLUGIN_ROOT}` env var for path resolution.
-- Knowledge served via **Hindsight MCP** at `https://hindsight-api.zingplay.dev/mcp/game-knowledge/`. Agents use `recall`/`reflect`; new knowledge is staged under `.kb-contributions/pending` and only written externally after explicit governance approval.
+- Knowledge served via **Hindsight MCP** at `https://hindsight.zingplay.dev/mcp/game-knowledge/`. Agents use `recall`/`reflect`; new knowledge is staged under `.kb-contributions/pending` and only written externally after explicit governance approval.
 - Early-pipeline phases owned by a single **skill** (`game-prototype`) rather than chained agents — keeps brainstorm + playable spike + lightweight GCD coherent inside one workflow.
 
 ## NOTES

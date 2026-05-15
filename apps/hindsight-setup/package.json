@@ -1,0 +1,16 @@
+{
+  "name": "hindsight-setup",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Internal web installer for Game Design Kit Hindsight setup",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/server.js",
+    "check": "node --check src/server.js && node --check scripts/smoke-test.js",
+    "test": "npm run check && node scripts/smoke-test.js",
+    "verify": "npm test"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

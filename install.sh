@@ -2,7 +2,7 @@
 set -euo pipefail
 
 PLUGIN_NAME="game-design-kit"
-MARKETPLACE_NAME="local"
+MARKETPLACE_NAME="nguyentamdat"
 PLUGIN_KEY="${PLUGIN_NAME}@${MARKETPLACE_NAME}"
 
 # Read version from plugin.json
@@ -14,6 +14,7 @@ PLUGINS_DIR="$CLAUDE_DIR/plugins"
 CACHE_DIR="$PLUGINS_DIR/cache/$MARKETPLACE_NAME/$PLUGIN_NAME/$PLUGIN_VERSION"
 INSTALLED_JSON="$PLUGINS_DIR/installed_plugins.json"
 SETTINGS_JSON="$CLAUDE_DIR/settings.json"
+USER_CLAUDE_JSON="$HOME/.claude.json"
 
 echo "=== Game Design Kit Installer ==="
 echo ""
@@ -35,6 +36,7 @@ rsync -a --delete \
   --exclude='.opencode' \
   --exclude='.omc' \
   --exclude='node_modules' \
+  --exclude='apps' \
   --exclude='tests' \
   --exclude='projects' \
   --exclude='art-skill' \
@@ -46,24 +48,68 @@ rsync -a --delete \
 
 # Set up Hindsight API key
 echo "[2/4] Configuring knowledge base..."
-ENV_FILE="$CACHE_DIR/.env"
-if [ -f "$ENV_FILE" ] && grep -q 'HINDSIGHT_API_KEY=' "$ENV_FILE" 2>/dev/null; then
+mkdir -p "$CLAUDE_DIR"
+hindsight_key_configured=0
+
+cleanup_legacy_hindsight_mcp() {
+  USER_CLAUDE_JSON="$USER_CLAUDE_JSON" node <<'NODE' 2>/dev/null || true
+const fs = require('fs');
+const p = process.env.USER_CLAUDE_JSON;
+if (!p || !fs.existsSync(p)) process.exit(0);
+const data = JSON.parse(fs.readFileSync(p, 'utf8'));
+if (data.mcpServers && Object.prototype.hasOwnProperty.call(data.mcpServers, 'hindsight')) {
+  delete data.mcpServers.hindsight;
+  if (Object.keys(data.mcpServers).length === 0) delete data.mcpServers;
+  fs.writeFileSync(p, JSON.stringify(data, null, 2) + '\n');
+  console.log('  Removed legacy user-level mcpServers.hindsight from ~/.claude.json; plugin manifest now owns this MCP config.');
+}
+NODE
+}
+
+write_hindsight_env() {
+  NEW_HINDSIGHT_API_KEY="$1" NEW_HINDSIGHT_MCP_URL="${HINDSIGHT_MCP_URL:-https://hindsight.zingplay.dev/mcp/game-knowledge/}" node -e "
+    const fs = require('fs');
+    const p = '$SETTINGS_JSON';
+    const data = fs.existsSync(p) ? JSON.parse(fs.readFileSync(p, 'utf8')) : {};
+    data.env = data.env || {};
+    data.env.HINDSIGHT_API_KEY = process.env.NEW_HINDSIGHT_API_KEY;
+    data.env.HINDSIGHT_MCP_URL = process.env.NEW_HINDSIGHT_MCP_URL;
+    fs.writeFileSync(p, JSON.stringify(data, null, 2) + '\n');
+  "
+}
+
+cleanup_legacy_hindsight_mcp
+
+if [ -n "${HINDSIGHT_API_KEY:-}" ]; then
+  write_hindsight_env "$HINDSIGHT_API_KEY"
+  echo "  Hindsight API key saved to ~/.claude/settings.json env from HINDSIGHT_API_KEY."
+  hindsight_key_configured=1
+elif node -e "
+  const fs = require('fs');
+  const p = '$SETTINGS_JSON';
+  if (!fs.existsSync(p)) process.exit(1);
+  const data = JSON.parse(fs.readFileSync(p, 'utf8'));
+  process.exit(data.env && data.env.HINDSIGHT_API_KEY ? 0 : 1);
+" 2>/dev/null; then
   echo "  Hindsight API key already configured."
+  hindsight_key_configured=1
 else
   echo ""
   echo "  The knowledge base requires a Hindsight API key."
-  echo "  Server: https://hindsight-api.zingplay.dev/"
+  echo "  Server: https://hindsight.zingplay.dev/"
+  echo "  The key is stored in ~/.claude/settings.json env so Claude Code can pass it to the MCP server."
   echo ""
   if [ -t 0 ]; then
     read -rp "  Enter your Hindsight API key (or press Enter to skip): " api_key
     if [ -n "$api_key" ]; then
-      echo "HINDSIGHT_API_KEY=$api_key" > "$ENV_FILE"
-      echo "  API key saved."
+      write_hindsight_env "$api_key"
+      echo "  API key saved to ~/.claude/settings.json env."
+      hindsight_key_configured=1
     else
-      echo "  Skipped. Set it later in your shell: export HINDSIGHT_API_KEY=your-key"
+      echo "  Skipped. Set it later with /design-kit:mcp-setup or export HINDSIGHT_API_KEY=your-key before launching Claude Code."
     fi
   else
-    echo "  Non-interactive mode. Set it later:"
+    echo "  Non-interactive mode. Set it later with /design-kit:mcp-setup or:"
     echo "    export HINDSIGHT_API_KEY=your-key"
   fi
 fi
@@ -141,8 +187,9 @@ echo ""
 echo "The plugin will auto-load in all new Claude Code sessions."
 echo "Run 'claude' to start using it."
 echo ""
-if [ -z "${api_key:-}" ] && ! grep -q 'HINDSIGHT_API_KEY=' "$CACHE_DIR/.env" 2>/dev/null; then
+if [ "$hindsight_key_configured" -ne 1 ]; then
   echo "  Remember to set your Hindsight API key:"
-  echo "  export HINDSIGHT_API_KEY=your-key"
+  echo "  /design-kit:mcp-setup"
+  echo "  # or: export HINDSIGHT_API_KEY=your-key before launching Claude Code"
   echo ""
 fi

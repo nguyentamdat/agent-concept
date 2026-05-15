@@ -25,8 +25,11 @@ Tỷ lệ % pipeline hoàn thành đến Gate 4 (Detail Docs approved) mà **kh�
 ### Cách đo
 ```bash
 # Chạy 10-20 game concept khác nhau qua toàn bộ pipeline
+# Ghi transcript/metrics từ Claude Code cho từng lần chạy vào run-${i}.json
+# Nếu cần cost/token chính xác, export usage từ Claude Code runtime; `claude --print`
+# chỉ là runner/transcript harness, không tự thay thế metric tracker.
 for i in {1..10}; do
-  opencode run --task "create-game-${i}" --output "run-${i}.json"
+  claude --print "/design-kit:create create-game-${i}" > "run-${i}.json"
 done
 
 # Đếm % hoàn thành đến Gate 4
@@ -97,15 +100,15 @@ Token usage và model cost cho mỗi artifact trong pipeline.
 
 ### Cách đo
 ```bash
-# Theo dõi qua OpenCode logs
-# Hoặc tính từ model usage
+# Theo dõi qua Claude Code transcript / usage export của phiên chạy
+# Hoặc tính từ model usage mà runtime cung cấp
 ```
 
 ### Target Cost
 | Artifact | Model | Target Cost | Nếu vượt |
 |----------|-------|-------------|----------|
-| Concept Pitch | sonnet / kimi | $0.50-1.00 | Dùng kimi-k2.5-turbo |
-| GCD | opus / kimi | $2-5 | 4-Pillar review tối ưu |
+| Phase 1 mini concepts | sonnet / kimi | $0.50-1.00 | Giảm scope mini prototype |
+| Lightweight GCD | opus / kimi | $2-5 | Tối ưu review loop + template |
 | Prototype | sonnet | $1-2 | Dùng quick category |
 | Mockup | sonnet | $2-4 | Thêm constraints strict |
 | Wireframe | sonnet | $1-2 | Nên dùng quick category |
@@ -128,7 +131,7 @@ Token usage và model cost cho mỗi artifact trong pipeline.
 ```bash
 # Chạy cùng 1 concept 5 lần
 for i in {1..5}; do
-  opencode run --task "same-concept" --seed $i --output "consistency-${i}.json"
+  claude --print "/design-kit:create same-concept run-${i}" > "consistency-${i}.json"
 done
 
 # So sánh:
@@ -266,9 +269,8 @@ CONCEPTS=(
 mkdir -p eval/baseline
 for concept in "${CONCEPTS[@]}"; do
   echo "Running: $concept"
-  opencode run --task "create-game-$concept" \
-    --output "eval/baseline/${concept}.json" \
-    --track-metrics
+  claude --print "/design-kit:create $concept" \
+    > "eval/baseline/${concept}.json"
   sleep 30  # Rate limit
 done
 
@@ -360,11 +362,11 @@ python3 eval/compare.py \
 
 ## Top Issues cần cải thiện
 1. Mockup phase hay bị REJECT lần 2 → Thêm auto-validator dom-grab
-2. GCD thiếu theory #11 (Randomness) → Update concept-designer prompt
+2. Lightweight GCD thiếu rule/edge-case thực tế từ prototype → Update `game-prototype` GCD extraction checklist
 
 ## Recommendations
 - [ ] Thêm auto-validator cho dom-grab integration
-- [ ] Update concept-designer prompt để cover đủ 12 theories
+- [ ] Update `game-prototype` Phase 3 checklist để cover đủ state schema, resolve rules, edge cases
 - [ ] Dùng Kimi K2.5 cho Tier 1 agents để giảm cost thêm 30%
 ```
 
@@ -412,7 +414,7 @@ jobs:
 
 - [Anthropic: Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)
 - [Six Key Metrics for AI Agent Evaluation](https://blog.dailydoseofds.com/p/six-key-metrics-for-ai-agent-evaluation)
-- [OpenCode Bench](https://github.com/anomalyco/opencode-bench)
+- [Claude Code documentation](https://docs.anthropic.com/en/docs/claude-code)
 
 ---
 

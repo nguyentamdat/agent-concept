@@ -47,7 +47,7 @@ export HINDSIGHT_API_KEY=your-key
 export HINDSIGHT_MCP_URL=https://hindsight.example.com/mcp/game-knowledge/
 ```
 
-If `HINDSIGHT_API_KEY` is unset, the knowledge-base tools (`recall`/`reflect`/`retain`) will be unavailable but the rest of the pipeline still works.
+If `HINDSIGHT_API_KEY` is unset, the knowledge-base tools (`recall`/`reflect`) will be unavailable but the rest of the pipeline still works. External knowledge writes are staged under `.kb-contributions/pending` and require explicit governance approval.
 
 ## Pipeline
 
@@ -56,7 +56,9 @@ If `HINDSIGHT_API_KEY` is unset, the knowledge-base tools (`recall`/`reflect`/`r
 | `/design-kit:create <idea>` | Prototype-first pipeline: brainstorm → playable HTML5 prototype + lightweight Vietnamese GCD (via the `game-prototype` skill) → mockup → wireframe → detail docs |
 | `/design-kit:iterate <feedback>` | Re-enter the pipeline with feedback. Playable / mechanic / balance feedback writes a new versioned `Game Demo/[slug]-vN+1.html`; mockup, wireframe, and doc-only feedback route to the matching producer |
 | `/design-kit:status` | Show current project stage and artifacts (Game Demo prototypes, lightweight GCD, mockup, wireframe, detail docs) |
-| `/design-kit:setup` | Check version, update plugin, or diagnose issues |
+| `/design-kit:setup` | Check version or update plugin; delegates diagnostics to `/design-kit:doctor` |
+| `/design-kit:doctor` | Diagnose plugin structure, MCP environment/connectivity, and version consistency |
+| `/design-kit:mcp-setup` | Configure required MCP environment variables in `~/.claude/settings.json` |
 
 The lightweight GCD (`Game Demo/[slug]-GCD.md`) is written in Vietnamese.
 

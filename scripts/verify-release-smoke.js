@@ -26,6 +26,7 @@ const expected = [
   'commands/create.md',
   'commands/iterate.md',
   'commands/doctor.md',
+  'commands/mcp-setup.md',
   'skills/game-prototype/SKILL.md',
   'skills/game-knowledge/SKILL.md',
   'skills/game-ui-ux-guide/SKILL.md',
@@ -45,7 +46,7 @@ for (const file of commandFiles) {
 }
 
 const agentFiles = fs.readdirSync(path.join(root, 'agents')).filter((f) => f.endsWith('.md'));
-assert(agentFiles.length >= 8, `expected >=8 top-level agent files, found ${agentFiles.length}`);
+assert(agentFiles.length >= 10, `expected >=10 top-level agent files, found ${agentFiles.length}`);
 for (const file of agentFiles) {
   const body = fs.readFileSync(path.join(root, 'agents', file), 'utf8');
   assert(body.startsWith('---\n'), `agents/${file} is missing frontmatter opening`);

@@ -18,6 +18,60 @@ function Write-Ok    { param($m) Write-Host "✓ " -ForegroundColor Green -NoNew
 function Write-Warn  { param($m) Write-Host "! " -ForegroundColor Yellow -NoNewline; Write-Host $m }
 function Write-Err   { param($m) Write-Host "✗ " -ForegroundColor Red -NoNewline; Write-Host $m; exit 1 }
 
+function Read-JsonFile {
+    param([string]$Path, [object]$DefaultValue)
+    if (Test-Path $Path) {
+        $raw = Get-Content $Path -Raw
+        if ($raw.Trim()) { return $raw | ConvertFrom-Json }
+    }
+    return $DefaultValue
+}
+
+function Save-JsonFile {
+    param([string]$Path, [object]$Value)
+    $dir = Split-Path -Parent $Path
+    if ($dir -and -not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir -Force | Out-Null }
+    $Value | ConvertTo-Json -Depth 20 | Set-Content $Path -Encoding UTF8
+}
+
+function Remove-LegacyHindsightMcpConfig {
+    if (-not (Test-Path $USER_CLAUDE_JSON)) { return }
+    try {
+        $userConfig = Get-Content $USER_CLAUDE_JSON -Raw | ConvertFrom-Json
+        if ($userConfig.PSObject.Properties['mcpServers'] -and $userConfig.mcpServers.PSObject.Properties['hindsight']) {
+            $userConfig.mcpServers.PSObject.Properties.Remove('hindsight')
+            if ($userConfig.mcpServers.PSObject.Properties.Count -eq 0) {
+                $userConfig.PSObject.Properties.Remove('mcpServers')
+            }
+            Save-JsonFile $USER_CLAUDE_JSON $userConfig
+            Write-Info "Removed legacy user-level mcpServers.hindsight from $USER_CLAUDE_JSON; plugin manifest now owns this MCP config."
+        }
+    } catch {
+        Write-Warn "Could not inspect $USER_CLAUDE_JSON for legacy Hindsight MCP config: $($_.Exception.Message)"
+    }
+}
+
+function Test-HindsightSettingsToken {
+    if (-not (Test-Path $SETTINGS_JSON)) { return $false }
+    try {
+        $settings = Get-Content $SETTINGS_JSON -Raw | ConvertFrom-Json
+        return [bool]($settings.PSObject.Properties['env'] -and $settings.env.PSObject.Properties['HINDSIGHT_API_KEY'])
+    } catch {
+        return $false
+    }
+}
+
+function Save-HindsightSettings {
+    param([string]$ApiKey, [string]$McpUrl)
+    $settings = Read-JsonFile $SETTINGS_JSON ([pscustomobject]@{})
+    if (-not $settings.PSObject.Properties['env']) {
+        Add-Member -InputObject $settings -NotePropertyName env -NotePropertyValue ([pscustomobject]@{})
+    }
+    $settings.env | Add-Member -NotePropertyName HINDSIGHT_API_KEY -NotePropertyValue $ApiKey -Force
+    $settings.env | Add-Member -NotePropertyName HINDSIGHT_MCP_URL -NotePropertyValue $McpUrl -Force
+    Save-JsonFile $SETTINGS_JSON $settings
+}
+
 # ─── Detect Claude config directory ──────────────────────────────────────────
 function Get-ClaudeDir {
     $candidates = @(
@@ -34,6 +88,7 @@ $CLAUDE_DIR = Get-ClaudeDir
 $PLUGINS_DIR = Join-Path $CLAUDE_DIR "plugins"
 $INSTALLED_JSON = Join-Path $PLUGINS_DIR "installed_plugins.json"
 $SETTINGS_JSON = Join-Path $CLAUDE_DIR "settings.json"
+$USER_CLAUDE_JSON = Join-Path $env:USERPROFILE ".claude.json"
 $MARKETPLACES_DIR = Join-Path $PLUGINS_DIR "marketplaces"
 $MARKETPLACE_DIR = Join-Path $MARKETPLACES_DIR $MARKETPLACE_NAME
 $KNOWN_MARKETPLACES_JSON = Join-Path $PLUGINS_DIR "known_marketplaces.json"
@@ -88,7 +143,7 @@ try {
     if (Test-Path $CACHE_DIR) { Remove-Item -Recurse -Force $CACHE_DIR }
     New-Item -ItemType Directory -Path $CACHE_DIR -Force | Out-Null
 
-    $excludeDirs = @('.git', '.github', '.sisyphus', '.opencode', '.omc', 'projects', 'docs\archive', 'art-skill')
+    $excludeDirs = @('.git', '.github', '.sisyphus', '.opencode', '.omc', 'projects', 'apps', 'docs\archive', 'art-skill')
     $excludeExts = @('.zip', '.tar.gz')
 
     Get-ChildItem -Path $repoDir -Recurse -Force | ForEach-Object {
@@ -172,19 +227,14 @@ try {
     # ─── Configure Hindsight API key ─────────────────────────────────────
     Write-Info "Configuring Hindsight knowledge base..."
 
-    $hindsightReady = $false
-    $hasClaude = [bool](Get-Command claude -ErrorAction SilentlyContinue)
-    if ($hasClaude) {
-        $mcpOut = claude mcp list 2>&1 | Out-String
-        if ($mcpOut -match "hindsight.*Connected") { $hindsightReady = $true }
-    }
+    Remove-LegacyHindsightMcpConfig
 
     $HINDSIGHT_CONFIGURED = $false
-    if ($hindsightReady) {
-        Write-Info "Hindsight already configured and connected."
+    if (Test-HindsightSettingsToken) {
+        Write-Info "Hindsight token already saved in ~/.claude/settings.json env."
         $HINDSIGHT_CONFIGURED = $true
     } else {
-        $DEFAULT_HINDSIGHT_URL = "https://hindsight-api.zingplay.dev/mcp/game-knowledge/"
+        $DEFAULT_HINDSIGHT_URL = "https://hindsight.zingplay.dev/mcp/game-knowledge/"
         Write-Host ""
         Write-Host "  Hindsight is a game design knowledge base used by AI agents."
         Write-Host ""
@@ -193,18 +243,12 @@ try {
         $hindsightKey = Read-Host "  Hindsight API key (or press Enter to skip)"
 
         if ($hindsightKey) {
-            if ($hasClaude) {
-                claude mcp remove hindsight --scope user 2>$null
-                claude mcp add hindsight $hindsightUrl --transport http --scope user --header "Authorization: Bearer $hindsightKey" 2>$null
-                Write-Ok "Hindsight configured: $hindsightUrl"
-                $HINDSIGHT_CONFIGURED = $true
-            } else {
-                Write-Warn "Claude CLI not found. Add hindsight manually after installing Claude Code:"
-                Write-Host "    claude mcp add hindsight $hindsightUrl --transport http --scope user --header `"Authorization: Bearer YOUR_KEY`""
-            }
+            Save-HindsightSettings $hindsightKey $hindsightUrl
+            Write-Ok "Hindsight token saved to ~/.claude/settings.json env: $hindsightUrl"
+            $HINDSIGHT_CONFIGURED = $true
         } else {
             Write-Warn "Skipped. Add later with:"
-            Write-Host "    claude mcp add hindsight $DEFAULT_HINDSIGHT_URL --transport http --scope user --header `"Authorization: Bearer YOUR_KEY`""
+            Write-Host "    /design-kit:mcp-setup"
         }
     }
 
@@ -285,7 +329,7 @@ try {
     Write-Host ""
     if (-not $HINDSIGHT_CONFIGURED) {
         Write-Warn "Hindsight not configured. Add later:"
-        Write-Host "    claude mcp add hindsight https://hindsight-api.zingplay.dev/mcp/game-knowledge/ --transport http --scope user --header `"Authorization: Bearer YOUR_KEY`""
+        Write-Host "    /design-kit:mcp-setup"
         Write-Host ""
     }
 

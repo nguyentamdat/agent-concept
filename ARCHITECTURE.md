@@ -102,7 +102,7 @@
 **Knowledge Retrieval Flow:**
 
 1. Agent or skill invokes `mcp__hindsight__recall` or `mcp__hindsight__reflect`
-2. Hindsight MCP server (`https://hindsight-api.zingplay.dev/mcp/game-knowledge/`) is called with Bearer auth (`HINDSIGHT_API_KEY`)
+2. Hindsight MCP server (`https://hindsight.zingplay.dev/mcp/game-knowledge/`) is called with Bearer auth (`HINDSIGHT_API_KEY`)
 3. Response grounds the agent's design recommendations in game design theory
 
 ## Key Abstractions
@@ -151,7 +151,17 @@
 **`/design-kit:setup`:**
 - Location: `commands/setup.md`
 - Triggers: User invocation; subcommands `update` / `doctor`
-- Responsibilities: Checks plugin version against GitHub releases, updates plugin files, runs diagnostics (doctor requires `skills/game-prototype/SKILL.md`)
+- Responsibilities: Checks plugin version against GitHub releases and updates plugin files; `setup doctor` delegates to `/design-kit:doctor`
+
+**`/design-kit:doctor`:**
+- Location: `commands/doctor.md`
+- Triggers: User invocation or `/design-kit:setup doctor`
+- Responsibilities: Diagnoses plugin structure, MCP environment variables, MCP reachability, and version consistency
+
+**`/design-kit:mcp-setup`:**
+- Location: `commands/mcp-setup.md`
+- Triggers: User invocation when MCP env vars are missing or need to be changed
+- Responsibilities: Discovers MCP server placeholders from the plugin manifest, prompts for required values, writes them to `~/.claude/settings.json`, and explains restart/verification steps
 
 **SessionStart Hook:**
 - Location: `hooks/hooks.json` → `scripts/plugin-setup.sh`
@@ -170,7 +180,7 @@
 
 ## Cross-Cutting Concerns
 
-**Knowledge Base:** Served via Hindsight MCP at `https://hindsight-api.zingplay.dev/mcp/game-knowledge/`; agents use `mcp__hindsight__recall` and `mcp__hindsight__reflect`; no local knowledge files
+**Knowledge Base:** Served via Hindsight MCP at `https://hindsight.zingplay.dev/mcp/game-knowledge/`; agents use `mcp__hindsight__recall` and `mcp__hindsight__reflect`; no local knowledge files
 **Permissions:** Declared in `settings.json`; Hindsight MCP tools explicitly listed in allow-list
 **Plugin Identity:** Declared in `.claude-plugin/plugin.json` (name, version, MCP server config) and `.claude-plugin/marketplace.json`
 **Localization:** `Game Demo/[slug]-GCD.md` always written in Vietnamese; all other artifacts in English

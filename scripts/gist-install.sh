@@ -31,6 +31,7 @@ CLAUDE_DIR="$(detect_claude_dir)"
 PLUGINS_DIR="$CLAUDE_DIR/plugins"
 INSTALLED_JSON="$PLUGINS_DIR/installed_plugins.json"
 SETTINGS_JSON="$CLAUDE_DIR/settings.json"
+USER_CLAUDE_JSON="$HOME/.claude.json"
 MARKETPLACES_DIR="$PLUGINS_DIR/marketplaces"
 MARKETPLACE_DIR="$MARKETPLACES_DIR/$MARKETPLACE_NAME"
 KNOWN_MARKETPLACES_JSON="$PLUGINS_DIR/known_marketplaces.json"
@@ -57,6 +58,47 @@ _node_path() {
   else
     echo "$1"
   fi
+}
+
+cleanup_legacy_hindsight_mcp() {
+  USER_CLAUDE_JSON="$(_node_path "$USER_CLAUDE_JSON")" node <<'NODE' 2>/dev/null || true
+const fs = require('fs');
+const p = process.env.USER_CLAUDE_JSON;
+if (!p || !fs.existsSync(p)) process.exit(0);
+const data = JSON.parse(fs.readFileSync(p, 'utf8'));
+if (data.mcpServers && Object.prototype.hasOwnProperty.call(data.mcpServers, 'hindsight')) {
+  delete data.mcpServers.hindsight;
+  if (Object.keys(data.mcpServers).length === 0) delete data.mcpServers;
+  fs.writeFileSync(p, JSON.stringify(data, null, 2) + '\n');
+  console.log('  Removed legacy user-level mcpServers.hindsight from ~/.claude.json; plugin manifest now owns this MCP config.');
+}
+NODE
+}
+
+settings_has_hindsight_key() {
+  NODE_SETTINGS_JSON="$(_node_path "$SETTINGS_JSON")" node <<'NODE' 2>/dev/null
+const fs = require('fs');
+const p = process.env.NODE_SETTINGS_JSON;
+if (!p || !fs.existsSync(p)) process.exit(1);
+const data = JSON.parse(fs.readFileSync(p, 'utf8'));
+process.exit(data.env && data.env.HINDSIGHT_API_KEY ? 0 : 1);
+NODE
+}
+
+write_hindsight_settings() {
+  local key="$1"
+  local url="${2:-https://hindsight.zingplay.dev/mcp/game-knowledge/}"
+  NODE_SETTINGS_JSON="$(_node_path "$SETTINGS_JSON")" NEW_HINDSIGHT_API_KEY="$key" NEW_HINDSIGHT_MCP_URL="$url" node <<'NODE'
+const fs = require('fs');
+const path = require('path');
+const p = process.env.NODE_SETTINGS_JSON;
+const data = fs.existsSync(p) ? JSON.parse(fs.readFileSync(p, 'utf8')) : {};
+data.env = data.env || {};
+data.env.HINDSIGHT_API_KEY = process.env.NEW_HINDSIGHT_API_KEY;
+data.env.HINDSIGHT_MCP_URL = process.env.NEW_HINDSIGHT_MCP_URL;
+fs.mkdirSync(path.dirname(p), { recursive: true });
+fs.writeFileSync(p, JSON.stringify(data, null, 2) + '\n');
+NODE
 }
 
 info "Fetching latest version from ${REPO}..."
@@ -108,6 +150,7 @@ if command -v rsync &>/dev/null; then
     --exclude='.opencode' \
     --exclude='.omc' \
     --exclude='projects' \
+    --exclude='apps' \
     --exclude='docs/archive' \
     --exclude='art-skill' \
     --exclude='*.zip' \
@@ -123,6 +166,7 @@ else
          -not -path './.opencode/*' \
          -not -path './.omc/*' \
          -not -path './projects/*' \
+         -not -path './apps/*' \
          -not -path './docs/archive/*' \
          -not -path './art-skill/*' \
          -not -name '*.zip' \
@@ -149,6 +193,7 @@ if command -v rsync &>/dev/null; then
     --exclude='.opencode' \
     --exclude='.omc' \
     --exclude='projects' \
+    --exclude='apps' \
     --exclude='docs/archive' \
     --exclude='art-skill' \
     --exclude='*.zip' \
@@ -188,18 +233,14 @@ fi
 
 # ─── Configure Hindsight API key ─────────────────────────────────────────────
 info "Configuring Hindsight knowledge base..."
-
-_hindsight_ready() {
-  command -v claude &>/dev/null && \
-  claude mcp list 2>/dev/null | grep -q "hindsight.*Connected"
-}
+cleanup_legacy_hindsight_mcp
 
 HINDSIGHT_CONFIGURED=false
-if _hindsight_ready; then
-  info "Hindsight already configured and connected."
+if settings_has_hindsight_key; then
+  info "Hindsight token already saved in ~/.claude/settings.json env."
   HINDSIGHT_CONFIGURED=true
 else
-  DEFAULT_HINDSIGHT_URL="https://hindsight-api.zingplay.dev/mcp/game-knowledge/"
+  DEFAULT_HINDSIGHT_URL="https://hindsight.zingplay.dev/mcp/game-knowledge/"
   echo ""
   echo "  Hindsight is a game design knowledge base used by AI agents."
   echo ""
@@ -208,24 +249,16 @@ else
     hindsight_url="${hindsight_url:-$DEFAULT_HINDSIGHT_URL}"
     read -rp "  Hindsight API key (Enter to skip): " hindsight_key
     if [ -n "$hindsight_key" ]; then
-      if command -v claude &>/dev/null; then
-        claude mcp remove hindsight --scope user 2>/dev/null || true
-        claude mcp add hindsight "$hindsight_url" \
-          --transport http --scope user \
-          --header "Authorization: Bearer $hindsight_key" 2>/dev/null
-        ok "Hindsight configured: $hindsight_url"
-        HINDSIGHT_CONFIGURED=true
-      else
-        warn "Claude CLI not found. Add hindsight manually after installing Claude Code:"
-        echo "    claude mcp add hindsight $hindsight_url --transport http --scope user --header \"Authorization: Bearer YOUR_KEY\""
-      fi
+      write_hindsight_settings "$hindsight_key" "$hindsight_url"
+      ok "Hindsight token saved to ~/.claude/settings.json env: $hindsight_url"
+      HINDSIGHT_CONFIGURED=true
     else
       warn "Skipped. Add later with:"
-      echo "    claude mcp add hindsight $DEFAULT_HINDSIGHT_URL --transport http --scope user --header \"Authorization: Bearer YOUR_KEY\""
+      echo "    /design-kit:mcp-setup"
     fi
   else
     warn "Non-interactive mode. Add hindsight later:"
-    echo "    claude mcp add hindsight $DEFAULT_HINDSIGHT_URL --transport http --scope user --header \"Authorization: Bearer YOUR_KEY\""
+    echo "    /design-kit:mcp-setup"
   fi
 fi
 
@@ -316,7 +349,7 @@ echo "    /design-kit:create casual puzzle game with gardening theme"
 echo ""
 if [ "$HINDSIGHT_CONFIGURED" != "true" ]; then
   warn "Hindsight not configured. Add later:"
-  echo "    claude mcp add hindsight https://hindsight-api.zingplay.dev/mcp/game-knowledge/ --transport http --scope user --header \"Authorization: Bearer YOUR_KEY\""
+  echo "    /design-kit:mcp-setup"
   echo ""
 fi
 echo "  To uninstall:"

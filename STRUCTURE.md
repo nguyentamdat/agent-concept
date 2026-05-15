@@ -66,7 +66,9 @@ game-design-kit/
   - `create.md` — Prototype-first pipeline: Step 0 setup + optional market research → Step 1 `game-prototype` skill (Phase 1 brainstorm + audits → Phase 2 versioned playable prototype with iteration → Phase 3 lightweight Vietnamese GCD) → Step 2 Mockup → Step 3 Wireframe → Step 4 Feedback Gate → Step 5 detail-doc selection → Step 6 detail-doc generation
   - `iterate.md` — Feedback-driven update flow with diff preview before any file changes; same routing rules as `feedback-interpreter`
   - `status.md` — Project artifact checklist + pipeline stage (with `Game Demo/*-v*.html` and `Game Demo/*-GCD.md` as primary indicators) + Hindsight MCP stats
-  - `setup.md` — Plugin version check, update from GitHub releases, diagnostics (doctor requires `skills/game-prototype/SKILL.md`)
+  - `setup.md` — Plugin version check and update from GitHub releases; delegates diagnostics to `/design-kit:doctor`
+  - `doctor.md` — Plugin structure, MCP env/connectivity, and version consistency diagnostics
+  - `mcp-setup.md` — Interactive MCP environment variable setup in `~/.claude/settings.json`
 
 **`skills/` — Behavioral skill packages:**
 - Purpose: Reusable knowledge retrieval and methodology modules loaded by agents on demand
@@ -127,7 +129,7 @@ game-design-kit/
 
 ## Key File Locations
 
-**Entry Points (Slash Commands):** `commands/create.md`, `commands/iterate.md`, `commands/status.md`, `commands/setup.md`
+**Entry Points (Slash Commands):** `commands/create.md`, `commands/iterate.md`, `commands/status.md`, `commands/setup.md`, `commands/doctor.md`, `commands/mcp-setup.md`
 **Plugin Manifest:** `.claude-plugin/plugin.json`: name, version, Hindsight MCP server config
 **Permission Manifest:** `settings.json`: MCP tool allow-list for Hindsight operations
 **Session Hook:** `hooks/hooks.json` → `scripts/plugin-setup.sh`
